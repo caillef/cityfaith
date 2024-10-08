@@ -1,9 +1,10 @@
 Modules = {
-    gameConfig = "github.com/caillef/cityfaith/config:55fee24",
-    propsFactory = "github.com/caillef/cityfaith/props:55fee24",
-    squadsFactory = "github.com/caillef/cityfaith/squads:55fee24",
+    gameConfig = "github.com/caillef/cityfaith/config:8699139bb91d18da1f0b6a01609b9d58f4dae6ef",
+    propsFactory = "github.com/caillef/cityfaith/props:8699139bb91d18da1f0b6a01609b9d58f4dae6ef",
+    squadsFactory = "github.com/caillef/cityfaith/squads:8699139bb91d18da1f0b6a01609b9d58f4dae6ef",
 }
 
+local MAP_SCALE = 10
 local squad
 
 function generateNewMap()

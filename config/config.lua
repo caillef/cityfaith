@@ -83,8 +83,10 @@ local SKILLS = {
     }
 }
 
-return {
+local gameConfig = {
     CHARACTERS = CHARACTERS,
     PROPS = PROPS,
     SKILLS = SKILLS
 }
+
+return gameConfig
