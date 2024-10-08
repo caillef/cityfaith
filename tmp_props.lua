@@ -1,11 +1,6 @@
-local MAP_SCALE = 10
 local propsModule = {}
 
 local props = {}
-
-local function setPropPosition(obj, x, y)
-    obj.Position = { (x + 0.5) * MAP_SCALE, 0, (y + 0.5) * MAP_SCALE }
-end
 
 propsModule.getAll = function(_)
     return props
@@ -61,7 +56,7 @@ end
 propsModule.createSpawner = function(self, type, x, y)
     local propSpawner = Object()
     propSpawner:SetParent(World)
-    setPropPosition(propSpawner, x, y)
+    common.setPropPosition(propSpawner, x, y)
 
     local spawn
     spawn = function()

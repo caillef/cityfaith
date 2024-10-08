@@ -1,12 +1,21 @@
 #!/bin/bash
 
+# files to add config
+configs=("props" "squads")
+concatfiles=("config" "common")
+
 # Function to concat config
 concat_config() {
     local name="$1"
     local file="$name.lua"
     local filepath="$name/$file"
     cp "$filepath" "tmp_$file"
-    echo "$(ghead -n -2 config/config.lua)" "\n\n" "$(cat $filepath)" > "tmpnew_$file"
+    local content=""
+    for concatfile in "${concatfiles[@]}"
+    do
+        content+="$(ghead -n -2 $concatfile/$concatfile.lua)\n\n"
+    done
+    echo -e "$content$(cat $filepath)" > "tmpnew_$file"
     mv "tmpnew_$file" "$filepath"
 }
 
@@ -20,8 +29,10 @@ revert_state() {
 }
 
 # Concat configs
-concat_config "props"
-concat_config "squads"
+for config in "${configs[@]}"
+do
+    concat_config "$config"
+done
 
 # Git operations
 git add .
@@ -29,8 +40,10 @@ git commit -m "x"
 git push origin main
 
 # Revert to previous state
-revert_state "props"
-revert_state "squads"
+for config in "${configs[@]}"
+do
+    revert_state "$config"
+done
 
 # copy commit id
 git rev-parse HEAD | pbcopy

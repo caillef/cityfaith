@@ -1,5 +1,3 @@
-local MAP_SCALE = 10
-
 local squadModule = {}
 
 local function equipRightHand(avatar, shapeOrItem)
@@ -93,10 +91,6 @@ local function equipRightHand(avatar, shapeOrItem)
     if compatRotation then
         shape:RotateLocal(Number3(0, 0, 1), math.pi * 0.5)
     end
-end
-
-local function setPropPosition(obj, x, y)
-    obj.Position = { (x + 0.5) * MAP_SCALE, 0, (y + 0.5) * MAP_SCALE }
 end
 
 local function createCharacter(charaType)
@@ -277,7 +271,7 @@ squadModule.create = function(_, defaultCharacter)
         end
     end)
 
-    setPropPosition(squad, 0, 0)
+    common.setPropPosition(squad, 0, 0)
 
     return squad
 end
