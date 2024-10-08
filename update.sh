@@ -6,7 +6,7 @@ concat_config() {
     local file="$name.lua"
     local filepath="$name/$file"
     cp "$filepath" "tmp_$file"
-    echo "$(ghead -n -2 config/config.lua)" "\n\n" "$(cat $file)" > "tmpnew_$file"
+    echo "$(ghead -n -2 config/config.lua)" "\n\n" "$(cat $filepath)" > "tmpnew_$file"
     mv "tmpnew_$file" "$filepath"
 }
 
