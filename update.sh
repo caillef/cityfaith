@@ -1,16 +1,18 @@
+#!/bin/bash
+
 # Function to concat config
 concat_config() {
     local file="$1"
-    cp "$file" "tmp$file"
-    echo "`ghead -n -2 config/config.lua`" "\n\n" "`cat $file`" > "tmpnew$file"
-    cp "tmpnew$file" "$file"
+    cp "$file" "tmp_$file"
+    echo "$(ghead -n -2 config/config.lua)" "\n\n" "$(cat $file)" > "tmpnew_$file"
+    mv "tmpnew_$file" "$file"
 }
 
 # Function to revert to previous state
 revert_state() {
     local file="$1"
-    cp "tmp$file" "$file"
-    rm "tmp$file" "tmpnew$file"
+    mv "tmp_$file" "$file"
+    rm -f "tmpnew_$file"
 }
 
 # Concat configs
