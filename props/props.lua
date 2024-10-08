@@ -65,7 +65,7 @@ propsModule.createSpawner = function(self, type, x, y)
 
     local spawn
     spawn = function()
-        local prop = self:createProp(type)
+        local prop = self:create(type)
         prop:SetParent(propSpawner)
         prop.LocalPosition = { 0, 0, 0 }
         prop.onDestroy = function()

@@ -1,10 +1,8 @@
 Modules = {
-    gameConfig = "github.com/caillef/cityfaith/config",
-    propsFactory = "github.com/caillef/cityfaith/props",
-    squadsFactory = "github.com/caillef/cityfaith/squads",
+    gameConfig = "github.com/caillef/cityfaith/config:55fee24",
+    propsFactory = "github.com/caillef/cityfaith/props:55fee24",
+    squadsFactory = "github.com/caillef/cityfaith/squads:55fee24",
 }
-
-local MAP_SCALE = 10
 
 local squad
 
