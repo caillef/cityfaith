@@ -1,5 +1,10 @@
 local squadModule = {}
 
+local propsModule
+squadModule.setPropsModule = function(_, module)
+    propsModule = module
+end
+
 local function equipRightHand(avatar, shapeOrItem)
     local shape = nil
     if shapeOrItem ~= nil then
@@ -231,7 +236,7 @@ squadModule.create = function(_, defaultCharacter)
         end
 
         local availableTasks = {}
-        for _, prop in ipairs(props) do
+        for _, prop in ipairs(propsModule.props) do
             local dist = (prop.Position - squad.Position).Length
             if dist <= 40 then
                 prop.object = prop

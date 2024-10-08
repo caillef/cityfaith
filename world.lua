@@ -1,10 +1,10 @@
 Modules = {
-    gameConfig = "github.com/caillef/cityfaith/config:8699139bb91d18da1f0b6a01609b9d58f4dae6ef",
-    propsFactory = "github.com/caillef/cityfaith/props:8699139bb91d18da1f0b6a01609b9d58f4dae6ef",
-    squadsFactory = "github.com/caillef/cityfaith/squads:8699139bb91d18da1f0b6a01609b9d58f4dae6ef",
+    common = "github.com/caillef/cityfaith/common:48ab704b86910243e315a6571bd475bff8f8ee54",
+    gameConfig = "github.com/caillef/cityfaith/config:48ab704b86910243e315a6571bd475bff8f8ee54",
+    propsModule = "github.com/caillef/cityfaith/props:48ab704b86910243e315a6571bd475bff8f8ee54",
+    squadsModule = "github.com/caillef/cityfaith/squads:48ab704b86910243e315a6571bd475bff8f8ee54",
 }
 
-local MAP_SCALE = 10
 local squad
 
 function generateNewMap()
@@ -15,15 +15,15 @@ function generateNewMap()
         end
     end
     map:SetParent(World)
-    map.Scale = MAP_SCALE
+    map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
 
-    propsFactory:createSpawner("tree", -5, -5)
-    propsFactory:createSpawner("tree", -8, -4)
+    propsModule:createSpawner("tree", -5, -5)
+    propsModule:createSpawner("tree", -8, -4)
 
-    propsFactory:createSpawner("goblin", 4, -4)
-    propsFactory:createSpawner("bush", 8, -6)
-    propsFactory:createSpawner("iron", 6, -4)
+    propsModule:createSpawner("goblin", 4, -4)
+    propsModule:createSpawner("bush", 8, -6)
+    propsModule:createSpawner("iron", 6, -4)
 end
 
 initCamera = function()
@@ -34,9 +34,10 @@ initCamera = function()
 end
 
 Client.OnStart = function()
+    squadsModule:setPropsModule(propsModule)
     generateNewMap()
 
-    squad = squadsFactory:create("lumberjack")
+    squad = squadsModule:create("lumberjack")
 
     initCamera()
 
