@@ -3,17 +3,19 @@
 # Function to concat config
 concat_config() {
     local name="$1"
-    local file="$name/$name.lua"
-    cp "$file" "tmp_$file"
+    local file="$name.lua"
+    local filepath="$name/$file"
+    cp "$filepath" "tmp_$file"
     echo "$(ghead -n -2 config/config.lua)" "\n\n" "$(cat $file)" > "tmpnew_$file"
-    mv "tmpnew_$file" "$file"
+    mv "tmpnew_$file" "$filepath"
 }
 
 # Function to revert to previous state
 revert_state() {
     local name="$1"
-    local file="$name/$name.lua"
-    mv "tmp_$file" "$file"
+    local file="$name.lua"
+    local filepath="$name/$file"
+    mv "tmp_$file" "$filepath"
     rm -f "tmpnew_$file"
 }
 

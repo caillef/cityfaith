@@ -1,114 +1,90 @@
-local MAP_SCALE = 10
-local propsModule = {}
+local CHARACTERS = {
+    lumberjack = {
+        skills = { gather = true, chop = true, attack = { type = "melee" } },
+        avatarName = "caillef",
+        tool = "littlecreator.lc_iron_axe"
+    },
+    ranger = {
+        skills = { gather = true, attack = { type = "range" } },
+        avatarName = "soliton",
+        tool = "xavier.bow",
+        toolScale = 0.5
+    },
+    miner = {
+        skills = { gather = true, mine = true, attack = { type = "range" } },
+        avatarName = "gdevillele",
+        tool = "divergonia.pickaxe"
+    },
+}
 
-local props = {}
+local PROPS = {
+    tree = {
+        skill = "chop",
+        objFullname = "voxels.ash_tree",
+        scale = 0.5,
+        hp = 3,
+    },
+    goblin = {
+        skill = "attack",
+        objFullname = "voxels.goblin_axeman",
+        scale = 0.5,
+        hp = 5,
+    },
+    bush = {
+        skill = "gather",
+        objFullname = "voxels.bush",
+        scale = 0.5,
+        hp = 1,
+    },
+    iron = {
+        skill = "mine",
+        objFullname = "voxels.iron_ore",
+        scale = 0.5,
+        hp = 10,
+    }
+}
 
-local function setPropPosition(obj, x, y)
-    obj.Position = { (x + 0.5) * MAP_SCALE, 0, (y + 0.5) * MAP_SCALE }
-end
-
-propsModule.getAll = function(_)
-    return props
-end
-
-propsModule.create = function(_, propType)
-    local prop = Object()
-    prop.destroyed = false
-
-    local propInfo = gameConfig.PROPS[propType]
-    prop.hp = propInfo.hp
-    prop.id = math.random(100000000, 1000000000)
-    prop.type = propInfo.skill
-    Object:Load(propInfo.objFullname, function(obj)
-        obj:SetParent(prop)
-        obj.Scale = propInfo.scale
-        local box = Box()
-        box:Fit(obj, true)
-        obj.Pivot = Number3(obj.Width / 2, box.Min.Y + obj.Pivot.Y, obj.Depth / 2)
-        require("hierarchyactions"):applyToDescendants(obj, { includeRoot = true }, function(o)
-            o.Physics = PhysicsMode.Disabled
-        end)
-    end)
-
-    prop.damage = function(prop, dmg, source)
-        if prop.destroyed then return end
-        prop.hp = prop.hp - dmg
-        if prop.hp <= 0 then
-            prop:destroy()
+local SKILLS = {
+    chop = {
+        callback = function(character, action)
+            if action.object.destroyed then
+                character:setAction()
+            end
+            character.model.Animations.SwingRight:Play()
+            action.object:damage(1)
         end
-    end
-
-    prop.destroy = function(prop)
-        if prop.destroyed then return end
-        prop.destroyed = true
-        for k, p in ipairs(props) do
-            if p == prop then table.remove(props, k) end
+    },
+    attack = {
+        callback = function(character, action)
+            if action.object.destroyed then
+                character:setAction()
+            end
+            character.model.Animations.SwingRight:Play()
+            action.object:damage(1)
         end
-        if prop.onDestroy then
-            prop:onDestroy()
+    },
+    gather = {
+        callback = function(character, action)
+            if action.object.destroyed then
+                character:setAction()
+            end
+            character.model.Animations.SwingRight:Play()
+            action.object:damage(1)
         end
-        prop.IsHidden = true
-        Timer(1, function()
-            prop:RemoveFromParent()
-        end)
-    end
-
-    table.insert(props, prop)
-
-    return prop
-end
-
-propsModule.createSpawner = function(self, type, x, y)
-    local propSpawner = Object()
-    propSpawner:SetParent(World)
-    setPropPosition(propSpawner, x, y)
-
-    local spawn
-    spawn = function()
-        local prop = self:create(type)
-        prop:SetParent(propSpawner)
-        prop.LocalPosition = { 0, 0, 0 }
-        prop.onDestroy = function()
-            Timer(5, function()
-                spawn()
-            end)
+    },
+    mine = {
+        callback = function(character, action)
+            if action.object.destroyed then
+                character:setAction()
+            end
+            character.model.Animations.SwingRight:Play()
+            action.object:damage(1)
         end
-    end
-    spawn()
+    }
+}
 
-    return propSpawner
-end
-
--- local function createCharacterBox()
---     local bonus = Object()
---     local box = Box()
---     box.Min = { -4, 0, -4 }
---     box.Max = { 4, 0, 4 }
---     bonus.CollisionBox = box
---     bonus.Physics = PhysicsMode.Trigger
-
---     local shape = MutableShape()
---     shape:AddBlock(Color.Blue, 0, 0, 0)
---     shape.Pivot = { 0.5, 0, 0.5 }
---     shape:SetParent(bonus)
---     shape.Scale = 5
---     shape.Physics = PhysicsMode.Disabled
-
---     local function executeBonus()
---         local list = { "lumberjack", "miner", "ranger" }
---         local character = createCharacter(list[math.random(#list)])
---         squad:add(character)
---     end
-
---     bonus.OnCollisionBegin = function(_, other)
---         if other == squad then
---             bonus.OnCollisionBegin = nil
---             bonus:RemoveFromParent()
---             executeBonus()
---         end
---     end
-
---     return bonus
--- end
-
-return propsModule
+local gameConfig = {
+    CHARACTERS = CHARACTERS,
+    PROPS = PROPS,
+    SKILLS = SKILLS
+} \n\n 
