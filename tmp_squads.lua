@@ -236,7 +236,7 @@ squadModule.create = function(_, defaultCharacter)
         end
 
         local availableTasks = {}
-        for _, prop in ipairs(propsModule.props) do
+        for _, prop in ipairs(propsModule:getAll()) do
             local dist = (prop.Position - squad.Position).Length
             if dist <= 40 then
                 prop.object = prop

@@ -1,8 +1,8 @@
 Modules = {
-    common = "github.com/caillef/cityfaith/common:48ab704b86910243e315a6571bd475bff8f8ee54",
-    gameConfig = "github.com/caillef/cityfaith/config:48ab704b86910243e315a6571bd475bff8f8ee54",
-    propsModule = "github.com/caillef/cityfaith/props:48ab704b86910243e315a6571bd475bff8f8ee54",
-    squadsModule = "github.com/caillef/cityfaith/squads:48ab704b86910243e315a6571bd475bff8f8ee54",
+    common = "github.com/caillef/cityfaith/common:6278ee147ae1fd6292a46612cfec5e5fa284d7d4",
+    gameConfig = "github.com/caillef/cityfaith/config:6278ee147ae1fd6292a46612cfec5e5fa284d7d4",
+    propsModule = "github.com/caillef/cityfaith/props:6278ee147ae1fd6292a46612cfec5e5fa284d7d4",
+    squadsModule = "github.com/caillef/cityfaith/squads:6278ee147ae1fd6292a46612cfec5e5fa284d7d4",
 }
 
 local squad
