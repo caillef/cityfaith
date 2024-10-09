@@ -33,6 +33,7 @@ propsModule.create = function(_, propType, x, y)
         obj:SetParent(prop)
         obj.Scale = propInfo.scale
         common.setPropPosition(prop, x, y)
+        obj.LocalPosition = { 0, 0, 0 }
         local box = Box()
         box:Fit(obj, true)
         obj.Pivot = Number3(obj.Width / 2, box.Min.Y + obj.Pivot.Y, obj.Depth / 2)
