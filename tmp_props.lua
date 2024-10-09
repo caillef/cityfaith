@@ -59,17 +59,32 @@ propsModule.createSpawner = function(self, type, x, y)
     common.setPropPosition(propSpawner, x, y)
 
     local spawn
+    local currentProp
+    local currentTimer
     spawn = function()
         local prop = self:create(type)
+        currentProp = prop
         prop:SetParent(propSpawner)
         prop.LocalPosition = { 0, 0, 0 }
         prop.onDestroy = function()
-            Timer(5, function()
+            prop = nil
+            currentTimer = Timer(5, function()
                 spawn()
             end)
         end
     end
     spawn()
+
+    propSpawner.remove = function(_)
+        if currentProp then
+            currentProp:RemoveFromParent()
+        end
+        if currentTimer then
+            currentTimer:RemoveFromParent()
+        end
+        propSpawner:RemoveFromParent()
+        propSpawner = nil
+    end
 
     return propSpawner
 end
