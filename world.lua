@@ -1,4 +1,4 @@
-local COMMIT_HASH = "bf14436b"
+local COMMIT_HASH = "eaafd97f"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -38,6 +38,7 @@ local buildingsInfo = {
             LocalEvent:Send("InvClearAll", { key = "hotbar" })
 
             coins = coins + fullPrice
+            KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
             coinText.Text = string.format("%d", coins)
         end
     },
@@ -202,6 +203,14 @@ initUI = function()
         { coinIcon.pos.X + coinIcon.Width + 5, coinIcon.pos.Y + coinIcon.Height * 0.5 - coinText.Height * 0.5 }
     end
     coinText:parentDidResize()
+end
+
+Client.OnPlayerJoin = function()
+    KeyValueStore("coins"):Get(Player.UserID, function(success, results)
+        if not success then print("error") end
+        coins = results[Player.UserID] or 0
+        coinText.Text = string.format("%d", coins)
+    end)
 end
 
 Client.OnStart = function()
