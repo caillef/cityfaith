@@ -198,6 +198,12 @@ squadModule.create = function(_, defaultCharacterList)
         end
     end
 
+    squad.reset = function()
+        for _, c in ipairs(characters) do
+            c:setAction({ type = "idle", Position = squad.Position })
+        end
+    end
+
     for _, defaultCharacterType in ipairs(defaultCharacterList) do
         local character = createCharacter(defaultCharacterType)
         squad:add(character)
