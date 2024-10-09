@@ -135,14 +135,6 @@ local RESOURCES_BY_KEY = {}
 for _, v in ipairs(RESOURCES) do
     RESOURCES_BY_KEY[v.key] = v
     RESOURCES_BY_ID[v.id] = v
-
-    if v.fullname then
-        print("Loading", v.fullname)
-        Object:Load(v.fullname, function(obj)
-            print("obj loaded", v.fullname, obj)
-            v.cachedShape = v.assetTransformer and v.assetTransformer(obj) or obj
-        end)
-    end
 end
 
 local gameConfig = {
@@ -214,10 +206,13 @@ propsModule.create = function(_, propType, x, y)
             prop:destroy()
             if propInfo.drops then
                 for dropName, quantityRange in pairs(propInfo.drops) do
+                    local randomRange = math.random() * (quantityRange[2] - quantityRange[1])
+                    local quantity = math.floor(randomRange) + quantityRange[1]
+                    print("Dropname", dropName, "x", quantity)
                     LocalEvent:Send("InvAdd", {
                         key = "hotbar",
                         rKey = dropName,
-                        amount = math.floor(math.random() * (quantityRange[2] - quantityRange[1])) + quantityRange[1],
+                        amount = quantity,
                         callback = function(success)
                             if success then
                                 return

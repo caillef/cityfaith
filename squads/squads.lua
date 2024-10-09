@@ -135,14 +135,6 @@ local RESOURCES_BY_KEY = {}
 for _, v in ipairs(RESOURCES) do
     RESOURCES_BY_KEY[v.key] = v
     RESOURCES_BY_ID[v.id] = v
-
-    if v.fullname then
-        print("Loading", v.fullname)
-        Object:Load(v.fullname, function(obj)
-            print("obj loaded", v.fullname, obj)
-            v.cachedShape = v.assetTransformer and v.assetTransformer(obj) or obj
-        end)
-    end
 end
 
 local gameConfig = {
