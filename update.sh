@@ -46,4 +46,4 @@ do
 done
 
 # copy commit id
-git rev-parse HEAD | pbcopy
+git rev-parse HEAD | cut -c1-8 | pbcopy
