@@ -1,9 +1,10 @@
-local COMMIT_HASH = "181c1a191ae78eddd80d404c10794f9fbcf76b68"
+local COMMIT_HASH = "a0e422ac"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
     propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
     squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
+    inventoryModule = "https://github.com/caillef/cubzh-library/inventory:1037602"
 }
 
 Config = {
@@ -50,6 +51,8 @@ function goToVillage()
         house.model:RemoveFromParent()
         generateNewMap()
     end
+
+    squad:setPosition(0, 0)
 end
 
 function generateNewMap()
@@ -71,11 +74,13 @@ function generateNewMap()
         propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
     end
 
-    Timer(60, function()
+    Timer(10, function()
         map:RemoveFromParent()
         propsModule:clearAllProps()
         goToVillage()
     end)
+
+    squad:setPosition(0, 0)
 end
 
 initCamera = function()
@@ -85,14 +90,31 @@ initCamera = function()
     Camera.Rotation.X = math.pi * 0.3
 end
 
+initUI = function()
+    inventoryModule:setResources(common.RESOURCES_BY_KEY, common.RESOURCES_BY_ID)
+    inventoryModule:create("hotbar", {
+        width = 8,
+        height = 1,
+        alwaysVisible = true,
+        selector = false,
+        uiPos = function(node)
+            local padding = require("uitheme").current.padding
+            return { Screen.Width * 0.5 - node.Width * 0.5, padding }
+        end,
+    })
+end
+
 Client.OnStart = function()
     squadsModule:setPropsModule(propsModule)
+
+    squad = squadsModule:create({ "lumberjack", "miner" })
 
     --generateNewMap()
     goToVillage()
 
-    squad = squadsModule:create("lumberjack")
     initCamera()
+    initUI()
+
 
     --[[
     for i = -5, 15 do

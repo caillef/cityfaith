@@ -48,6 +48,20 @@ propsModule.create = function(_, propType, x, y)
         prop.hp = prop.hp - dmg
         if prop.hp <= 0 then
             prop:destroy()
+            if propInfo.drops then
+                for dropName, quantityRange in pairs(propInfo.drops) do
+                    LocalEvent:Send("InvAdd", {
+                        key = "hotbar",
+                        rKey = dropName,
+                        amount = math.floor(math.random() * (quantityRange[2] - quantityRange[1])) + quantityRange[1],
+                        callback = function(success)
+                            if success then
+                                return
+                            end
+                        end,
+                    })
+                end
+            end
         end
     end
 
