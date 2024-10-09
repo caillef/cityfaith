@@ -420,7 +420,7 @@ squadModule.create = function(_, defaultCharacterList)
                 table.insert(availableTasks, { prop = prop, dist = dist })
             end
         end
-        table.sort(availableTasks, function(a, b) return a.dist < b.dist end)
+        table.sort(availableTasks, function(a, b) return a.dist > b.dist end)
         for _, c in ipairs(characters) do
             if #availableTasks == 0 then
                 c:setAction()
