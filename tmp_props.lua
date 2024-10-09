@@ -80,7 +80,7 @@ propsModule.createSpawner = function(self, type, x, y)
             currentProp:RemoveFromParent()
         end
         if currentTimer then
-            currentTimer:RemoveFromParent()
+            currentTimer:Cancel()
         end
         propSpawner:RemoveFromParent()
         propSpawner = nil
