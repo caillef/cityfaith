@@ -122,6 +122,7 @@ end
 
 propsModule.create = function(_, propType, x, y)
     local prop = Object()
+    prop:SetParent(World)
     prop.destroyed = false
 
     local propInfo = gameConfig.PROPS[propType]
