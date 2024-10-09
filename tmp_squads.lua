@@ -177,7 +177,7 @@ local function createCharacter(charaType)
     return character
 end
 
-squadModule.create = function(_, defaultCharacter)
+squadModule.create = function(_, defaultCharacterList)
     local squad = Object()
     squad:SetParent(World)
     squad.Physics = PhysicsMode.Dynamic
@@ -198,8 +198,10 @@ squadModule.create = function(_, defaultCharacter)
         end
     end
 
-    local character = createCharacter(defaultCharacter)
-    squad:add(character)
+    for _, defaultCharacterType in ipairs(defaultCharacterList) do
+        local character = createCharacter(defaultCharacterType)
+        squad:add(character)
+    end
 
     local polygonBuilder = require("polygonbuilder")
     local handle = polygonBuilder:create({
