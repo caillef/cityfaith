@@ -159,9 +159,11 @@ local function createCharacter(charaType)
             return
         end
 
-        character.Forward = (action.Position + squadMotion) - character.Position
-        character.Rotation.X = 0
-        character.Rotation.Z = 0
+        if action.type ~= "idle" then
+            character.Forward = (action.Position + squadMotion) - character.Position
+            character.Rotation.X = 0
+            character.Rotation.Z = 0
+        end
         if needToMove then
             local dir = action.Position - character.Position
             dir:Normalize()

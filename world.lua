@@ -1,4 +1,4 @@
-local COMMIT_HASH = "a0e422ac"
+local COMMIT_HASH = "bf14436b"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -7,11 +7,53 @@ Modules = {
     inventoryModule = "https://github.com/caillef/cubzh-library/inventory:1037602"
 }
 
+local ADVENTURE_DURATION = 20
+
 Config = {
-    Items = { "buche.portal" }
+    Items = { "buche.portal", "caillef.coin" }
 }
 
 local squad
+local coins = 0
+local coinIcon, coinText
+
+local buildingsInfo = {
+    house = {
+        color = Color.Red,
+        scale = 15,
+        x = 5,
+        y = 4
+    },
+    market = {
+        color = Color.Yellow,
+        scale = 25,
+        x = -5,
+        y = 4,
+        onInteract = function()
+            local sticksPrice = inventory:getQuantity("wooden_stick")
+            local logsPrice = inventory:getQuantity("oak_log") * 3
+            local ironsPrice = inventory:getQuantity("iron") * 10
+            local fullPrice = sticksPrice + logsPrice + ironsPrice
+            print("Sell for ", fullPrice)
+            LocalEvent:Send("InvClearAll", { key = "hotbar" })
+
+            coins = coins + fullPrice
+            coinText.Text = string.format("%d", coins)
+        end
+    },
+    forge = {
+        color = Color.Grey,
+        scale = 25,
+        x = -5,
+        y = -4
+    },
+    workshop = {
+        color = Color.Brown,
+        scale = 25,
+        x = 5,
+        y = -4
+    },
+}
 
 function goToVillage()
     local map = MutableShape()
@@ -28,13 +70,23 @@ function goToVillage()
     map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
 
-    local house = {}
-    house.model = MutableShape()
-    house.model:AddBlock(Color.Red, 0, 0, 0)
-    house.model.Pivot = { 0.5, 0, 0.5 }
-    house.model.Scale = 15
-    house.model:SetParent(World)
-    common.setPropPosition(house.model, 6, 6)
+    local buildings = {}
+    for _, buildingInfo in pairs(buildingsInfo) do
+        local building = {}
+        building.model = MutableShape()
+        building.model:AddBlock(buildingInfo.color, 0, 0, 0)
+        building.model.Pivot = { 0.5, 0, 0.5 }
+        building.model.Scale = buildingInfo.scale
+        building.model:SetParent(World)
+        if buildingInfo.onInteract then
+            building.model.OnCollisionBegin = function(_, other)
+                if other ~= squad then return end
+                buildingInfo.onInteract()
+            end
+        end
+        common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+        table.insert(buildings, building)
+    end
 
     local portal = {}
     portal.model = Shape(Items.buche.portal)
@@ -48,7 +100,10 @@ function goToVillage()
         if other ~= squad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
-        house.model:RemoveFromParent()
+        for _, building in ipairs(buildings) do
+            building.model:RemoveFromParent()
+        end
+        buildings = {}
         generateNewMap()
     end
 
@@ -67,20 +122,49 @@ function generateNewMap()
     map.Pivot.Y = 1
 
     for _ = 1, 50 do
-        propsModule:create("tree", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
         propsModule:create("bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
+    for _ = 1, 30 do
+        propsModule:create("tree", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
     end
     for _ = 1, 10 do
         propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
     end
 
-    Timer(10, function()
-        map:RemoveFromParent()
-        propsModule:clearAllProps()
-        goToVillage()
+    squad:setPosition(0, 0)
+
+    local durationBar = require("uikit"):createFrame(Color.White)
+    durationBar.parentDidResize = function()
+        durationBar.Height = 40
+        durationBar.pos = { Screen.Width * 0.2, Screen.Height - Screen.SafeArea.Top - durationBar.Height - 5 }
+    end
+    durationBar:parentDidResize()
+
+    local tick
+    local endAt = Time.UnixMilli() + ADVENTURE_DURATION * 1000
+    tick = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+        local percentage = (endAt - Time.UnixMilli()) / (ADVENTURE_DURATION * 1000)
+        if percentage < 0.15 then
+            durationBar.Color = Color.Red
+        end
+        durationBar.Width = Screen.Width * 0.6 * percentage
     end)
 
-    squad:setPosition(0, 0)
+    Timer(ADVENTURE_DURATION, function()
+        -- Clear map
+        map:RemoveFromParent()
+        propsModule:clearAllProps()
+
+        -- Clear squad
+        squad:reset()
+
+        -- UI
+        tick:Remove()
+        durationBar:remove()
+
+        -- Teleport
+        goToVillage()
+    end)
 end
 
 initCamera = function()
@@ -91,8 +175,8 @@ initCamera = function()
 end
 
 initUI = function()
-    inventoryModule:setResources(common.RESOURCES_BY_KEY, common.RESOURCES_BY_ID)
-    inventoryModule:create("hotbar", {
+    inventoryModule:setResources(gameConfig.RESOURCES_BY_KEY, gameConfig.RESOURCES_BY_ID)
+    inventory = inventoryModule:create("hotbar", {
         width = 8,
         height = 1,
         alwaysVisible = true,
@@ -102,6 +186,22 @@ initUI = function()
             return { Screen.Width * 0.5 - node.Width * 0.5, padding }
         end,
     })
+
+    local ui = require("uikit")
+
+    coinIcon = ui:createShape(Shape(Items.caillef.coin), { spherized = true })
+    LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+        coinIcon.pivot.Rotation.Y = coinIcon.pivot.Rotation.Y + dt
+    end)
+    coinIcon.Size = 80
+    coinText = ui:createText("0", Color.White, "big")
+    coinText.object.FontSize = 30
+    coinText.parentDidResize = function()
+        coinIcon.pos = { 10, Screen.Height - Screen.SafeArea.Top - 10 - coinIcon.Height }
+        coinText.pos =
+        { coinIcon.pos.X + coinIcon.Width + 5, coinIcon.pos.Y + coinIcon.Height * 0.5 - coinText.Height * 0.5 }
+    end
+    coinText:parentDidResize()
 end
 
 Client.OnStart = function()
@@ -114,7 +214,6 @@ Client.OnStart = function()
 
     initCamera()
     initUI()
-
 
     --[[
     for i = -5, 15 do
