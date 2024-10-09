@@ -1,4 +1,4 @@
-local COMMIT_HASH = "24d2535616b35335878e1e28aa54213e6e127dd0"
+local COMMIT_HASH = "181c1a191ae78eddd80d404c10794f9fbcf76b68"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -43,10 +43,11 @@ function goToVillage()
     portal.model:SetParent(World)
     common.setPropPosition(portal.model, 0, 10)
 
-    portal.model.OnCollisionBegin = function()
+    portal.model.OnCollisionBegin = function(_, other)
+        if other ~= squad then return end
         map:RemoveFromParent()
-        portal.house:RemoveFromParent()
         portal.model:RemoveFromParent()
+        house.model:RemoveFromParent()
         generateNewMap()
     end
 end
@@ -62,19 +63,17 @@ function generateNewMap()
     map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
 
-    local spawners = {
-        propsModule:createSpawner("tree", -5, -5),
-        propsModule:createSpawner("tree", -8, -4),
-        propsModule:createSpawner("goblin", 4, -4),
-        propsModule:createSpawner("bush", 8, -6),
-        propsModule:createSpawner("iron", 6, -4),
-    }
+    for _ = 1, 50 do
+        propsModule:create("tree", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+        propsModule:create("bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
+    for _ = 1, 10 do
+        propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
 
-    Timer(10, function()
+    Timer(60, function()
         map:RemoveFromParent()
-        for _, spawner in ipairs(spawners) do
-            spawner:remove()
-        end
+        propsModule:clearAllProps()
         goToVillage()
     end)
 end

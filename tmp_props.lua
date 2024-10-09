@@ -21,7 +21,7 @@ propsModule.clearAllProps = function()
     props = {}
 end
 
-propsModule.create = function(_, propType)
+propsModule.create = function(_, propType, x, y)
     local prop = Object()
     prop.destroyed = false
 
@@ -32,6 +32,7 @@ propsModule.create = function(_, propType)
     Object:Load(propInfo.objFullname, function(obj)
         obj:SetParent(prop)
         obj.Scale = propInfo.scale
+        common.setPropPosition(prop, x, y)
         local box = Box()
         box:Fit(obj, true)
         obj.Pivot = Number3(obj.Width / 2, box.Min.Y + obj.Pivot.Y, obj.Depth / 2)
