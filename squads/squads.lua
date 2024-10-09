@@ -290,6 +290,13 @@ squadModule.create = function(_, defaultCharacter)
         character.LocalPosition = { 0, 0, 0 }
     end
 
+    squad.setPosition = function(_, x, y)
+        common.setPropPosition(squad, x, y)
+        for _, c in ipairs(characters) do
+            c.LocalPosition = { 0, 0, 0 }
+        end
+    end
+
     local character = createCharacter(defaultCharacter)
     squad:add(character)
 
