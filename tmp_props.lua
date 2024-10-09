@@ -1,9 +1,24 @@
 local propsModule = {}
 
 local props = {}
+local spawners = {}
 
 propsModule.getAll = function(_)
     return props
+end
+
+propsModule.clearAllSpawners = function()
+    for _, spawner in ipairs(spawners) do
+        spawner:remove()
+    end
+    spawners = {}
+end
+
+propsModule.clearAllProps = function()
+    for _, prop in ipairs(props) do
+        prop:remove()
+    end
+    props = {}
 end
 
 propsModule.create = function(_, propType)
@@ -49,7 +64,6 @@ propsModule.create = function(_, propType)
     end
 
     table.insert(props, prop)
-
     return prop
 end
 
@@ -86,6 +100,7 @@ propsModule.createSpawner = function(self, type, x, y)
         propSpawner = nil
     end
 
+    table.insert(spawners, propSpawner)
     return propSpawner
 end
 
