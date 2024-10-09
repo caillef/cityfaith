@@ -160,9 +160,15 @@ propsModule.create = function(_, propType, x, y)
             prop:onDestroy()
         end
         prop.IsHidden = true
+        prop.Physics = false
         Timer(1, function()
             prop:RemoveFromParent()
         end)
+    end
+
+    prop.remove = function(_)
+        prop.onDestroy = nil
+        prop:RemoveFromParent()
     end
 
     table.insert(props, prop)
