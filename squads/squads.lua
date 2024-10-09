@@ -425,8 +425,12 @@ squadModule.create = function(_, defaultCharacterList)
             if #availableTasks == 0 then
                 c:setAction()
             else
-                for _, task in ipairs(availableTasks) do
+                for i = #availableTasks, 1, -1 do
+                    local task = availableTasks[i]
                     if c:setAction(task.prop) then
+                        if task.prop.hp == 1 then
+                            table.remove(availableTasks, i)
+                        end
                         break
                     end
                 end
