@@ -46,4 +46,7 @@ do
 done
 
 # copy commit id
-git rev-parse HEAD | cut -c1-8 | tr -d '\n' | pbcopy
+commit_hash=$(git rev-parse HEAD | cut -c1-8)
+sed -i '' "1s/.*local COMMIT_HASH.*/local COMMIT_HASH = \"$commit_hash\"/" world.lua
+
+cat world.lua | pbcopy
