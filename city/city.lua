@@ -343,6 +343,7 @@ cityModule.show = function(_, config)
     common.setPropPosition(portal.model, 0, 10)
 
     portal.model.OnCollisionBegin = function(_, other)
+        print(other, config.squad)
         if other ~= config.squad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
