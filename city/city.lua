@@ -327,7 +327,7 @@ cityModule.show = function(_, config)
         building.model:SetParent(World)
         if config.buildingsInfo[name].onInteract then
             building.model.OnCollisionBegin = function(_, other)
-                if other ~= squad then return end
+                if other ~= config.squad then return end
                 config.buildingsInfo[name].onInteract()
             end
         end
@@ -344,7 +344,6 @@ cityModule.show = function(_, config)
     common.setPropPosition(portal.model, 0, 10)
 
     portal.model.OnCollisionBegin = function(_, other)
-        print("collision", other)
         if other ~= config.squad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
