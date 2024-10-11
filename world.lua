@@ -1,4 +1,4 @@
-local COMMIT_HASH = "eaafd97f"
+local COMMIT_HASH = "338067a0"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -19,16 +19,8 @@ local coinIcon, coinText
 
 local buildingsInfo = {
     house = {
-        color = Color.Red,
-        scale = 15,
-        x = 5,
-        y = 4
     },
     market = {
-        color = Color.Yellow,
-        scale = 25,
-        x = -5,
-        y = 4,
         onInteract = function()
             local sticksPrice = inventory:getQuantity("wooden_stick")
             local logsPrice = inventory:getQuantity("oak_log") * 3
@@ -43,16 +35,8 @@ local buildingsInfo = {
         end
     },
     forge = {
-        color = Color.Grey,
-        scale = 25,
-        x = -5,
-        y = -4
     },
     workshop = {
-        color = Color.Brown,
-        scale = 25,
-        x = 5,
-        y = -4
     },
 }
 
@@ -72,17 +56,17 @@ function goToVillage()
     map.Pivot.Y = 1
 
     local buildings = {}
-    for _, buildingInfo in pairs(buildingsInfo) do
+    for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
         building.model = MutableShape()
         building.model:AddBlock(buildingInfo.color, 0, 0, 0)
         building.model.Pivot = { 0.5, 0, 0.5 }
         building.model.Scale = buildingInfo.scale
         building.model:SetParent(World)
-        if buildingInfo.onInteract then
+        if buildingsInfo[name].onInteract then
             building.model.OnCollisionBegin = function(_, other)
                 if other ~= squad then return end
-                buildingInfo.onInteract()
+                buildingsInfo[name].onInteract()
             end
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)

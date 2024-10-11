@@ -1,19 +1,20 @@
 local CHARACTERS = {
-    lumberjack = {
-        skills = { gather = true, chop = true, attack = { type = "melee" } },
-        avatarName = "caillef",
-        tool = "littlecreator.lc_iron_axe"
-    },
-    ranger = {
-        skills = { gather = true, attack = { type = "range" } },
+    gatherer = {
+        skills = { gather = true },
         avatarName = "soliton",
-        tool = "xavier.bow",
-        toolScale = 0.5
+        slots = 30
+    },
+    lumberjack = {
+        skills = { chop = true, gather = true },
+        avatarName = "caillef",
+        tool = "littlecreator.lc_iron_axe",
+        slots = 5
     },
     miner = {
-        skills = { gather = true, mine = true, attack = { type = "range" } },
+        skills = { mine = true, gather = true },
         avatarName = "gdevillele",
-        tool = "divergonia.pickaxe"
+        tool = "divergonia.pickaxe",
+        slots = 5
     },
 }
 
@@ -22,17 +23,11 @@ local PROPS = {
         skill = "chop",
         objFullname = "voxels.ash_tree",
         drops = {
-            oak_log = { 2, 3 },
+            wood_log = { 2, 3 },
             wooden_stick = { 1, 2 }
         },
         scale = 0.5,
         hp = 3,
-    },
-    goblin = {
-        skill = "attack",
-        objFullname = "voxels.goblin_axeman",
-        scale = 0.5,
-        hp = 5,
     },
     bush = {
         skill = "gather",
@@ -43,6 +38,25 @@ local PROPS = {
         scale = 0.5,
         hp = 1,
     },
+    berry_bush = {
+        skill = "gather",
+        objFullname = "voxels.berry_bush",
+        drops = {
+            wooden_stick = { 0, 1 },
+            berry = { 1, 2 }
+        },
+        scale = 0.5,
+        hp = 1,
+    },
+    stone = {
+        skill = "mine",
+        objFullname = "voxels.stone_ore",
+        drops = {
+            stone = { 2, 3 }
+        },
+        scale = 0.5,
+        hp = 6,
+    },
     iron = {
         skill = "mine",
         objFullname = "voxels.iron_ore",
@@ -51,20 +65,99 @@ local PROPS = {
         },
         scale = 0.5,
         hp = 10,
+    },
+    gold = {
+        skill = "mine",
+        objFullname = "voxels.gold_ore",
+        drops = {
+            iron = { 1, 3 }
+        },
+        scale = 0.5,
+        hp = 20,
+    }
+}
+
+local BUILDINGS = {
+    house = {
+        -- level 0 = 1 people in squad
+        -- level 1 = 2 people in squad
+        -- level 2 = 4 people in squad
+        level = 0,
+        repairPrices = {
+            {
+                wood_log = 1,
+                stone = 1
+            },
+            {
+                wood_log = 2,
+                stone = 2
+            }
+        },
+        repairDurations = { 5, 10 },
+        color = Color.Red,
+        scale = 15,
+        x = 5,
+        y = 4,
+    },
+    workshop = {
+        -- level 1 = can upgrade squad boots level 2, squad inventory
+        -- level 2 = can upgrade squad boots level 3, squad inventory
+        level = 0,
+        repairPrices = {
+            {
+                wood_log = 1,
+                stone = 1
+            },
+            {
+                wood_log = 2,
+                stone = 2
+            }
+        },
+        repairDurations = { 5, 10 },
+        color = Color.Brown,
+        scale = 25,
+        x = 5,
+        y = -4
+    },
+    market = {
+        -- level 1 = sell for coins
+        level = 0,
+        repairPrices = {
+            {
+                wood_log = 1,
+                stone = 1
+            }
+        },
+        repairDurations = { 5 },
+        color = Color.Yellow,
+        scale = 25,
+        x = -5,
+        y = 4,
+    },
+    forge = {
+        -- level 1 = can upgrade characters tool (mining speed) level 2
+        -- level 2 = can upgrade characters tool (mining speed) level 3
+        level = 0,
+        repairPrices = {
+            {
+                wood_log = 1,
+                stone = 1
+            },
+            {
+                wood_log = 1,
+                stone = 1
+            },
+        },
+        repairDurations = { 5, 10 },
+        color = Color.Grey,
+        scale = 25,
+        x = -5,
+        y = -4
     }
 }
 
 local SKILLS = {
     chop = {
-        callback = function(character, action)
-            if action.object.destroyed then
-                character:setAction()
-            end
-            character.model.Animations.SwingRight:Play()
-            action.object:damage(1)
-        end
-    },
-    attack = {
         callback = function(character, action)
             if action.object.destroyed then
                 character:setAction()
@@ -109,17 +202,62 @@ local RESOURCES = {
     },
     {
         id = 2,
-        key = "iron",
-        name = "Iron",
-        type = "block",
-        block = { color = Color.LightGrey },
+        key = "wood_log",
+        name = "Wood Log",
+        type = "item",
+        fullname = "voxels.oak",
+        item = {},
+        icon = {
+            rotation = { 0, -math.pi * 0.25, math.pi * 0.05 },
+            pos = { 0, 0 },
+            scale = 2,
+        },
     },
     {
         id = 3,
-        key = "oak_log",
-        name = "Oak Log",
+        key = "stone",
+        name = "Stone",
         type = "item",
-        fullname = "voxels.oak",
+        fullname = "voxels.stone",
+        item = {},
+        icon = {
+            rotation = { 0, -math.pi * 0.25, math.pi * 0.05 },
+            pos = { 0, 0 },
+            scale = 2,
+        },
+    },
+    {
+        id = 4,
+        key = "iron",
+        name = "Iron",
+        type = "item",
+        fullname = "voxels.iron",
+        item = {},
+        icon = {
+            rotation = { 0, -math.pi * 0.25, math.pi * 0.05 },
+            pos = { 0, 0 },
+            scale = 2,
+        },
+    },
+    {
+        id = 5,
+        key = "gold",
+        name = "Gold",
+        type = "item",
+        fullname = "voxels.gold",
+        item = {},
+        icon = {
+            rotation = { 0, -math.pi * 0.25, math.pi * 0.05 },
+            pos = { 0, 0 },
+            scale = 2,
+        },
+    },
+    {
+        id = 6,
+        key = "berry",
+        name = "Berry",
+        type = "item",
+        fullname = "chocomatte.tomato",
         item = {},
         icon = {
             rotation = { 0, -math.pi * 0.25, math.pi * 0.05 },
@@ -150,6 +288,7 @@ local gameConfig = {
     RESOURCES = RESOURCES,
     RESOURCES_BY_ID = RESOURCES_BY_ID,
     RESOURCES_BY_KEY = RESOURCES_BY_KEY,
+    BUILDINGS = BUILDINGS,
 }
 
 local common = {}

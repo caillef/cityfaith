@@ -104,17 +104,19 @@ local function createCharacter(charaType)
     local character = Object()
 
     local model = require("avatar"):get(charaInfo.avatarName)
-    Object:Load(charaInfo.tool, function(obj)
-        equipRightHand(model, obj)
-        require("hierarchyactions"):applyToDescendants(obj, { includeRoot = true }, function(o)
-            o.Physics = PhysicsMode.Disabled
-        end)
-        obj.Scale = charaInfo.toolScale or 1
-    end)
     model:SetParent(character)
     model.Scale = 0.45
     model.Physics = PhysicsMode.Disabled
     character.model = model
+    if charaInfo.tool then
+        Object:Load(charaInfo.tool, function(obj)
+            equipRightHand(model, obj)
+            require("hierarchyactions"):applyToDescendants(obj, { includeRoot = true }, function(o)
+                o.Physics = PhysicsMode.Disabled
+            end)
+            obj.Scale = charaInfo.toolScale or 1
+        end)
+    end
 
     local action
     local t = 0
