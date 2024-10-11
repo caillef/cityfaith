@@ -302,8 +302,28 @@ end
 local cityModule = {}
 local buildings = {}
 
-cityModule.show = function(_, config)
-    print("SHOW config", config.squad)
+local playerCityInfo = {
+    buildings = {}
+}
+local startFetchData = false
+
+cityModule.show = function(self, config)
+    if not startFetchData then
+        startFetchData = true
+        KeyValueStore("city"):Get(Player.UserID, function(success, results)
+            if not success then
+                print("can't get city status")
+                self:show(config)
+                return
+            end
+            if results[Player.UserID] then
+                playerCityInfo = results[Player.UserID]
+            end
+            playerCityInfo.buildings.market = { level = 1 }
+            self:show(config)
+        end)
+        return
+    end
     local map = MutableShape()
     for z = -20, 20 do
         for x = -30, 30 do
@@ -320,15 +340,30 @@ cityModule.show = function(_, config)
 
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
-        building.model = MutableShape()
-        building.model:AddBlock(buildingInfo.color, 0, 0, 0)
-        building.model.Pivot = { 0.5, 0, 0.5 }
-        building.model.Scale = buildingInfo.scale
-        building.model:SetParent(World)
-        if config.buildingsInfo[name].onInteract then
-            building.model.OnCollisionBegin = function(_, other)
-                if other ~= config.squad then return end
-                config.buildingsInfo[name].onInteract()
+        building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
+        if building.level == 0 then
+            building.model = MutableShape()
+            building.model:AddBlock(Color.Grey, 0, 0, 0)
+            building.model.Pivot = { 0.5, 0, 0.5 }
+            building.model.Scale = { buildingInfo.scale, 0.1, buildingInfo.scale }
+            building.model:SetParent(World)
+            if config.buildingsInfo[name].onInteract then
+                building.model.OnCollisionBegin = function(_, other)
+                    if other ~= config.squad then return end
+                    config.buildingsInfo[name].onBuild()
+                end
+            end
+        else
+            building.model = MutableShape()
+            building.model:AddBlock(buildingInfo.color, 0, 0, 0)
+            building.model.Pivot = { 0.5, 0, 0.5 }
+            building.model.Scale = buildingInfo.scale
+            building.model:SetParent(World)
+            if config.buildingsInfo[name].onInteract then
+                building.model.OnCollisionBegin = function(_, other)
+                    if other ~= config.squad then return end
+                    config.buildingsInfo[name].onInteract()
+                end
             end
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
@@ -352,6 +387,10 @@ cityModule.show = function(_, config)
         end
         buildings = {}
         config.portalCallback()
+    end
+
+    if config.callback then
+        config.callback()
     end
 end
 
