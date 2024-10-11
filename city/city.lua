@@ -303,6 +303,7 @@ local cityModule = {}
 local buildings = {}
 
 cityModule.show = function(_, config)
+    print("SHOW config", config.squad)
     local map = MutableShape()
     for z = -20, 20 do
         for x = -30, 30 do
@@ -343,7 +344,7 @@ cityModule.show = function(_, config)
     common.setPropPosition(portal.model, 0, 10)
 
     portal.model.OnCollisionBegin = function(_, other)
-        print(other, config.squad)
+        print("collision", other)
         if other ~= config.squad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
