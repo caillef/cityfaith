@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # files to add config
-configs=("props" "squads")
+filesToUpgrade=("props" "squads" "city")
 concatfiles=("config" "common")
 
 # Function to concat config
@@ -28,10 +28,10 @@ revert_state() {
     rm -f "tmpnew_$file"
 }
 
-# Concat configs
-for config in "${configs[@]}"
+# Concat fileToUpgrade
+for fileToUpgrade in "${filesToUpgrade[@]}"
 do
-    concat_config "$config"
+    concat_config "$fileToUpgrade"
 done
 
 # Git operations
@@ -40,9 +40,9 @@ git commit -m "x"
 git push origin main
 
 # Revert to previous state
-for config in "${configs[@]}"
+for fileToUpgrade in "${filesToUpgrade[@]}"
 do
-    revert_state "$config"
+    revert_state "$fileToUpgrade"
 done
 
 # copy commit id
