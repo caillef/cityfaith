@@ -1,9 +1,10 @@
-local COMMIT_HASH = "49457e0e"
+local COMMIT_HASH = "dbd2e963"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
     propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
     squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
+    cityModule = "github.com/caillef/cityfaith/city:" .. COMMIT_HASH,
     inventoryModule = "https://github.com/caillef/cubzh-library/inventory:1037602"
 }
 
