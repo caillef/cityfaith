@@ -347,11 +347,16 @@ cityModule.show = function(self, config)
             building.model.Pivot = { 0.5, 0, 0.5 }
             building.model.Scale = { buildingInfo.scale, 0.1, buildingInfo.scale }
             building.model:SetParent(World)
+            building.model.Physics = PhysicsMode.Trigger
             if config.buildingsInfo[name].onInteract then
-                building.model.OnCollisionBegin = function(_, other)
-                    if other ~= config.squad then return end
-                    config.buildingsInfo[name].onBuild()
-                end
+                -- building.model.OnCollisionBegin = function(_, other)
+                --     if other ~= config.squad then return end
+                --     config.buildingsInfo[name].onStartBuilding()
+                -- end
+                -- building.model.OnCollisionEnd = function(_, other)
+                --     if other ~= config.squad then return end
+                --     config.buildingsInfo[name].onStopBuilding()
+                -- end
             end
         else
             building.model = MutableShape()
