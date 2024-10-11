@@ -1,4 +1,4 @@
-local COMMIT_HASH = "dbd2e963"
+local COMMIT_HASH = "fb14889f"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -42,7 +42,7 @@ local buildingsInfo = {
 }
 
 function goToVillage()
-    city:show({
+    cityModule:show({
         buildingsInfo = buildingsInfo,
         squad = squad,
         portalCallback = generateNewMap
