@@ -1,4 +1,4 @@
-local COMMIT_HASH = "27faf329"
+local COMMIT_HASH = "35331b31"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
