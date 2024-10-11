@@ -300,7 +300,58 @@ common.setPropPosition = function(obj, x, y)
 end
 
 local cityModule = {}
+local buildings = {}
 
+cityModule.show = function(_, config)
+    local map = MutableShape()
+    for z = -20, 20 do
+        for x = -30, 30 do
+            local color = Color(116, 183, 46)
+            if (x > -2 and x < 2) or (z > -2 and z < 2) then
+                color = Color(200, 173, 127)
+            end
+            map:AddBlock(color, x, 0, z)
+        end
+    end
+    map:SetParent(World)
+    map.Scale = common.MAP_SCALE
+    map.Pivot.Y = 1
 
+    for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
+        local building = {}
+        building.model = MutableShape()
+        building.model:AddBlock(buildingInfo.color, 0, 0, 0)
+        building.model.Pivot = { 0.5, 0, 0.5 }
+        building.model.Scale = buildingInfo.scale
+        building.model:SetParent(World)
+        if config.buildingsInfo[name].onInteract then
+            building.model.OnCollisionBegin = function(_, other)
+                if other ~= squad then return end
+                config.buildingsInfo[name].onInteract()
+            end
+        end
+        common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+        table.insert(buildings, building)
+    end
+
+    local portal = {}
+    portal.model = Shape(Items.buche.portal)
+    portal.model.Rotation.Y = math.pi * 0.5
+    portal.model.Scale = 3
+    portal.model.Pivot.Y = 0
+    portal.model:SetParent(World)
+    common.setPropPosition(portal.model, 0, 10)
+
+    portal.model.OnCollisionBegin = function(_, other)
+        if other ~= config.squad then return end
+        map:RemoveFromParent()
+        portal.model:RemoveFromParent()
+        for _, building in ipairs(buildings) do
+            building.model:RemoveFromParent()
+        end
+        buildings = {}
+        config.portalCallback()
+    end
+end
 
 return cityModule
