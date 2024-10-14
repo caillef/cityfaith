@@ -324,7 +324,7 @@ function startBuildingProgress()
     local bg = ui:createFrame(Color(0, 0, 0, 0.5))
     progressUI = bg
 
-    local title = ui:createTitle("Upgrading " .. currentlyBuilding, Color.White)
+    local title = ui:createText("Upgrading " .. currentlyBuilding, Color.White)
     title:setParent(bg)
 
     local barBg = ui:createFrame(Color.Black)
