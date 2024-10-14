@@ -361,7 +361,7 @@ function startBuildingProgress()
 end
 
 function updateBuilding(name)
-    print("buildings", buildings)
+    print("buildings", buildings, name)
     print(JSON:Encode(buildings))
     local building = buildings[name]
     if not building then
