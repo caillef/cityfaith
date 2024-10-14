@@ -1,10 +1,10 @@
-local COMMIT_HASH = "ebe68835"
+local COMMIT_HASH = "48f09a9a"
 Modules = {
-    common = "github.com/caillef/cityfaith/common:" .. "19c54ba41a52bbf1726532432d213a00f23d7e74",
-    gameConfig = "github.com/caillef/cityfaith/config:" .. "19c54ba41a52bbf1726532432d213a00f23d7e74",
-    propsModule = "github.com/caillef/cityfaith/props:" .. "19c54ba41a52bbf1726532432d213a00f23d7e74",
-    squadsModule = "github.com/caillef/cityfaith/squads:" .. "0db14a09029ee8c20c3b94da59a631d57afd0e69",
-    cityModule = "github.com/caillef/cityfaith/city:" .. "19c54ba41a52bbf1726532432d213a00f23d7e74",
+    common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
+    gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
+    propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
+    squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
+    cityModule = "github.com/caillef/cityfaith/city:" .. COMMIT_HASH,
     inventoryModule = "https://github.com/caillef/cubzh-library/inventory:1037602"
 }
 
