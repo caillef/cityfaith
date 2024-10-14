@@ -357,6 +357,7 @@ function startBuildingProgress()
 end
 
 function clearProgressUI()
+    progressBar = nil
     progressUI:remove()
     progressUI = nil
 end
