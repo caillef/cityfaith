@@ -472,6 +472,7 @@ cityModule.show = function(self, config)
 end
 
 LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+    if not progressBar then return end
     buildingProgress = buildingProgress + dt
     progressBar.Width = progressBar.parent.Width * (buildingProgress / common.TIME_TO_BUILD_BUILDING)
 end)

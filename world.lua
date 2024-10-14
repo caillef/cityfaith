@@ -1,4 +1,4 @@
-local COMMIT_HASH = "e7c1caba"
+local COMMIT_HASH = "0db14a09"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -157,7 +157,7 @@ end
 Client.OnStart = function()
     squadsModule:setPropsModule(propsModule)
 
-    squad = squadsModule:create({ "lumberjack", "miner", "gatherer" })
+    squad = squadsModule:create({ "gatherer", "lumberjack", "miner" })
 
     --generateNewMap()
     goToVillage()
