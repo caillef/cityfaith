@@ -536,13 +536,14 @@ cityModule.show = function(self, config)
 end
 
 LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
-    if buildingState == BUILDING_STATES.BUILDING then return end
+    if buildingState ~= BUILDING_STATES.BUILDING then return end
     buildingProgress = buildingProgress + dt
-    if buildingProgress >= 1 then
-        buildingProgress = 1
+    local percentage = buildingProgress / common.TIME_TO_BUILD_BUILDING
+    if percentage >= 1 then
+        percentage = 1
         setBuildingState(BUILDING_STATES.BUILT)
     end
-    progressBar.Width = progressBar.parent.Width * (buildingProgress / common.TIME_TO_BUILD_BUILDING)
+    progressBar.Width = progressBar.parent.Width * percentage
 end)
 
 return cityModule
