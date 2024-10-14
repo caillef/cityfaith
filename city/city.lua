@@ -393,7 +393,8 @@ function successfullBuild()
     local bg = ui:createFrame(Color(0, 0, 0, 0.5))
     progressUI = bg
 
-    local title = ui:createText("Successfully built " .. currentlyBuilding, Color.White)
+    local title = ui:createText("Successfully " .. (isUpgrade and "upgraded" or "built") .. " " .. currentlyBuilding,
+        Color.White)
     title:setParent(bg)
 
     bg.parentDidResize = function()
@@ -543,7 +544,9 @@ LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
         percentage = 1
         setBuildingState(BUILDING_STATES.BUILT)
     end
-    progressBar.Width = progressBar.parent.Width * percentage
+    if progressBar then
+        progressBar.Width = progressBar.parent.Width * percentage
+    end
 end)
 
 return cityModule
