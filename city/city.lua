@@ -362,8 +362,11 @@ end
 
 function updateBuilding(name)
     local building = buildings[name]
+    if not building then
+        print("Error: can't find building", name)
+        return
+    end
 
-    print(building)
     if building.model then
         building.model:RemoveFromParent()
         return
@@ -513,6 +516,7 @@ cityModule.show = function(self, config)
             end
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+        print("Add building", name, building)
         buildings[name] = building
     end
 
