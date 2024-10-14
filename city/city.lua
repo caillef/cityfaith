@@ -311,12 +311,14 @@ local startFetchData = false
 local BUILDING_STATES = {
     NONE = 1,
     BUILDING = 2,
+    BUILT = 3,
 }
 local buildingState = BUILDING_STATES.NONE
 local progressBar
 local progressUI
 local buildingProgress = 0
 local currentlyBuilding
+local isUpgrade = false
 function startBuildingProgress()
     if not currentlyBuilding then return end
     buildingProgress = 0
@@ -358,6 +360,55 @@ function startBuildingProgress()
     bg:parentDidResize()
 end
 
+function updateBuilding(name)
+    local building = buildings[name]
+
+    building.model:RemoveFromParent()
+    building.model = MutableShape()
+    building.model:AddBlock(buildingInfo.color, 0, 0, 0)
+    building.model.Pivot = { 0.5, 0, 0.5 }
+    building.model.Scale = buildingInfo.scale
+    building.model:SetParent(World)
+    building.model.OnCollisionBegin = function(_, other)
+        if other ~= config.squad then return end
+        LocalEvent:Send("InteractWithBuilding", { name = name })
+    end
+end
+
+function saveBuildingUpgrade()
+    local currentBuildingData = playerCityInfo.buildings[currentlyBuilding] or { level = 0 }
+    currentBuildingData.level = currentBuildingData.level + 1
+    playerCityInfo.buildings[currentlyBuilding] = currentBuildingData
+    KeyValueStore("city"):Set(Player.UserID, playerCityInfo, function(succes, results)
+        updateBuilding(currentlyBuilding)
+    end)
+end
+
+function successfullBuild()
+    clearProgressUI()
+
+    saveBuildingUpgrade()
+    local ui = require("uikit")
+
+    local bg = ui:createFrame(Color(0, 0, 0, 0.5))
+    progressUI = bg
+
+    local title = ui:createText("Successfully built " .. currentlyBuilding, Color.White)
+    title:setParent(bg)
+
+    bg.parentDidResize = function()
+        bg.Width = math.min(500, Screen.Width * 0.5)
+        bg.Height = bg.Width * 0.3
+        bg.pos = {
+            Screen.Width * 0.5 - bg.Width * 0.5,
+            Screen.Height * 0.5 - bg.Height * 0.5
+        }
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height - title.Height - 5 }
+    end
+    bg:parentDidResize()
+    currentlyBuilding = nil
+end
+
 function clearProgressUI()
     progressBar = nil
     progressUI:remove()
@@ -372,15 +423,27 @@ function setBuildingState(newState, data)
     elseif newState == BUILDING_STATES.BUILDING then
         currentlyBuilding = data -- name string
         startBuildingProgress()
+    elseif newState == BUILDING_STATES.BUILT then
+        successfullBuild()
     end
     buildingState = newState
 end
 
 function onStartBuilding(name)
+    isUpgrade = false
     setBuildingState(BUILDING_STATES.BUILDING, name)
 end
 
 function onStopBuilding(name)
+    setBuildingState(BUILDING_STATES.NONE, name)
+end
+
+function onStartUpgrading(name)
+    isUpgrade = true
+    setBuildingState(BUILDING_STATES.BUILDING, name)
+end
+
+function onStopUpgrading(name)
     setBuildingState(BUILDING_STATES.NONE, name)
 end
 
@@ -422,7 +485,7 @@ cityModule.show = function(self, config)
             building.model = MutableShape()
             building.model:AddBlock(Color.Grey, 0, 0, 0)
             building.model.Pivot = { 0.5, 0, 0.5 }
-            building.model.Scale = { buildingInfo.scale, 0.1, buildingInfo.scale }
+            building.model.Scale = { 30, 0.1, 30 }
             building.model:SetParent(World)
             building.model.Physics = PhysicsMode.Trigger
             building.model.OnCollisionBegin = function(_, other)
@@ -439,15 +502,13 @@ cityModule.show = function(self, config)
             building.model.Pivot = { 0.5, 0, 0.5 }
             building.model.Scale = buildingInfo.scale
             building.model:SetParent(World)
-            if config.buildingsInfo[name].onInteract then
-                building.model.OnCollisionBegin = function(_, other)
-                    if other ~= config.squad then return end
-                    config.buildingsInfo[name].onInteract()
-                end
+            building.model.OnCollisionBegin = function(_, other)
+                if other ~= config.squad then return end
+                LocalEvent:Send("InteractWithBuilding", { name = name })
             end
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
-        table.insert(buildings, building)
+        buildings[name] = building
     end
 
     local portal = {}
@@ -462,7 +523,7 @@ cityModule.show = function(self, config)
         if other ~= config.squad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
-        for _, building in ipairs(buildings) do
+        for _, building in pairs(buildings) do
             building.model:RemoveFromParent()
         end
         buildings = {}
@@ -475,8 +536,12 @@ cityModule.show = function(self, config)
 end
 
 LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
-    if not progressBar then return end
+    if buildingState == BUILDING_STATES.BUILDING then return end
     buildingProgress = buildingProgress + dt
+    if buildingProgress >= 1 then
+        buildingProgress = 1
+        setBuildingState(BUILDING_STATES.BUILT)
+    end
     progressBar.Width = progressBar.parent.Width * (buildingProgress / common.TIME_TO_BUILD_BUILDING)
 end)
 
