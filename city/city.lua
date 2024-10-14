@@ -371,7 +371,7 @@ function updateBuilding(name)
         building.model:RemoveFromParent()
         return
     end
-    local buildingInfo = gameConfig.buildingsInfo[name]
+    local buildingInfo = gameConfig.BUILDINGS[name]
     building.model = MutableShape()
     building.model:AddBlock(buildingInfo.color, 0, 0, 0)
     building.model.Pivot = { 0.5, 0, 0.5 }
