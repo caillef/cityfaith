@@ -361,11 +361,13 @@ function startBuildingProgress()
 end
 
 function updateBuilding(name)
-    print("update building")
     local building = buildings[name]
 
-    print(building.model)
-    building.model:RemoveFromParent()
+    print(building)
+    if building.model then
+        building.model:RemoveFromParent()
+        return
+    end
     building.model = MutableShape()
     building.model:AddBlock(buildingInfo.color, 0, 0, 0)
     building.model.Pivot = { 0.5, 0, 0.5 }
