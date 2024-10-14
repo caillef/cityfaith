@@ -346,7 +346,7 @@ function startBuildingProgress()
         barBg.Height = bg.Height * 0.5
         barBg.pos = {
             bg.Width * 0.5 - barBg.Width * 0.5,
-            title.pos.Height - 10 - barBg.Height
+            title.pos.Y - 10 - barBg.Height
         }
 
         bar.Width = barBg.Width
