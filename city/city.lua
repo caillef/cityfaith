@@ -340,7 +340,7 @@ function startBuildingProgress()
             Screen.Width * 0.5 - bg.Width * 0.5,
             Screen.Height * 0.5 - bg.Height * 0.5
         }
-        title.pos = { bg.Width * 0.5 - title.Width * 0.5 }
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height - title.Height - 5 }
 
         barBg.Width = bg.Width * 0.8
         barBg.Height = bg.Height * 0.5
