@@ -319,6 +319,8 @@ local buildingProgress = 0
 local currentlyBuilding
 function startBuildingProgress()
     if not currentlyBuilding then return end
+    buildingProgress = 0
+
     local ui = require("uikit")
 
     local bg = ui:createFrame(Color(0, 0, 0, 0.5))
