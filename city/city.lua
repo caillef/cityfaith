@@ -360,26 +360,39 @@ function startBuildingProgress()
     bg:parentDidResize()
 end
 
-function updateBuilding(name)
-    local building = buildings[name]
-    if not building then
-        print("Error: can't find building", name)
-        return
-    end
-
-    if building.model then
-        building.model:RemoveFromParent()
-        return
-    end
-    local buildingInfo = gameConfig.BUILDINGS[name]
-    building.model = MutableShape()
-    building.model:AddBlock(buildingInfo.color, 0, 0, 0)
-    building.model.Pivot = { 0.5, 0, 0.5 }
-    building.model.Scale = buildingInfo.scale
-    building.model:SetParent(World)
-    building.model.OnCollisionBegin = function(_, other)
-        if other ~= config.squad then return end
-        LocalEvent:Send("InteractWithBuilding", { name = name })
+function updateBuildings()
+    for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
+        local building = {}
+        building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
+        if building.level == 0 then
+            building.model = MutableShape()
+            building.model:AddBlock(Color.Grey, 0, 0, 0)
+            building.model.Pivot = { 0.5, 0, 0.5 }
+            building.model.Scale = { 30, 0.1, 30 }
+            building.model:SetParent(World)
+            building.model.Physics = PhysicsMode.Trigger
+            building.model.OnCollisionBegin = function(_, other)
+                if other ~= config.squad then return end
+                onStartBuilding(name)
+            end
+            building.model.OnCollisionEnd = function(_, other)
+                if other ~= config.squad then return end
+                onStopBuilding(name)
+            end
+        else
+            building.model = MutableShape()
+            building.model:AddBlock(buildingInfo.color, 0, 0, 0)
+            building.model.Pivot = { 0.5, 0, 0.5 }
+            building.model.Scale = buildingInfo.scale
+            building.model:SetParent(World)
+            building.model.OnCollisionBegin = function(_, other)
+                if other ~= config.squad then return end
+                LocalEvent:Send("InteractWithBuilding", { name = name })
+            end
+        end
+        common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+        print("Add building", name, building)
+        buildings[name] = building
     end
 end
 
@@ -389,7 +402,7 @@ function saveBuildingUpgrade()
     currentBuildingData.level = currentBuildingData.level + 1
     playerCityInfo.buildings[buildingName] = currentBuildingData
     KeyValueStore("city"):Set(Player.UserID, playerCityInfo, function(succes, results)
-        updateBuilding(buildingName)
+        updateBuildings()
     end)
 end
 
@@ -488,39 +501,7 @@ cityModule.show = function(self, config)
     map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
 
-    for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
-        local building = {}
-        building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
-        if building.level == 0 then
-            building.model = MutableShape()
-            building.model:AddBlock(Color.Grey, 0, 0, 0)
-            building.model.Pivot = { 0.5, 0, 0.5 }
-            building.model.Scale = { 30, 0.1, 30 }
-            building.model:SetParent(World)
-            building.model.Physics = PhysicsMode.Trigger
-            building.model.OnCollisionBegin = function(_, other)
-                if other ~= config.squad then return end
-                onStartBuilding(name)
-            end
-            building.model.OnCollisionEnd = function(_, other)
-                if other ~= config.squad then return end
-                onStopBuilding(name)
-            end
-        else
-            building.model = MutableShape()
-            building.model:AddBlock(buildingInfo.color, 0, 0, 0)
-            building.model.Pivot = { 0.5, 0, 0.5 }
-            building.model.Scale = buildingInfo.scale
-            building.model:SetParent(World)
-            building.model.OnCollisionBegin = function(_, other)
-                if other ~= config.squad then return end
-                LocalEvent:Send("InteractWithBuilding", { name = name })
-            end
-        end
-        common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
-        print("Add building", name, building)
-        buildings[name] = building
-    end
+    updateBuildings()
 
     local portal = {}
     portal.model = Shape(Items.buche.portal)
