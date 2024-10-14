@@ -335,7 +335,7 @@ function startBuildingProgress()
 
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
-        bg.Height = bg.Width * 0.5
+        bg.Height = bg.Width * 0.3
         bg.pos = {
             Screen.Width * 0.5 - bg.Width * 0.5,
             Screen.Height * 0.5 - bg.Height * 0.5
