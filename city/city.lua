@@ -361,8 +361,6 @@ function startBuildingProgress()
 end
 
 function updateBuilding(name)
-    print("buildings", buildings, name)
-    print(JSON:Encode(buildings))
     local building = buildings[name]
     if not building then
         print("Error: can't find building", name)
@@ -385,11 +383,12 @@ function updateBuilding(name)
 end
 
 function saveBuildingUpgrade()
-    local currentBuildingData = playerCityInfo.buildings[currentlyBuilding] or { level = 0 }
+    local buildingName = currentlyBuilding
+    local currentBuildingData = playerCityInfo.buildings[buildingName] or { level = 0 }
     currentBuildingData.level = currentBuildingData.level + 1
-    playerCityInfo.buildings[currentlyBuilding] = currentBuildingData
+    playerCityInfo.buildings[buildingName] = currentBuildingData
     KeyValueStore("city"):Set(Player.UserID, playerCityInfo, function(succes, results)
-        updateBuilding(currentlyBuilding)
+        updateBuilding(buildingName)
     end)
 end
 
