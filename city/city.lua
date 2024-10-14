@@ -294,6 +294,7 @@ local gameConfig = {
 local common = {}
 
 common.MAP_SCALE = 10
+common.TIME_TO_BUILD_BUILDING = 5
 
 common.setPropPosition = function(obj, x, y)
     obj.Position = { (x + 0.5) * common.MAP_SCALE, 0, (y + 0.5) * common.MAP_SCALE }
@@ -306,6 +307,79 @@ local playerCityInfo = {
     buildings = {}
 }
 local startFetchData = false
+
+local BUILDING_STATES = {
+    NONE = 1,
+    BUILDING = 2,
+}
+local buildingState = BUILDING_STATES.NONE
+local progressBar
+local progressUI
+local buildingProgress = 0
+local currentlyBuilding
+function startBuildingProgress()
+    if not currentlyBuilding then return end
+    local ui = require("uikit")
+
+    local bg = ui:createFrame(Color(0, 0, 0, 0.5))
+    progressUI = bg
+
+    local title = ui:createTitle("Upgrading " .. currentlyBuilding, Color.White)
+    title:setParent(bg)
+
+    local barBg = ui:createFrame(Color.Black)
+    barBg:setParent(bg)
+
+    local bar = ui:createFrame(Color.Green)
+    bar:setParent(barBg)
+
+    bg.parentDidResize = function()
+        bg.Width = math.min(500, Screen.Width * 0.5)
+        bg.Height = bg.Width * 0.5
+        bg.pos = {
+            Screen.Width * 0.5 - bg.Width * 0.5,
+            Screen.Height * 0.5 - bg.Height * 0.5
+        }
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5 }
+
+        barBg.Width = bg.Width * 0.8
+        barBg.Height = bg.Height * 0.5
+        barBg.pos = {
+            bg.Width * 0.5 - barBg.Width * 0.5,
+            title.pos.Height - 10 - barBg.Height
+        }
+
+        bar.Width = barBg.Width
+        bar.Height = barBg.Height
+        progressBar = bar
+    end
+    bg:parentDidResize()
+end
+
+function clearProgressUI()
+    progressUI:remove()
+    progressUI = nil
+end
+
+function setBuildingState(newState, data)
+    if newState == buildingState then return end
+    if newState == BUILDING_STATES.NONE then
+        clearProgressUI()
+        currentlyBuilding = nil
+    elseif newState == BUILDING_STATES.BUILDING then
+        currentlyBuilding = data -- name string
+        startBuildingProgress()
+    end
+    buildingState = newState
+end
+
+function onStartBuilding(name)
+    setBuildingState(BUILDING_STATES.BUILDING, name)
+end
+
+function onStopBuilding(name)
+    setBuildingState(BUILDING_STATES.NONE, name)
+end
 
 cityModule.show = function(self, config)
     if not startFetchData then
@@ -348,15 +422,13 @@ cityModule.show = function(self, config)
             building.model.Scale = { buildingInfo.scale, 0.1, buildingInfo.scale }
             building.model:SetParent(World)
             building.model.Physics = PhysicsMode.Trigger
-            if config.buildingsInfo[name].onInteract then
-                -- building.model.OnCollisionBegin = function(_, other)
-                --     if other ~= config.squad then return end
-                --     config.buildingsInfo[name].onStartBuilding()
-                -- end
-                -- building.model.OnCollisionEnd = function(_, other)
-                --     if other ~= config.squad then return end
-                --     config.buildingsInfo[name].onStopBuilding()
-                -- end
+            building.model.OnCollisionBegin = function(_, other)
+                if other ~= config.squad then return end
+                onStartBuilding(name)
+            end
+            building.model.OnCollisionEnd = function(_, other)
+                if other ~= config.squad then return end
+                onStopBuilding(name)
             end
         else
             building.model = MutableShape()
@@ -398,5 +470,10 @@ cityModule.show = function(self, config)
         config.callback()
     end
 end
+
+LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+    buildingProgress = buildingProgress + dt
+    progressBar.Width = progressBar.parent.Width * (buildingProgress / common.TIME_TO_BUILD_BUILDING)
+end)
 
 return cityModule
