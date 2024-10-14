@@ -361,6 +361,8 @@ function startBuildingProgress()
 end
 
 function updateBuilding(name)
+    print("buildings", buildings)
+    print(JSON:Encode(buildings))
     local building = buildings[name]
     if not building then
         print("Error: can't find building", name)
