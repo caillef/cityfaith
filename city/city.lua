@@ -361,6 +361,7 @@ function startBuildingProgress()
 end
 
 function updateBuildings()
+    print("Updating buildings")
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
         building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
