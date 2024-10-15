@@ -300,6 +300,31 @@ common.setPropPosition = function(obj, x, y)
     obj.Position = { (x + 0.5) * common.MAP_SCALE, 0, (y + 0.5) * common.MAP_SCALE }
 end
 
+local progressBarModule = {}
+
+progressBarModule.create = function(_, config)
+    local ui = require("uikit")
+
+    local barBg = ui:createFrame(Color.Black)
+    local bar = ui:createFrame(config.color or Color.Green)
+    bar:setParent(barBg)
+
+    barBg.parentDidResize = function()
+        barBg.Width = config.width and config.width(barBg) or 100
+        barBg.Height = config.height and config.height(barBg) or 30
+        barBg.pos = config.pos(barBg)
+
+        bar.Height = barBg.Height
+    end
+    barBg:parentDidResize()
+
+    barBg.setPercentage = function(_, percentage)
+        bar.Width = barBg.parent.Width * percentage
+    end
+
+    return barBg
+end
+
 local cityModule = {}
 local buildings = {}
 
@@ -336,12 +361,6 @@ function startBuildingProgress()
     local title = ui:createText("Upgrading " .. currentlyBuilding, Color.White)
     title:setParent(bg)
 
-    local barBg = ui:createFrame(Color.Black)
-    barBg:setParent(bg)
-
-    local bar = ui:createFrame(Color.Green)
-    bar:setParent(barBg)
-
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
         bg.Height = bg.Width * 0.3
@@ -351,16 +370,19 @@ function startBuildingProgress()
         }
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height - title.Height - 5 }
 
-        barBg.Width = bg.Width * 0.8
-        barBg.Height = bg.Height * 0.5
-        barBg.pos = {
-            bg.Width * 0.5 - barBg.Width * 0.5,
-            title.pos.Y - 10 - barBg.Height
-        }
-
-        bar.Width = barBg.Width
-        bar.Height = barBg.Height
-        progressBar = bar
+        if progressBar then progressBar:destroy() end
+        progressBar = progressBarModule:create({
+            color = Color.Green,
+            width = function() return bg.Width * 0.8 end,
+            height = function() return bg.Height * 0.5 end,
+            pos = function(bar)
+                return {
+                    bg.Width * 0.5 - bar.Width * 0.5,
+                    title.pos.Y - 10 - bar.Height
+                }
+            end
+        })
+        progressBar:setParent(bg)
     end
     bg:parentDidResize()
 end
@@ -610,7 +632,7 @@ LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
         setBuildingState(BUILDING_STATES.BUILT)
     end
     if progressBar then
-        progressBar.Width = progressBar.parent.Width * percentage
+        progressBar:setPercentage(percentage)
     end
 end)
 

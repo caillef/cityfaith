@@ -300,6 +300,31 @@ common.setPropPosition = function(obj, x, y)
     obj.Position = { (x + 0.5) * common.MAP_SCALE, 0, (y + 0.5) * common.MAP_SCALE }
 end
 
+local progressBarModule = {}
+
+progressBarModule.create = function(_, config)
+    local ui = require("uikit")
+
+    local barBg = ui:createFrame(Color.Black)
+    local bar = ui:createFrame(config.color or Color.Green)
+    bar:setParent(barBg)
+
+    barBg.parentDidResize = function()
+        barBg.Width = config.width and config.width(barBg) or 100
+        barBg.Height = config.height and config.height(barBg) or 30
+        barBg.pos = config.pos(barBg)
+
+        bar.Height = barBg.Height
+    end
+    barBg:parentDidResize()
+
+    barBg.setPercentage = function(_, percentage)
+        bar.Width = barBg.parent.Width * percentage
+    end
+
+    return barBg
+end
+
 local propsModule = {}
 
 local props = {}
@@ -345,10 +370,17 @@ propsModule.create = function(_, propType, x, y)
         end)
     end)
 
+    local hpBar
     prop.damage = function(prop, dmg, source)
         if prop.destroyed then return end
+        if not hpBar then
+
+        end
         prop.hp = prop.hp - dmg
         if prop.hp <= 0 then
+            if hpBar then
+                hpBar:remove()
+            end
             prop:destroy()
             if propInfo.drops then
                 for dropName, quantityRange in pairs(propInfo.drops) do
