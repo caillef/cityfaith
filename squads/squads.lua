@@ -162,8 +162,11 @@ local SKILLS = {
             if action.object.destroyed then
                 character:setAction()
             end
-            character.model.Animations.SwingRight:Play()
-            action.object:damage(1)
+            local damaged = action.object:damage(1)
+            if damaged then
+                require("sfx")("wood_impact_" .. math.floor(math.random(1, 5)), { Spatialized = false, Volume = 0.6 })
+                character.model.Animations.SwingRight:Play()
+            end
         end
     },
     gather = {
@@ -171,8 +174,11 @@ local SKILLS = {
             if action.object.destroyed then
                 character:setAction()
             end
-            character.model.Animations.SwingRight:Play()
-            action.object:damage(1)
+            local damaged = action.object:damage(1)
+            if damaged then
+                require("sfx")("walk_sand_" .. math.floor(math.random(1, 5)), { Spatialized = false, Volume = 0.6 })
+                character.model.Animations.SwingRight:Play()
+            end
         end
     },
     mine = {
@@ -180,8 +186,11 @@ local SKILLS = {
             if action.object.destroyed then
                 character:setAction()
             end
-            character.model.Animations.SwingRight:Play()
-            action.object:damage(1)
+            local damaged = action.object:damage(1)
+            if damaged then
+                require("sfx")("metal_clanging_" .. math.floor(math.random(1, 8)), { Spatialized = false, Volume = 0.6 })
+                character.model.Animations.SwingRight:Play()
+            end
         end
     }
 }
