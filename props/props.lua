@@ -417,7 +417,10 @@ propsModule.create = function(_, propType, x, y)
         if prop.destroyed then return end
         prop.destroyed = true
         for k, p in ipairs(props) do
-            if p == prop then table.remove(props, k) end
+            if p == prop then
+                table.remove(props, k)
+                break
+            end
         end
         if hpBar then
             hpBarTickListener:Remove()
