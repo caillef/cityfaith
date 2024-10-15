@@ -401,11 +401,13 @@ propsModule.create = function(_, propType, x, y)
             hpBarTickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
                 local pos = Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height) +
                     Number2(-hpBar.Width * 0.5, 5)
+                print("Computed pos", pos)
                 if pos.X < 0 or pos.X > Screen.Width or pos.Y < 0 or pos.Y > Screen.Height then
+                    print("hide")
                     hpBar:hide()
                 else
                     hpBar:show()
-                    print(pos)
+                    print("show")
                     hpBar.pos = pos
                 end
             end)
