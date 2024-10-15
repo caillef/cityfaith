@@ -380,7 +380,7 @@ propsModule.create = function(_, propType, x, y)
                 width = function() return 50 end,
                 height = function() return 20 end,
                 pos = function(bar)
-                    return Camera:WorldToScreen(prop.Position) + Number2(0, 5)
+                    return Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height)
                 end
             })
         end
