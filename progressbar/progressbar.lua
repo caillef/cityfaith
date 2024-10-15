@@ -15,7 +15,6 @@ progressBarModule.create = function(_, config)
             barBg:hide()
         else
             barBg:show()
-            print(pos)
             barBg.pos = pos
         end
         bar.Height = barBg.Height

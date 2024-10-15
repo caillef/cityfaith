@@ -326,7 +326,6 @@ progressBarModule.create = function(_, config)
             barBg:hide()
         else
             barBg:show()
-            print(pos)
             barBg.pos = pos
         end
         bar.Height = barBg.Height
@@ -400,8 +399,14 @@ propsModule.create = function(_, propType, x, y)
                 end
             })
             hpBarTickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
-                hpBar.pos = Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height) +
+                local pos = Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height) +
                     Number2(-hpBar.Width * 0.5, 5)
+                if pos.X < 0 or pos.X > Screen.Width or pos.Y < 0 or pos.Y > Screen.Height then
+                    hpBar:hide()
+                else
+                    hpBar:show()
+                    hpBar.pos = pos
+                end
             end)
         end
         prop.hp = prop.hp - dmg
