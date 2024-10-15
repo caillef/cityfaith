@@ -17,7 +17,7 @@ progressBarModule.create = function(_, config)
     barBg:parentDidResize()
 
     barBg.setPercentage = function(_, percentage)
-        bar.Width = barBg.parent.Width * percentage
+        bar.Width = barBg.Width * percentage
     end
 
     return barBg
