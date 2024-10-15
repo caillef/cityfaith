@@ -1,4 +1,4 @@
-local COMMIT_HASH = "727e634d"
+local COMMIT_HASH = "c666f976"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -96,6 +96,15 @@ function generateNewMap()
     end
     for _ = 1, 30 do
         propsModule:create("tree", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
+    for _ = 1, 30 do
+        propsModule:create("stone", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
+    for _ = 1, 10 do
+        propsModule:create("gold", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
+    for _ = 1, 30 do
+        propsModule:create("berry_bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
     end
     for _ = 1, 10 do
         propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
