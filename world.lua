@@ -1,4 +1,4 @@
-local COMMIT_HASH = "2f7e9779"
+local COMMIT_HASH = "4ba37e91"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -55,8 +55,26 @@ function goToVillage()
             squad:setPosition(0, 0)
         end,
         canUpgradeBuilding = function(name, requirements)
-            print("requirements", JSON:Encode(requirements))
-            local sticksPrice = inventory:getQuantity("wooden_stick")
+            for resName, qty in pairs(requirements) do
+                local inventoryQty = inventory:getQuantity(resName)
+                if inventoryQty < qty then
+                    return false
+                end
+            end
+            return true
+        end,
+        payBuildingUpgrade = function(name, requirements)
+            for resName, qty in pairs(requirements) do
+                local inventoryQty = inventory:getQuantity(resName)
+                if inventoryQty < qty then
+                    return false
+                end
+            end
+
+            for resName, qty in pairs(requirements) do
+                inventory:tryRemoveElement(resName, qty)
+            end
+
             return true
         end
     })

@@ -310,6 +310,7 @@ local startFetchData = false
 
 local localSquad
 local canUpgradeBuilding
+local payBuildingUpgrade
 
 local BUILDING_STATES = {
     NONE = 1,
@@ -411,6 +412,22 @@ end
 
 function successfullBuild()
     clearProgressUI()
+
+    local nextLevel = 1
+    if playerCityInfo.buildings[currentlyBuilding].level ~= nil then
+        nextLevel = playerCityInfo.buildings[currentlyBuilding].level + 1
+    end
+    if not gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel] then
+        print("can't upgrade this building")
+        setBuildingState(BUILDING_STATES.NONE)
+        return
+    end
+    local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
+    local requirements = buildingInfo.repairPrices[nextLevel]
+    local success = payBuildingUpgrade(currentlyBuilding, requirements)
+    if not success then
+        return setBuildingState(BUILDING_STATES.CANT_UPGRADE)
+    end
 
     saveBuildingUpgrade()
     local ui = require("uikit")
@@ -519,6 +536,7 @@ end
 cityModule.show = function(self, config)
     localSquad = config.squad
     canUpgradeBuilding = config.canUpgradeBuilding
+    payBuildingUpgrade = config.payBuildingUpgrade
     if not startFetchData then
         startFetchData = true
         KeyValueStore("city"):Get(Player.UserID, function(success, results)
