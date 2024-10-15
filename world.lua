@@ -5,7 +5,7 @@ Modules = {
     propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
     squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
     cityModule = "github.com/caillef/cityfaith/city:" .. COMMIT_HASH,
-    inventoryModule = "https://github.com/caillef/cubzh-library/inventory:3ef5256"
+    inventoryModule = "https://github.com/caillef/cubzh-library/inventory:1037602"
 }
 
 local ADVENTURE_DURATION = 20
@@ -54,16 +54,10 @@ function goToVillage()
         callback = function()
             squad:setPosition(0, 0)
         end,
-        canUpgradeBuilding = function(name, requirements, cb)
-            LocalEvent:Send("InvGetQuantity", {
-                keys = "hotbar",
-                rKey = { "wooden_stick", "wood_log", "stone" },
-                callback = function(quantities)
-                    print("quantites", JSON:Encode(quantities))
-                    print("requirements", JSON:Encode(requirements))
-                    cb(true)
-                end
-            })
+        canUpgradeBuilding = function(name, requirements)
+            print("requirements", JSON:Encode(requirements))
+            local sticksPrice = inventory:getQuantity("wooden_stick")
+            return true
         end
     })
 end
