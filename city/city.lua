@@ -502,6 +502,7 @@ function setBuildingState(newState, data)
             currentlyBuilding,
             gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel]
         )
+        print("can build", canBuild)
         if canBuild then
             startBuildingProgress()
         else
