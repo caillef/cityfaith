@@ -355,6 +355,7 @@ propsModule.create = function(_, propType, x, y)
 
     local propInfo = gameConfig.PROPS[propType]
     prop.hp = propInfo.hp
+    prop.maxHp = prop.hp
     prop.id = math.random(100000000, 1000000000)
     prop.type = propInfo.skill
     Object:Load(propInfo.objFullname, function(obj)
@@ -374,9 +375,18 @@ propsModule.create = function(_, propType, x, y)
     prop.damage = function(prop, dmg, source)
         if prop.destroyed then return end
         if not hpBar then
-
+            hpBar = progressBarModule:create({
+                color = Color.Red,
+                width = function() return 50 end,
+                height = function() return 20 end,
+                pos = function(bar)
+                    return Camera:WorldToScreen(prop.Position) + Number2(0, 5)
+                end
+            })
         end
         prop.hp = prop.hp - dmg
+        if prop.hp <= 0 then prop.hp = 0 end
+        hpBar:setPercentage(prop.hp / prop.maxHp)
         if prop.hp <= 0 then
             if hpBar then
                 hpBar:remove()
