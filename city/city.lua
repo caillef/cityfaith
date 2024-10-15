@@ -374,11 +374,11 @@ function updateBuildings()
             building.model:SetParent(World)
             building.model.Physics = PhysicsMode.Trigger
             building.model.OnCollisionBegin = function(_, other)
-                if other ~= localSquad.squad then return end
+                if other ~= localSquad then return end
                 onStartBuilding(name)
             end
             building.model.OnCollisionEnd = function(_, other)
-                if other ~= localSquad.squad then return end
+                if other ~= localSquad then return end
                 onStopBuilding(name)
             end
         else
@@ -388,7 +388,7 @@ function updateBuildings()
             building.model.Scale = buildingInfo.scale
             building.model:SetParent(World)
             building.model.OnCollisionBegin = function(_, other)
-                if other ~= localSquad.squad then return end
+                if other ~= localSquad then return end
                 LocalEvent:Send("InteractWithBuilding", { name = name })
             end
         end
@@ -515,7 +515,7 @@ cityModule.show = function(self, config)
     common.setPropPosition(portal.model, 0, 10)
 
     portal.model.OnCollisionBegin = function(_, other)
-        if other ~= localSquad.squad then return end
+        if other ~= localSquad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
         for _, building in pairs(buildings) do
