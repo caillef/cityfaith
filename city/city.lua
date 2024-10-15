@@ -307,12 +307,15 @@ local playerCityInfo = {
     buildings = {}
 }
 local startFetchData = false
+
 local localSquad
+local canUpgradeBuilding
 
 local BUILDING_STATES = {
     NONE = 1,
     BUILDING = 2,
     BUILT = 3,
+    CANT_UPGRADE = 4,
 }
 local buildingState = BUILDING_STATES.NONE
 local progressBar
@@ -362,7 +365,6 @@ function startBuildingProgress()
 end
 
 function updateBuildings()
-    print("Updating buildings", localSquad)
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
         building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
@@ -393,7 +395,6 @@ function updateBuildings()
             end
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
-        print("Add building", name, building)
         buildings[name] = building
     end
 end
@@ -434,6 +435,30 @@ function successfullBuild()
     currentlyBuilding = nil
 end
 
+function cantUpgradeUI()
+    clearProgressUI()
+
+    local ui = require("uikit")
+
+    local bg = ui:createFrame(Color(0, 0, 0, 0.5))
+    progressUI = bg
+
+    local title = ui:createText("Not enough resources", Color.White)
+    title:setParent(bg)
+
+    bg.parentDidResize = function()
+        bg.Width = math.min(500, Screen.Width * 0.5)
+        bg.Height = bg.Width * 0.3
+        bg.pos = {
+            Screen.Width * 0.5 - bg.Width * 0.5,
+            Screen.Height * 0.5 - bg.Height * 0.5
+        }
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
+    end
+    bg:parentDidResize()
+    currentlyBuilding = nil
+end
+
 function clearProgressUI()
     progressBar = nil
     progressUI:remove()
@@ -447,9 +472,29 @@ function setBuildingState(newState, data)
         currentlyBuilding = nil
     elseif newState == BUILDING_STATES.BUILDING then
         currentlyBuilding = data -- name string
-        startBuildingProgress()
+        local nextLevel = 0
+        if playerCityInfo.buildings[currentlyBuilding].level ~= nil then
+            nextLevel = playerCityInfo.buildings[currentlyBuilding].level + 1
+        end
+        if not gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel] then
+            print("can't upgrade this building")
+            setBuildingState(BUILDING_STATES.NONE)
+            return
+        end
+        canUpgradeBuilding(currentlyBuilding, gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel],
+            function(canBuild)
+                if canBuild then
+                    startBuildingProgress()
+                    buildingState = newState
+                else
+                    setBuildingState(BUILDING_STATES.CANT_UPGRADE)
+                end
+            end)
+        return
     elseif newState == BUILDING_STATES.BUILT then
         successfullBuild()
+    elseif newState == BUILDING_STATES.CANT_UPGRADE then
+        cantUpgradeUI()
     end
     buildingState = newState
 end
@@ -474,6 +519,7 @@ end
 
 cityModule.show = function(self, config)
     localSquad = config.squad
+    canUpgradeBuilding = config.canUpgradeBuilding
     if not startFetchData then
         startFetchData = true
         KeyValueStore("city"):Get(Player.UserID, function(success, results)
@@ -509,7 +555,7 @@ cityModule.show = function(self, config)
     local portal = {}
     portal.model = Shape(Items.buche.portal)
     portal.model.Rotation.Y = math.pi * 0.5
-    portal.model.Scale = 3
+    portal.model.Scale = 2.5
     portal.model.Pivot.Y = 0
     portal.model:SetParent(World)
     common.setPropPosition(portal.model, 0, 10)

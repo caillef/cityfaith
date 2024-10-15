@@ -1,4 +1,4 @@
-local COMMIT_HASH = "8993c3c6"
+local COMMIT_HASH = "57fa8e54"
 Modules = {
     common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
     gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -27,7 +27,6 @@ local buildingsInfo = {
             local logsPrice = inventory:getQuantity("oak_log") * 3
             local ironsPrice = inventory:getQuantity("iron") * 10
             local fullPrice = sticksPrice + logsPrice + ironsPrice
-            print("Sell for ", fullPrice)
             LocalEvent:Send("InvClearAll", { key = "hotbar" })
 
             coins = coins + fullPrice
@@ -54,6 +53,17 @@ function goToVillage()
         portalCallback = generateNewMap,
         callback = function()
             squad:setPosition(0, 0)
+        end,
+        canUpgradeBuilding = function(name, requirements, cb)
+            LocalEvent:Send("InvGetQuantity", {
+                rKey = "hotbar",
+                keys = { "wooden_stick" },
+                callback = function(quantities)
+                    print("quantites", JSON:Encode(quantities))
+                    print("requirements", JSON:Encode(requirements))
+                    cb(true)
+                end
+            })
         end
     })
 end
