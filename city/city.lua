@@ -481,6 +481,7 @@ function setBuildingState(newState, data)
             setBuildingState(BUILDING_STATES.NONE)
             return
         end
+        print("nextlevel", nextLevel)
         canUpgradeBuilding(currentlyBuilding, gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel],
             function(canBuild)
                 if canBuild then
