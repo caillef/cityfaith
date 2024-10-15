@@ -472,16 +472,16 @@ function setBuildingState(newState, data)
         currentlyBuilding = nil
     elseif newState == BUILDING_STATES.BUILDING then
         currentlyBuilding = data -- name string
-        local nextLevel = 0
+        local nextLevel = 1
         if playerCityInfo.buildings[currentlyBuilding].level ~= nil then
             nextLevel = playerCityInfo.buildings[currentlyBuilding].level + 1
         end
+        print("nextlevel", nextLevel)
         if not gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel] then
             print("can't upgrade this building")
             setBuildingState(BUILDING_STATES.NONE)
             return
         end
-        print("nextlevel", nextLevel)
         canUpgradeBuilding(currentlyBuilding, gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel],
             function(canBuild)
                 if canBuild then
