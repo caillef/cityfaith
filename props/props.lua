@@ -405,6 +405,7 @@ propsModule.create = function(_, propType, x, y)
                     hpBar:hide()
                 else
                     hpBar:show()
+                    print(pos)
                     hpBar.pos = pos
                 end
             end)
