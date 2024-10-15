@@ -371,6 +371,7 @@ function updateBuildings()
             building.model.Pivot = { 0.5, 0, 0.5 }
             building.model.Scale = { 30, 0.1, 30 }
             building.model:SetParent(World)
+            print("chantier")
             building.model.Physics = PhysicsMode.Trigger
             building.model.OnCollisionBegin = function(_, other)
                 if other ~= config.squad then return end
@@ -386,6 +387,7 @@ function updateBuildings()
             building.model.Pivot = { 0.5, 0, 0.5 }
             building.model.Scale = buildingInfo.scale
             building.model:SetParent(World)
+            print("already built")
             building.model.OnCollisionBegin = function(_, other)
                 if other ~= config.squad then return end
                 LocalEvent:Send("InteractWithBuilding", { name = name })
