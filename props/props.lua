@@ -353,7 +353,7 @@ propsModule.create = function(_, propType, x, y)
     prop:SetParent(World)
     prop.destroyed = false
 
-    local hpBar
+    local hpBar, hpBarTickListener
     local propInfo = gameConfig.PROPS[propType]
     prop.hp = propInfo.hp
     prop.maxHp = prop.hp
@@ -384,6 +384,10 @@ propsModule.create = function(_, propType, x, y)
                         Number2(-bar.Width * 0.5, 5)
                 end
             })
+            hpBarTickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+                hpBar.pos = Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height) +
+                    Number2(-hpBar.Width * 0.5, 5)
+            end)
         end
         prop.hp = prop.hp - dmg
         if prop.hp <= 0 then prop.hp = 0 end
@@ -416,6 +420,7 @@ propsModule.create = function(_, propType, x, y)
             if p == prop then table.remove(props, k) end
         end
         if hpBar then
+            hpBarTickListener:Remove()
             hpBar:remove()
             hpBar = nil
         end
