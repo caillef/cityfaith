@@ -405,10 +405,12 @@ propsModule.create = function(_, propType, x, y)
                 if pos.X < 0 or pos.X > Screen.Width or pos.Y < 0 or pos.Y > Screen.Height then
                     print("hide")
                     hpBar:hide()
+                    print("hide OK")
                 else
                     hpBar:show()
                     print("show")
                     hpBar.pos = pos
+                    print("show OK")
                 end
             end)
         end
