@@ -353,6 +353,7 @@ propsModule.create = function(_, propType, x, y)
     prop:SetParent(World)
     prop.destroyed = false
 
+    local hpBar
     local propInfo = gameConfig.PROPS[propType]
     prop.hp = propInfo.hp
     prop.maxHp = prop.hp
@@ -371,16 +372,16 @@ propsModule.create = function(_, propType, x, y)
         end)
     end)
 
-    local hpBar
     prop.damage = function(prop, dmg, source)
         if prop.destroyed then return end
         if not hpBar then
             hpBar = progressBarModule:create({
                 color = Color.Red,
-                width = function() return 50 end,
-                height = function() return 20 end,
+                width = function() return 40 end,
+                height = function() return 8 end,
                 pos = function(bar)
-                    return Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height)
+                    return Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height) +
+                        Number2(-bar.Width * 0.5, 5)
                 end
             })
         end
@@ -388,9 +389,6 @@ propsModule.create = function(_, propType, x, y)
         if prop.hp <= 0 then prop.hp = 0 end
         hpBar:setPercentage(prop.hp / prop.maxHp)
         if prop.hp <= 0 then
-            if hpBar then
-                hpBar:remove()
-            end
             prop:destroy()
             if propInfo.drops then
                 for dropName, quantityRange in pairs(propInfo.drops) do
@@ -416,6 +414,10 @@ propsModule.create = function(_, propType, x, y)
         prop.destroyed = true
         for k, p in ipairs(props) do
             if p == prop then table.remove(props, k) end
+        end
+        if hpBar then
+            hpBar:remove()
+            hpBar = nil
         end
         if prop.onDestroy then
             prop:onDestroy()

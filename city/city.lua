@@ -370,7 +370,7 @@ function startBuildingProgress()
         }
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height - title.Height - 5 }
 
-        if progressBar then progressBar:destroy() end
+        if progressBar then progressBar:remove() end
         progressBar = progressBarModule:create({
             color = Color.Green,
             width = function() return bg.Width * 0.8 end,
