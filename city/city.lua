@@ -477,9 +477,13 @@ function cantUpgradeUI()
 end
 
 function clearProgressUI()
-    progressBar = nil
-    progressUI:remove()
-    progressUI = nil
+    if progressBar then
+        progressBar = nil
+    end
+    if progressUI then
+        progressUI:remove()
+        progressUI = nil
+    end
 end
 
 function setBuildingState(newState, data)
@@ -510,7 +514,6 @@ function setBuildingState(newState, data)
     elseif newState == BUILDING_STATES.BUILT then
         successfullBuild()
     elseif newState == BUILDING_STATES.CANT_UPGRADE then
-        print("can't upgrade ui")
         cantUpgradeUI()
     end
     buildingState = newState
