@@ -368,6 +368,10 @@ end
 function updateBuildings()
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
+        if buildings[name] then
+            buildings.model:RemoveFromParent()
+            buildings.model = nil
+        end
         building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
         if building.level == 0 then
             building.model = MutableShape()
