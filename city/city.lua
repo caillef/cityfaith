@@ -307,6 +307,7 @@ local playerCityInfo = {
     buildings = {}
 }
 local startFetchData = false
+local localSquad
 
 local BUILDING_STATES = {
     NONE = 1,
@@ -371,14 +372,13 @@ function updateBuildings()
             building.model.Pivot = { 0.5, 0, 0.5 }
             building.model.Scale = { 30, 0.1, 30 }
             building.model:SetParent(World)
-            print("chantier")
             building.model.Physics = PhysicsMode.Trigger
             building.model.OnCollisionBegin = function(_, other)
-                if other ~= config.squad then return end
+                if other ~= localSquad.squad then return end
                 onStartBuilding(name)
             end
             building.model.OnCollisionEnd = function(_, other)
-                if other ~= config.squad then return end
+                if other ~= localSquad.squad then return end
                 onStopBuilding(name)
             end
         else
@@ -387,9 +387,8 @@ function updateBuildings()
             building.model.Pivot = { 0.5, 0, 0.5 }
             building.model.Scale = buildingInfo.scale
             building.model:SetParent(World)
-            print("already built")
             building.model.OnCollisionBegin = function(_, other)
-                if other ~= config.squad then return end
+                if other ~= localSquad.squad then return end
                 LocalEvent:Send("InteractWithBuilding", { name = name })
             end
         end
@@ -474,6 +473,7 @@ function onStopUpgrading(name)
 end
 
 cityModule.show = function(self, config)
+    localSquad = config.squad
     if not startFetchData then
         startFetchData = true
         KeyValueStore("city"):Get(Player.UserID, function(success, results)
@@ -515,7 +515,7 @@ cityModule.show = function(self, config)
     common.setPropPosition(portal.model, 0, 10)
 
     portal.model.OnCollisionBegin = function(_, other)
-        if other ~= config.squad then return end
+        if other ~= localSquad.squad then return end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
         for _, building in pairs(buildings) do
