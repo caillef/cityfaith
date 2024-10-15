@@ -343,7 +343,7 @@ end
 
 propsModule.clearAllProps = function()
     for _, prop in ipairs(props) do
-        prop:remove()
+        prop:destroy()
     end
     props = {}
 end
