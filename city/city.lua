@@ -479,7 +479,7 @@ function updateBuildings()
                 if other ~= localSquad then return end
                 LocalEvent:Send("InteractWithBuilding", { name = name })
             end
-            building.model.Physics = false
+            building.model.Physics = PhysicsMode.Disabled
             Timer(5, function()
                 building.model.Physics = PhysicsMode.Static
             end)
