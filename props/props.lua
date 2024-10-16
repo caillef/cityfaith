@@ -437,6 +437,7 @@ propsModule.create = function(_, propType, x, y)
 
     prop.destroy = function(prop)
         if prop.destroyed then return end
+        print("destroying prop")
         prop.destroyed = true
         for k, p in ipairs(props) do
             if p == prop then
