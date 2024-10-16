@@ -1,4 +1,4 @@
-local COMMIT_HASH = "5a9dd361"
+local COMMIT_HASH = "708f3238"
 
 local inventoryModule
 local common
@@ -220,6 +220,7 @@ Client.OnPlayerJoin = function()
 end
 
 function startGame()
+    require("ambience"):set(require("ambience").default)
     KeyValueStore("coins"):Get(Player.UserID, function(success, results)
         if not success then print("error") end
         coins = results[Player.UserID] or 0
