@@ -403,13 +403,11 @@ function startBuildingProgress()
 end
 
 function updateBuildings()
-    print("update buildings")
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
-        print(">", name)
         local building = {}
         if buildings[name] then
-            buildings.model:RemoveFromParent()
-            buildings.model = nil
+            buildings[name].model:RemoveFromParent()
+            buildings[name].model = nil
         end
         building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
         if building.level == 0 then
@@ -437,11 +435,14 @@ function updateBuildings()
                 if other ~= localSquad then return end
                 LocalEvent:Send("InteractWithBuilding", { name = name })
             end
+            building.model.Physics = false
+            Timer(5, function()
+                building.model.Physics = true
+            end)
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
         buildings[name] = building
     end
-    print("b")
 end
 
 function saveBuildingUpgrade()
