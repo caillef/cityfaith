@@ -1,4 +1,4 @@
-local COMMIT_HASH = "f6866911"
+local COMMIT_HASH = "1476545c"
 
 local inventoryModule
 local common
@@ -135,6 +135,8 @@ function generateNewMap()
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
     end
     bg:parentDidResize()
+
+    require("sfx")("whooshes_medium_1", { Spatialized = false, Volume = 0.6 })
 
     local map = MutableShape()
     for z = -30, 30 do
