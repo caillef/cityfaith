@@ -1,12 +1,4 @@
-local COMMIT_HASH = "c6973353"
--- Modules = {
--- common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
--- gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
--- propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
--- squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
--- cityModule = "github.com/caillef/cityfaith/city:" .. COMMIT_HASH,
---    inventoryModule = "https://github.com/caillef/cubzh-library/inventory:3ef5256"
--- }
+local COMMIT_HASH = "e7523be1"
 
 local inventoryModule
 local common
@@ -16,8 +8,8 @@ local squadsModule
 local cityModule
 local modulesLoad = {}
 
-function dostring(str)
-    return load(str)()
+function dostring(str, name)
+    return load(str, name)()
 end
 
 modulesLoad.start = function(_, callback)
@@ -31,28 +23,28 @@ modulesLoad.start = function(_, callback)
     end
     HTTP:Get("https://raw.githubusercontent.com/caillef/cubzh-library/refs/heads/main/inventory/inventory_module.lua",
         function(res)
-            inventoryModule = dostring(res.Body:ToString())
+            inventoryModule = dostring(res.Body:ToString(), "inventoryModule")
             loadNext()
         end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/" .. COMMIT_HASH .. "/common/common.lua", function(res)
-        common = dostring(res.Body:ToString())
+        common = dostring(res.Body:ToString(), "commonModule")
         loadNext()
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/" .. COMMIT_HASH .. "/config/config.lua",
         function(res)
-            gameConfig = dostring(res.Body:ToString())
+            gameConfig = dostring(res.Body:ToString(), "configModule")
             loadNext()
         end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/" .. COMMIT_HASH .. "/props/props.lua", function(res)
-        propsModule = dostring(res.Body:ToString())
+        propsModule = dostring(res.Body:ToString(), "propsModule")
         loadNext()
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/" .. COMMIT_HASH .. "/squads/squads.lua", function(res)
-        squadsModule = dostring(res.Body:ToString())
+        squadsModule = dostring(res.Body:ToString(), "squadModule")
         loadNext()
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/" .. COMMIT_HASH .. "/city/city.lua", function(res)
-        cityModule = dostring(res.Body:ToString())
+        cityModule = dostring(res.Body:ToString(), "cityModule")
         loadNext()
     end)
 end
