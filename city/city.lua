@@ -20,6 +20,7 @@ local CHARACTERS = {
 
 local WORLDS = {
     forest = {
+        name = "the Whispering Woods",
         color = Color(116, 183, 46),
         props = {
             tree = 50,
@@ -29,6 +30,7 @@ local WORLDS = {
         }
     },
     desert = {
+        name = "the Golden Dunes",
         color = Color(239, 221, 111),
         props = {
             stone = 60,
@@ -38,6 +40,7 @@ local WORLDS = {
         }
     },
     magicland = {
+        name = "the Arcane Territories",
         color = Color(170, 51, 106),
         props = {
             tree = 30,
@@ -47,6 +50,7 @@ local WORLDS = {
         }
     },
     plateau = {
+        name = "the Skyreach Plateau",
         color = Color(167, 167, 167),
         props = {
             tree = 5,
