@@ -1,4 +1,4 @@
-local COMMIT_HASH = "9ab8f928"
+local COMMIT_HASH = "d2eb5cf6"
 
 -- MODULES
 local inventoryModule
@@ -194,6 +194,7 @@ function generateNewMap()
 
             -- Teleport
             goToVillage()
+            require("sfx")("whooshes_medium_1", { Spatialized = false, Volume = 0.6 })
         end)
     end
 
