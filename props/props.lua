@@ -459,7 +459,7 @@ propsModule.create = function(_, propType, x, y)
             prop:onDestroy()
         end
         print("set hidden = true")
-        require("hierarchyactions"):applyToDescendants(prop, {  includeRoot = true }, function(o)
+        require("hierarchyactions"):applyToDescendants(prop, { includeRoot = true }, function(o)
             o.IsHidden = true
             o.Physics = false
         end)
