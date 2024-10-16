@@ -1,5 +1,6 @@
-local COMMIT_HASH = "1476545c"
+local COMMIT_HASH = "345db128"
 
+-- MODULES
 local inventoryModule
 local common
 local gameConfig
@@ -49,6 +50,8 @@ modulesLoad.start = function(_, callback)
     end)
 end
 
+-- GAME
+
 Config = {
     Items = { "buche.portal", "caillef.coin" }
 }
@@ -56,6 +59,7 @@ Config = {
 local squad
 local coins = 0
 local coinIcon, coinText
+local globalUI
 
 local buildingsInfo = {
     house = {
@@ -135,6 +139,7 @@ function generateNewMap()
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
     end
     bg:parentDidResize()
+    globalUI:hide()
 
     require("sfx")("whooshes_medium_1", { Spatialized = false, Volume = 0.6 })
 
@@ -194,6 +199,8 @@ function generateNewMap()
 
     squad:freeze()
     Timer(3, function()
+        globalUI:show()
+
         bg:remove()
         title = nil
         bg = nil
@@ -223,6 +230,7 @@ initUI = function()
 
     local ui = require("uikit")
 
+    local uiRoot = ui:createFrame()
     coinIcon = ui:createShape(Shape(Items.caillef.coin), { spherized = true })
     LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
         coinIcon.pivot.Rotation.Y = coinIcon.pivot.Rotation.Y + dt
@@ -236,6 +244,8 @@ initUI = function()
         { coinIcon.pos.X + coinIcon.Width + 5, coinIcon.pos.Y + coinIcon.Height * 0.5 - coinText.Height * 0.5 }
     end
     coinText:parentDidResize()
+    coinIcon:setParent(uiRoot)
+    return uiRoot
 end
 
 Client.OnPlayerJoin = function()
@@ -260,7 +270,7 @@ function startGame()
     goToVillage()
 
     initCamera()
-    initUI()
+    globalUI = initUI()
 
     --[[
     for i = -5, 15 do
