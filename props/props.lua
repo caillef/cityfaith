@@ -357,6 +357,7 @@ propsModule.clearAllSpawners = function()
 end
 
 propsModule.clearAllProps = function()
+    print("props to destroy", #props)
     for _, prop in ipairs(props) do
         prop:destroy()
     end

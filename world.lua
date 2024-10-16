@@ -1,4 +1,4 @@
-local COMMIT_HASH = "4b0f4270"
+local COMMIT_HASH = "f3edd422"
 
 local inventoryModule
 local common
@@ -130,24 +130,24 @@ function generateNewMap()
     map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
 
-    for _ = 1, 50 do
-        propsModule:create("bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    end
+    -- for _ = 1, 50 do
+    --     propsModule:create("bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    -- end
     for _ = 1, 30 do
         propsModule:create("tree", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
     end
-    for _ = 1, 30 do
-        propsModule:create("stone", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    end
-    for _ = 1, 10 do
-        propsModule:create("gold", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    end
-    for _ = 1, 30 do
-        propsModule:create("berry_bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    end
-    for _ = 1, 10 do
-        propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    end
+    -- for _ = 1, 30 do
+    --     propsModule:create("stone", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    -- end
+    -- for _ = 1, 10 do
+    --     propsModule:create("gold", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    -- end
+    -- for _ = 1, 30 do
+    --     propsModule:create("berry_bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    -- end
+    -- for _ = 1, 10 do
+    --     propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    -- end
 
     squad:setPosition(0, 0)
 
