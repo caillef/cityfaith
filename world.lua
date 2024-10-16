@@ -1,4 +1,4 @@
--- local COMMIT_HASH = "0416bce0"
+local COMMIT_HASH = "3769116a"
 -- Modules = {
 -- common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
 -- gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -33,19 +33,20 @@ modulesLoad.start = function(_, callback)
         common = load(res.Body:ToString())()
         loadNext()
     end)
-    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/config/gameConfig.lua", function(res)
-        gameConfig = load(res.Body:ToString())()
-        loadNext()
-    end)
-    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/props/propsModule.lua", function(res)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/gameConfig/gameConfig.lua",
+        function(res)
+            gameConfig = load(res.Body:ToString())()
+            loadNext()
+        end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/props/props.lua", function(res)
         propsModule = load(res.Body:ToString())()
         loadNext()
     end)
-    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/squads/squadsModule.lua", function(res)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/squads/squads.lua", function(res)
         squadsModule = load(res.Body:ToString())()
         loadNext()
     end)
-    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/city/cityModule.lua", function(res)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/city/city.lua", function(res)
         cityModule = load(res.Body:ToString())()
         loadNext()
     end)
