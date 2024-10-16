@@ -1,4 +1,4 @@
-local COMMIT_HASH = "54b7d89a"
+local COMMIT_HASH = "d1611e99"
 
 -- MODULES
 local inventoryModule
@@ -124,7 +124,7 @@ function goToVillage()
 end
 
 function generateNewMap()
-    local worldKeys = { "forest", "desert", "plateau", "magicland" }
+    local worldKeys = { "forest", "forest", "forest", "desert", "desert", "plateau", "plateau", "magicland" }
     local worldType = worldKeys[math.random(1, 4)]
     local worldInfo = gameConfig.WORLDS[worldType]
 
