@@ -358,8 +358,8 @@ end
 
 propsModule.clearAllProps = function()
     print("props to destroy", #props)
-    for _, prop in ipairs(props) do
-        prop:destroy()
+    for i = #props, 1, -1 do
+        props[i]:destroy()
     end
     props = {}
 end
