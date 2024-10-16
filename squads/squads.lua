@@ -567,12 +567,21 @@ squadModule.create = function(_, defaultCharacterList)
     squad.Physics = PhysicsMode.Dynamic
     squad.CollisionGroups = Player.CollisionGroups
     squad.CollidesWithGroups = Player.CollidesWithGroups
+    squad.freezed = false
 
     local characters = {}
     squad.add = function(_, character)
         character:SetParent(squad)
         table.insert(characters, character)
         character.LocalPosition = { 0, 0, 0 }
+    end
+
+    squad.freeze = function()
+        squad.freezed = true
+    end
+
+    squad.unfreeze = function()
+        squad.freezed = false
     end
 
     squad.setPosition = function(_, x, y)
@@ -661,6 +670,7 @@ squadModule.create = function(_, defaultCharacterList)
     end
 
     LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+        if squad.freezed then return end
         if squad.Motion == Number3(0, 0, 0) then
             if moving then
                 moving = false

@@ -1,4 +1,4 @@
-local COMMIT_HASH = "86916ca6"
+local COMMIT_HASH = "22a5a6ea"
 
 local inventoryModule
 local common
@@ -135,11 +135,6 @@ function generateNewMap()
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
     end
     bg:parentDidResize()
-    Timer(2, function()
-        bg:remove()
-        title = nil
-        bg = nil
-    end)
 
     local map = MutableShape()
     for z = -30, 30 do
@@ -157,39 +152,50 @@ function generateNewMap()
         end
     end
 
-    squad:setPosition(0, 0)
+    function startExploration()
+        squad:unfreeze()
+        squad:setPosition(0, 0)
 
-    local durationBar = require("uikit"):createFrame(Color.White)
-    durationBar.parentDidResize = function()
-        durationBar.Height = 40
-        durationBar.pos = { Screen.Width * 0.2, Screen.Height - Screen.SafeArea.Top - durationBar.Height - 5 }
-    end
-    durationBar:parentDidResize()
-
-    local tick
-    local endAt = Time.UnixMilli() + common.ADVENTURE_DURATION * 1000
-    tick = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
-        local percentage = (endAt - Time.UnixMilli()) / (common.ADVENTURE_DURATION * 1000)
-        if percentage < 0.15 then
-            durationBar.Color = Color.Red
+        local durationBar = require("uikit"):createFrame(Color.White)
+        durationBar.parentDidResize = function()
+            durationBar.Height = 40
+            durationBar.pos = { Screen.Width * 0.2, Screen.Height - Screen.SafeArea.Top - durationBar.Height - 5 }
         end
-        durationBar.Width = Screen.Width * 0.6 * percentage
-    end)
+        durationBar:parentDidResize()
 
-    Timer(common.ADVENTURE_DURATION, function()
-        -- Clear map
-        map:RemoveFromParent()
-        propsModule:clearAllProps()
+        local tick
+        local endAt = Time.UnixMilli() + common.ADVENTURE_DURATION * 1000
+        tick = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+            local percentage = (endAt - Time.UnixMilli()) / (common.ADVENTURE_DURATION * 1000)
+            if percentage < 0.15 then
+                durationBar.Color = Color.Red
+            end
+            durationBar.Width = Screen.Width * 0.6 * percentage
+        end)
 
-        -- Clear squad
-        squad:reset()
+        Timer(common.ADVENTURE_DURATION, function()
+            -- Clear map
+            map:RemoveFromParent()
+            propsModule:clearAllProps()
 
-        -- UI
-        tick:Remove()
-        durationBar:remove()
+            -- Clear squad
+            squad:reset()
 
-        -- Teleport
-        goToVillage()
+            -- UI
+            tick:Remove()
+            durationBar:remove()
+
+            -- Teleport
+            goToVillage()
+        end)
+    end
+
+    squad:freeze()
+    Timer(3, function()
+        bg:remove()
+        title = nil
+        bg = nil
+        startExploration()
     end)
 end
 
