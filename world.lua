@@ -1,4 +1,4 @@
-local COMMIT_HASH = "345db128"
+local COMMIT_HASH = "a2de6f1d"
 
 -- MODULES
 local inventoryModule
@@ -244,7 +244,9 @@ initUI = function()
         { coinIcon.pos.X + coinIcon.Width + 5, coinIcon.pos.Y + coinIcon.Height * 0.5 - coinText.Height * 0.5 }
     end
     coinText:parentDidResize()
+
     coinIcon:setParent(uiRoot)
+    coinText:setParent(uiRoot)
     return uiRoot
 end
 
