@@ -394,13 +394,18 @@ propsModule.create = function(_, propType, x, y)
                 width = function() return 40 end,
                 height = function() return 8 end,
                 pos = function(bar)
-                    return Camera:WorldToScreen(prop.Position) * Number2(Screen.Width, Screen.Height) +
-                        Number2(-bar.Width * 0.5, 5)
+                    local propScreenPos = Camera:WorldToScreen(prop.Position)
+                    if not propScreenPos then
+                        bar:hide()
+                        return Number2(0, 0)
+                    end
+                    local pos = propScreenPos * Number2(Screen.Width, Screen.Height) + Number2(-hpBar.Width * 0.5, 5)
+                    bar:show()
+                    return pos
                 end
             })
             hpBarTickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
                 if not prop or not hpBar then return end
-                print("a")
                 local propScreenPos = Camera:WorldToScreen(prop.Position)
                 if not propScreenPos then
                     hpBar:hide()
