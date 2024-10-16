@@ -424,6 +424,7 @@ propsModule.create = function(_, propType, x, y)
         obj.Pivot = Number3(obj.Width / 2, box.Min.Y + obj.Pivot.Y, obj.Depth / 2)
         require("hierarchyactions"):applyToDescendants(obj, { includeRoot = true }, function(o)
             o.Physics = PhysicsMode.Disabled
+            o.Shadows = true
         end)
     end)
 
