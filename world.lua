@@ -1,4 +1,4 @@
-local COMMIT_HASH = "bdea6b23"
+local COMMIT_HASH = "70c1afa8"
 -- Modules = {
 -- common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
 -- gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -35,12 +35,11 @@ modulesLoad.start = function(_, callback)
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/config/config.lua",
         function(res)
-            print("gameconfig size", #res.Body:ToString())
             gameConfig = load(res.Body:ToString())()
             loadNext()
         end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/props/props.lua", function(res)
-        print("props size", #res.Body:ToString())
+        print("props size", #res.Body:ToString(), string.sub(res.Body:ToString(), 1, 20))
         propsModule = load(res.Body:ToString())()
         loadNext()
     end)
