@@ -481,7 +481,7 @@ function updateBuildings()
             end
             building.model.Physics = false
             Timer(5, function()
-                building.model.Physics = true
+                building.model.Physics = PhysicsMode.Static
             end)
         end
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
