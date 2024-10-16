@@ -453,8 +453,11 @@ propsModule.create = function(_, propType, x, y)
         if prop.onDestroy then
             prop:onDestroy()
         end
-        prop.IsHidden = true
-        prop.Physics = false
+        print("set hidden = true")
+        require("hierarchyactions"):applyToDescendants(prop, {  includeChildren = true }, function(o)
+            o.IsHidden = true
+            o.Physics = false
+        end)
         Timer(1, function()
             prop:RemoveFromParent()
         end)
@@ -465,7 +468,6 @@ propsModule.create = function(_, propType, x, y)
         prop:RemoveFromParent()
     end
 
-    print("add prop")
     table.insert(props, prop)
     return prop
 end
