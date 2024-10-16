@@ -1,4 +1,4 @@
-local COMMIT_HASH = "3777e48a"
+-- local COMMIT_HASH = "3777e48a"
 -- Modules = {
 -- common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
 -- gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -15,6 +15,11 @@ local propsModule
 local squadsModule
 local cityModule
 local modulesLoad = {}
+
+function dostring(str)
+    return load(str)()
+end
+
 modulesLoad.start = function(_, callback)
     local nbToLoad = 6
     local loaded = 0
@@ -26,29 +31,28 @@ modulesLoad.start = function(_, callback)
     end
     HTTP:Get("https://raw.githubusercontent.com/caillef/cubzh-library/refs/heads/main/inventory/inventory_module.lua",
         function(res)
-            inventoryModule = load(res.Body:ToString())()
+            inventoryModule = dostring(res.Body:ToString())
             loadNext()
         end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/common/common.lua", function(res)
-        common = load(res.Body:ToString())()
+        common = dostring(res.Body:ToString())
         loadNext()
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/config/config.lua",
         function(res)
-            gameConfig = load(res.Body:ToString())()
+            gameConfig = dostring(res.Body:ToString())
             loadNext()
         end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/props/props.lua", function(res)
-        print("props size", #res.Body:ToString(), string.sub(res.Body:ToString(), 1, 20))
-        propsModule = load(res.Body:ToString())()
+        propsModule = dostring(res.Body:ToString())
         loadNext()
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/squads/squads.lua", function(res)
-        squadsModule = load(res.Body:ToString())()
+        squadsModule = dostring(res.Body:ToString())
         loadNext()
     end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/city/city.lua", function(res)
-        cityModule = load(res.Body:ToString())()
+        cityModule = dostring(res.Body:ToString())
         loadNext()
     end)
 end
