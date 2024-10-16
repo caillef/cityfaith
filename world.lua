@@ -1,4 +1,4 @@
-local COMMIT_HASH = "22f47669"
+local COMMIT_HASH = "a1a59c38"
 
 local inventoryModule
 local common
@@ -63,17 +63,17 @@ local buildingsInfo = {
     house = {
     },
     market = {
-        onInteract = function()
-            local sticksPrice = inventory:getQuantity("wooden_stick")
-            local logsPrice = inventory:getQuantity("oak_log") * 3
-            local ironsPrice = inventory:getQuantity("iron") * 10
-            local fullPrice = sticksPrice + logsPrice + ironsPrice
-            LocalEvent:Send("InvClearAll", { key = "hotbar" })
+        -- onInteract = function()
+        --     local sticksPrice = inventory:getQuantity("wooden_stick")
+        --     local logsPrice = inventory:getQuantity("oak_log") * 3
+        --     local ironsPrice = inventory:getQuantity("iron") * 10
+        --     local fullPrice = sticksPrice + logsPrice + ironsPrice
+        --     LocalEvent:Send("InvClearAll", { key = "hotbar" })
 
-            coins = coins + fullPrice
-            KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
-            coinText.Text = string.format("%d", coins)
-        end
+        --     coins = coins + fullPrice
+        --     KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
+        --     coinText.Text = string.format("%d", coins)
+        -- end
     },
     forge = {
     },
