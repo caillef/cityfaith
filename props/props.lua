@@ -465,6 +465,7 @@ propsModule.create = function(_, propType, x, y)
         prop:RemoveFromParent()
     end
 
+    print("add prop")
     table.insert(props, prop)
     return prop
 end
