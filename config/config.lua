@@ -18,6 +18,45 @@ local CHARACTERS = {
     },
 }
 
+local WORLDS = {
+    forest = {
+        color = Color(116, 183, 46),
+        props = {
+            tree = 50,
+            bush = 50,
+            stone = 30,
+            iron = 10
+        }
+    },
+    desert = {
+        color = Color(239, 221, 111),
+        props = {
+            stone = 60,
+            iron = 20,
+            gold = 10,
+            bush = 5,
+        }
+    },
+    magicland = {
+        color = Color(170, 51, 106),
+        props = {
+            tree = 30,
+            stone = 60,
+            gold = 25,
+            bush = 20,
+        }
+    },
+    plateau = {
+        color = Color(167, 167, 167),
+        props = {
+            tree = 5,
+            stone = 60,
+            iron = 30,
+            gold = 10,
+        }
+    }
+}
+
 local PROPS = {
     tree = {
         skill = "chop",
@@ -298,6 +337,7 @@ local gameConfig = {
     RESOURCES_BY_ID = RESOURCES_BY_ID,
     RESOURCES_BY_KEY = RESOURCES_BY_KEY,
     BUILDINGS = BUILDINGS,
+    WORLDS = WORLDS,
 }
 
 return gameConfig

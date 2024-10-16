@@ -1,4 +1,4 @@
-local COMMIT_HASH = "418ad785"
+local COMMIT_HASH = "67edbdba"
 
 local inventoryModule
 local common
@@ -120,34 +120,25 @@ function goToVillage()
 end
 
 function generateNewMap()
+    local worldKeys = { "forest", "desert", "plateau", "magicland" }
+    local worldType = worldKeys[math.random(1, 4)]
+    local worldInfo = gameConfig.WORLDS[worldType]
+
     local map = MutableShape()
     for z = -30, 30 do
         for x = -30, 30 do
-            map:AddBlock(Color(116, 183, 46), x, 0, z)
+            map:AddBlock(worldInfo.color, x, 0, z)
         end
     end
     map:SetParent(World)
     map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
 
-    -- for _ = 1, 50 do
-    --     propsModule:create("bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    -- end
-    for _ = 1, 30 do
-        propsModule:create("tree", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    for name, nb in pairs(worldInfo.props) do
+        for _ = 1, nb do
+            propsModule:create(name, math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+        end
     end
-    -- for _ = 1, 30 do
-    --     propsModule:create("stone", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    -- end
-    -- for _ = 1, 10 do
-    --     propsModule:create("gold", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    -- end
-    -- for _ = 1, 30 do
-    --     propsModule:create("berry_bush", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    -- end
-    -- for _ = 1, 10 do
-    --     propsModule:create("iron", math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
-    -- end
 
     squad:setPosition(0, 0)
 
