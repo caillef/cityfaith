@@ -1,12 +1,55 @@
-local COMMIT_HASH = "d3232a07"
-Modules = {
-    common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
-    gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
-    propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
-    squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
-    cityModule = "github.com/caillef/cityfaith/city:" .. COMMIT_HASH,
-    inventoryModule = "https://github.com/caillef/cubzh-library/inventory:3ef5256"
-}
+-- local COMMIT_HASH = "0416bce0"
+-- Modules = {
+-- common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
+-- gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
+-- propsModule = "github.com/caillef/cityfaith/props:" .. COMMIT_HASH,
+-- squadsModule = "github.com/caillef/cityfaith/squads:" .. COMMIT_HASH,
+-- cityModule = "github.com/caillef/cityfaith/city:" .. COMMIT_HASH,
+--    inventoryModule = "https://github.com/caillef/cubzh-library/inventory:3ef5256"
+-- }
+
+local inventoryModule
+local common
+local gameConfig
+local propsModule
+local squadsModule
+local cityModule
+local modulesLoad = {}
+modulesLoad.start = function(_, callback)
+    local nbToLoad = 6
+    local loaded = 0
+    local function loadNext()
+        loaded = loaded + 1
+        if loaded == nbToLoad then
+            callback()
+        end
+    end
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cubzh-library/refs/heads/main/inventory/inventory_module.lua",
+        function(res)
+            inventoryModule = load(res.Body:ToString())()
+            loadNext()
+        end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/common/common.lua", function(res)
+        common = load(res.Body:ToString())()
+        loadNext()
+    end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/config/gameConfig.lua", function(res)
+        gameConfig = load(res.Body:ToString())()
+        loadNext()
+    end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/props/propsModule.lua", function(res)
+        propsModule = load(res.Body:ToString())()
+        loadNext()
+    end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/squads/squadsModule.lua", function(res)
+        squadsModule = load(res.Body:ToString())()
+        loadNext()
+    end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/city/cityModule.lua", function(res)
+        cityModule = load(res.Body:ToString())()
+        loadNext()
+    end)
+end
 
 local ADVENTURE_DURATION = 20
 
@@ -184,14 +227,18 @@ initUI = function()
 end
 
 Client.OnPlayerJoin = function()
+    modulesLoad:start(function()
+        startGame()
+    end)
+end
+
+function startGame()
     KeyValueStore("coins"):Get(Player.UserID, function(success, results)
         if not success then print("error") end
         coins = results[Player.UserID] or 0
         coinText.Text = string.format("%d", coins)
     end)
-end
 
-Client.OnStart = function()
     squadsModule:setPropsModule(propsModule)
 
     squad = squadsModule:create({ "gatherer", "lumberjack", "miner" })
