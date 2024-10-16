@@ -1,4 +1,4 @@
-local COMMIT_HASH = "6f892652"
+local COMMIT_HASH = "bdea6b23"
 -- Modules = {
 -- common = "github.com/caillef/cityfaith/common:" .. COMMIT_HASH,
 -- gameConfig = "github.com/caillef/cityfaith/config:" .. COMMIT_HASH,
@@ -33,7 +33,7 @@ modulesLoad.start = function(_, callback)
         common = load(res.Body:ToString())()
         loadNext()
     end)
-    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/gameConfig/gameConfig.lua",
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/refs/heads/main/config/config.lua",
         function(res)
             print("gameconfig size", #res.Body:ToString())
             gameConfig = load(res.Body:ToString())()
