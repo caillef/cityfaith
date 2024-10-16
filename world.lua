@@ -1,4 +1,4 @@
-local COMMIT_HASH = "a1a59c38"
+local COMMIT_HASH = "4b0f4270"
 
 local inventoryModule
 local common
@@ -48,8 +48,6 @@ modulesLoad.start = function(_, callback)
         loadNext()
     end)
 end
-
-local ADVENTURE_DURATION = 20
 
 Config = {
     Items = { "buche.portal", "caillef.coin" }
@@ -161,16 +159,16 @@ function generateNewMap()
     durationBar:parentDidResize()
 
     local tick
-    local endAt = Time.UnixMilli() + ADVENTURE_DURATION * 1000
+    local endAt = Time.UnixMilli() + common.ADVENTURE_DURATION * 1000
     tick = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
-        local percentage = (endAt - Time.UnixMilli()) / (ADVENTURE_DURATION * 1000)
+        local percentage = (endAt - Time.UnixMilli()) / (common.ADVENTURE_DURATION * 1000)
         if percentage < 0.15 then
             durationBar.Color = Color.Red
         end
         durationBar.Width = Screen.Width * 0.6 * percentage
     end)
 
-    Timer(ADVENTURE_DURATION, function()
+    Timer(common.ADVENTURE_DURATION, function()
         -- Clear map
         map:RemoveFromParent()
         propsModule:clearAllProps()
