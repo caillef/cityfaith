@@ -1,4 +1,4 @@
-local COMMIT_HASH = "ff2d7574"
+local COMMIT_HASH = "b055792d"
 
 local inventoryModule
 local common
@@ -123,6 +123,21 @@ function generateNewMap()
     local worldKeys = { "forest", "desert", "plateau", "magicland" }
     local worldType = worldKeys[math.random(1, 4)]
     local worldInfo = gameConfig.WORLDS[worldType]
+
+    local ui = require("uikit")
+    local bg = ui:createFrame(Color.Black)
+    local title = ui:createText("Teleporting to " .. worldType .. "...")
+    title:setParent(bg)
+    bg.parentDidResize = function()
+        bg.Width = Screen.Width
+        bg.Height = Screen.Height
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
+    end
+    Timer(2, function()
+        bg:remove()
+        title = nil
+        bg = nil
+    end)
 
     local map = MutableShape()
     for z = -30, 30 do
