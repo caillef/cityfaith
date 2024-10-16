@@ -405,6 +405,7 @@ end
 function updateBuildings()
     print("update buildings")
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
+        print(">", name)
         local building = {}
         if buildings[name] then
             buildings.model:RemoveFromParent()
@@ -440,6 +441,7 @@ function updateBuildings()
         common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
         buildings[name] = building
     end
+    print("b")
 end
 
 function saveBuildingUpgrade()
