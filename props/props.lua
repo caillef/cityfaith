@@ -442,27 +442,34 @@ propsModule.create = function(_, propType, x, y)
 
     prop.destroy = function(prop)
         if prop.destroyed then return end
-        print("destroying prop")
         prop.destroyed = true
+        print("a")
         for k, p in ipairs(props) do
             if p == prop then
                 table.remove(props, k)
                 break
             end
         end
+        print("b")
+
         if hpBar then
             hpBarTickListener:Remove()
             hpBar:remove()
             hpBar = nil
         end
+        print("c")
+
         if prop.onDestroy then
             prop:onDestroy()
         end
-        print("set hidden = true")
+        print("d")
+
+        prop.IsHidden = true
         require("hierarchyactions"):applyToDescendants(prop, { includeRoot = true }, function(o)
-            o.IsHidden = true
             o.Physics = false
         end)
+        print("e")
+
         Timer(1, function()
             prop:RemoveFromParent()
         end)
