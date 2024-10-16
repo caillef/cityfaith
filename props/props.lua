@@ -411,7 +411,7 @@ propsModule.create = function(_, propType, x, y)
                     hpBar:hide()
                     return
                 end
-                local pos = propScreenPos * Number2(Screen.Width, Screen.Height) + Number2(-hpBar.Width * 0.5, 5)
+                local pos = propScreenPos * Number2(Screen.Width, Screen.Height) + Number2(50, 10)
                 hpBar:show()
                 hpBar.pos = pos
             end)
