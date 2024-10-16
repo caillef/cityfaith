@@ -403,6 +403,7 @@ function startBuildingProgress()
 end
 
 function updateBuildings()
+    print("update buildings")
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
         if buildings[name] then
@@ -463,6 +464,7 @@ function successfullBuild()
         setBuildingState(BUILDING_STATES.NONE)
         return
     end
+
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
     local requirements = buildingInfo.repairPrices[nextLevel]
     local success = payBuildingUpgrade(currentlyBuilding, requirements)
