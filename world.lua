@@ -1,4 +1,4 @@
-local COMMIT_HASH = "a2de6f1d"
+local COMMIT_HASH = "e0bc86b2"
 
 -- MODULES
 local inventoryModule
@@ -130,7 +130,7 @@ function generateNewMap()
 
     local ui = require("uikit")
     local bg = ui:createFrame(Color.Black)
-    local title = ui:createText("Teleporting to " .. worldType .. "...", Color.White, "big")
+    local title = ui:createText("Teleporting to " .. worldInfo.name .. "...", Color.White, "big")
     title.object.FontSize = 50
     title:setParent(bg)
     bg.parentDidResize = function()
