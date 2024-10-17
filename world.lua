@@ -1,4 +1,4 @@
-local COMMIT_HASH = "bc75c38d"
+local COMMIT_HASH = "a77a4039"
 
 -- MODULES
 local inventoryModule
