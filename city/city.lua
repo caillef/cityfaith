@@ -816,6 +816,8 @@ function cantUpgradeUI()
     local requirementsUINodes = {}
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
     for name, qty in pairs(buildingInfo.repairPrices) do
+        print(gameConfig, gameConfig.RESOURCES_BY_KEY, name)
+        print(JSON:Encode(gameConfig.RESOURCES_BY_KEY[name]))
         local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
         local text = ui:createText(string.format(" %d/%d", 4, qty), Color.White)
         local icon = ui:createShape(iconShape, { spherized = true })
