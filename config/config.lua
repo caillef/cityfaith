@@ -159,7 +159,7 @@ local BUILDINGS = {
             }
         },
         repairDurations = { 5, 10 },
-        item = "caillef.shop2",
+        item = "wrden.workbench",
         itemScale = 0.75,
         color = Color.Brown,
         scale = 25,
