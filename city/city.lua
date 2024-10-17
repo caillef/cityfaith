@@ -816,15 +816,16 @@ function cantUpgradeUI()
     local requirementsUINodes = {}
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
     for name, qty in pairs(buildingInfo.repairPrices) do
+        local text = ui:createText("5/20")
         local icon = ui:createFrame(Color.Red)
         icon.Size = 20
         local triptychIcon = ui_blocks:createBlock({
             triptych = {
                 dir = "horizontal",
                 right = icon
-            }
+            },
+            height = function() return text.Height end
         })
-        local text = ui:createText("5/20")
         local node = ui_blocks:createBlock({
             columns = {
                 triptychIcon, text
