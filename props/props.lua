@@ -831,9 +831,8 @@ propsModule.createCharacterBox = function()
     shape.Physics = PhysicsMode.Disabled
 
     local function executeBonus()
-        local list = { "lumberjack", "miner", "ranger" }
-        local character = createCharacter(list[math.random(#list)])
-        squad:add(character)
+        local list = { "lumberjack", "miner", "gatherer" }
+        LocalEvent:Send("AddCharacter", { name = list[math.random(#list)] })
     end
 
     bonus.OnCollisionBegin = function(_, other)

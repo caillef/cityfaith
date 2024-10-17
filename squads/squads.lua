@@ -643,6 +643,8 @@ end
 
 local squadModule = {}
 
+local localSquad
+
 local propsModule
 squadModule.setPropsModule = function(_, module)
     propsModule = module
@@ -951,8 +953,13 @@ squadModule.create = function(_, defaultCharacterList)
     end)
 
     common.setPropPosition(squad, 0, 0)
-
+    localSquad = squad
     return squad
 end
+
+LocalEvent:Listen("AddCharacter", function(data)
+    local character = createCharacter(data.name)
+    squad:add(character)
+end)
 
 return squadModule
