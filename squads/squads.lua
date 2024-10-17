@@ -499,7 +499,7 @@ local function createCharacter(charaType)
 
     local model = require("avatar"):get(charaInfo.avatarName)
     model:SetParent(character)
-    model.Scale = 0.45
+    model.Scale = 0.6
     model.Physics = PhysicsMode.Disabled
     character.model = model
     if charaInfo.tool then
@@ -643,12 +643,12 @@ squadModule.create = function(_, defaultCharacterList)
                 local posZ = 0
                 if k > 7 then
                     local nb = math.min(12, nbCharacters - 6)
-                    posX = math.cos(((k - 7) / nb) * math.pi * 2) * 20
-                    posZ = math.sin(((k - 7) / nb) * math.pi * 2) * 20
+                    posX = math.cos(((k - 7) / nb) * math.pi * 2) * 25
+                    posZ = math.sin(((k - 7) / nb) * math.pi * 2) * 25
                 elseif k > 1 then
                     local nb = math.min(6, nbCharacters)
-                    posX = math.cos((k / nb) * math.pi * 2) * 10
-                    posZ = math.sin((k / nb) * math.pi * 2) * 10
+                    posX = math.cos((k / nb) * math.pi * 2) * 15
+                    posZ = math.sin((k / nb) * math.pi * 2) * 15
                 end
                 c:setAction({ type = "idle", Position = squad.Position + Number3(posX, 0, posZ) })
             end
