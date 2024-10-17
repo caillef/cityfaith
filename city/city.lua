@@ -690,10 +690,10 @@ cityModule.show = function(self, config)
         local quad = Quad()
         quad.Image = res.Body
         quad:SetParent(World)
-        quad.Width = 150
-        quad.Height = 150
+        quad.Width = 300
+        quad.Height = 300
         quad.Anchor = { 0.5, 0.5 }
-        quad.Position.Z = 0.1
+        quad.Position.Z = 1
         quad.Rotation.X = 0.5 * math.pi
     end)
 
