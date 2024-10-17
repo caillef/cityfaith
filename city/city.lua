@@ -693,7 +693,7 @@ cityModule.show = function(self, config)
         quad.Width = 300
         quad.Height = 300
         quad.Anchor = { 0.5, 0.5 }
-        quad.Position.Z = 1
+        quad.Position.Z = 5
         quad.Rotation.X = 0.5 * math.pi
     end)
 
