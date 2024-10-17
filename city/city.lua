@@ -707,9 +707,9 @@ cityModule.show = function(self, config)
             shape:SetParent(map)
             shape.Scale = 0.2
             shape.LocalPosition = Number3(
-                math.cos((i / 20) * math.pi * 2),
+                math.cos((i / 20) * math.pi * 2) * 20,
                 0,
-                math.sin((i / 20) * math.pi * 2)
+                math.sin((i / 20) * math.pi * 2) * 20
             )
             shape.Rotation.Y = (i / 20) * math.pi * 2
         end
