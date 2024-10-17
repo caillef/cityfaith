@@ -819,7 +819,7 @@ function cantUpgradeUI()
 
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
 
-    local title = ui:createText("Resources needed to build the " .. currentlyBuilding .. ".", Color.White)
+    local title = ui:createText("Resources needed to build the " .. currentlyBuilding .. ":", Color.White)
     title:setParent(bg)
 
     -- requirements UI
