@@ -711,7 +711,7 @@ cityModule.show = function(self, config)
                 0,
                 math.sin((i / 20) * math.pi * 2) * 10
             )
-            shape.Rotation.Y = -(i / 20) * math.pi * 2 + 0.5
+            shape.Rotation.Y = -(i / 20) * math.pi * 2 + 0.5 * math.pi
         end
     end)
 
