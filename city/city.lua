@@ -830,7 +830,7 @@ function cantUpgradeUI()
                 },
                 height = function() return icon.Height end
             })
-            icon.pivot.Rotation = { math.pi * 0.1, math.pi * 0.2, 0 }
+            icon.pivot.Rotation = { math.pi * -0.1, math.pi * -0.2, 0 }
             local node = ui_blocks:createBlock({
                 columns = {
                     triptychIcon, text
