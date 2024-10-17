@@ -809,7 +809,8 @@ function cantUpgradeUI()
     local bg = ui:createFrame(Color(0, 0, 0, 0.5))
     progressUI = bg
 
-    local title = ui:createText("Not enough resources", Color.White)
+    local title = ui:createText(gameConfig.BUILDINGS[currentlyBuilding].name .. "
+Not enough resources", Color.White)
     title:setParent(bg)
 
     -- requirements UI
