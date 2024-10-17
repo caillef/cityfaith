@@ -1,4 +1,4 @@
-local COMMIT_HASH = "19edb421"
+local COMMIT_HASH = "40a4ef58"
 
 -- MODULES
 local inventoryModule
@@ -251,7 +251,8 @@ initUI = function()
     return uiRoot
 end
 
-Client.OnPlayerJoin = function()
+Client.OnPlayerJoin = function(player)
+    if player ~= Player then return end
     modulesLoad:start(function()
         startGame()
     end)
