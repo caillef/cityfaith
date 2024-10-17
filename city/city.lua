@@ -685,7 +685,7 @@ cityModule.show = function(self, config)
     end
     map:SetParent(World)
     map.Scale = common.MAP_SCALE
-    map.Pivot.Y = 1
+    map.Pivot = { 0.5, 1, 0.5 }
     HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
         local quad = Quad()
         map.groundTexture = quad
