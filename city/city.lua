@@ -821,7 +821,7 @@ function cantUpgradeUI()
         local triptychIcon = ui_blocks:createBlock({
             triptych = {
                 dir = "horizontal",
-                left = icon
+                right = icon
             }
         })
         local text = ui:createText("5/20")
