@@ -2,7 +2,7 @@
 
 # files to add config
 filesToUpgrade=("props" "squads" "city")
-concatfiles=("config" "common" "progressbar")
+concatfiles=("config" "common" "progressbar" "ui_blocks")
 
 # Function to concat config
 concat_config() {

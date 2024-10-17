@@ -129,7 +129,7 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1,
+                wood_log = 1000,
                 stone = 1
             },
             {
@@ -153,7 +153,7 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1,
+                wood_log = 1000,
                 stone = 1
             },
             {
@@ -176,7 +176,7 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1,
+                wood_log = 11000,
                 stone = 1
             }
         },
@@ -196,7 +196,7 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1,
+                wood_log = 1000,
                 stone = 1
             },
             {
