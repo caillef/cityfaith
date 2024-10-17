@@ -1,4 +1,4 @@
-local COMMIT_HASH = "2847357b"
+local COMMIT_HASH = "b0a2a53d"
 
 -- MODULES
 local inventoryModule
@@ -125,7 +125,7 @@ end
 
 function generateNewMap()
     local worldKeys = { "forest", "forest", "forest", "desert", "desert", "plateau", "plateau", "magicland" }
-    local worldType = worldKeys[math.random(1, 4)]
+    local worldType = worldKeys[math.random(1, #worldKeys)]
     local worldInfo = gameConfig.WORLDS[worldType]
 
     local ui = require("uikit")

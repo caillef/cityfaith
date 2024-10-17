@@ -173,6 +173,7 @@ local BUILDINGS = {
         },
         repairDurations = { 5 },
         color = Color.Yellow,
+        item = "voxels.market_stall",
         scale = 25,
         x = -5,
         y = 4,
@@ -193,6 +194,7 @@ local BUILDINGS = {
         },
         repairDurations = { 5, 10 },
         color = Color.Grey,
+        item = "voxels.simple_furnace",
         scale = 25,
         x = -5,
         y = -4
