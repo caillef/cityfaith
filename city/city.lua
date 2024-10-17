@@ -674,8 +674,8 @@ cityModule.show = function(self, config)
         return
     end
     local map = MutableShape()
-    for z = -14, 14 do
-        for x = -14, 14 do
+    for z = -15, 14 do
+        for x = -15, 14 do
             local color = Color(116, 183, 46)
             if (x > -2 and x < 2) or (z > -2 and z < 2) then
                 color = Color(200, 173, 127)
@@ -685,7 +685,7 @@ cityModule.show = function(self, config)
     end
     map:SetParent(World)
     map.Scale = common.MAP_SCALE
-    map.Pivot = { 0.5, 1, 0.5 }
+    map.Pivot = { 0, 1, 0 }
     HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
         local quad = Quad()
         map.groundTexture = quad
