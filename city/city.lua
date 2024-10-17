@@ -141,6 +141,7 @@ local BUILDINGS = {
         },
         repairDurations = { 5, 10 },
         item = "voxels.simple_cabin",
+        description = "The House increase your squad maximum size.",
         itemScale = 0.75,
         color = Color.Red,
         scale = 15,
@@ -167,6 +168,7 @@ local BUILDINGS = {
         },
         repairDurations = { 5, 10 },
         item = "voxels.simple_workstation",
+        description = "The Workstation increases your characters speed.",
         itemScale = 0.75,
         color = Color.Brown,
         scale = 25,
@@ -188,6 +190,7 @@ local BUILDINGS = {
         repairDurations = { 5 },
         color = Color.Yellow,
         item = "voxels.market_stall",
+        description = "The Market increases the number of golds received.",
         itemScale = 0.75,
         rotation = -0.2 * math.pi,
         scale = 25,
@@ -215,6 +218,7 @@ local BUILDINGS = {
         repairDurations = { 5, 10 },
         color = Color.Grey,
         item = "voxels.simple_furnace",
+        description = "The Forge allows you to gather resources faster.",
         itemScale = 0.75,
         scale = 25,
         rotation = -0.2 * math.pi,
@@ -819,8 +823,11 @@ function cantUpgradeUI()
 
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
 
-    local title = ui:createText("Resources needed to build the " .. currentlyBuilding .. ":", Color.White)
-    title:setParent(bg)
+    local text = ui:createText(buildingInfo.description, Color.White)
+    text:setParent(bg)
+
+    local text = ui:createText("Resources needed:", Color.White)
+    text:setParent(bg)
 
     -- requirements UI
     local requirementsUINodes = {}
@@ -867,6 +874,7 @@ function cantUpgradeUI()
             Screen.Height * 0.5 - bg.Height * 0.5
         }
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
+        text.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
     end
     bg:parentDidResize()
     currentlyBuilding = nil
