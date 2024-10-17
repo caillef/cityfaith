@@ -706,7 +706,7 @@ cityModule.show = function(self, config)
     portal.model.Scale = 2.5
     portal.model.Pivot.Y = 0
     portal.model:SetParent(World)
-    common.setPropPosition(portal.model, 0, 10)
+    common.setPropPosition(portal.model, 0, 7)
 
     portal.model.OnCollisionBegin = function(_, other)
         if other ~= localSquad then return end
