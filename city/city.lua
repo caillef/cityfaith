@@ -740,6 +740,9 @@ cityModule.show = function(self, config)
     portal.model.Pivot.Y = 0
     portal.model:SetParent(World)
     common.setPropPosition(portal.model, 0, 7)
+    require("hierarchyactions"):applyToDescendants(portal.model, { includeRoot = true }, function(o)
+        o.Shadow = true
+    end)
 
     portal.model.OnCollisionBegin = function(_, other)
         if other ~= localSquad then return end
