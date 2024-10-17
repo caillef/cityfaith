@@ -144,7 +144,7 @@ local BUILDINGS = {
         x = 5,
         y = 4,
     },
-    workshop = {
+    workstation = {
         -- level 1 = can upgrade squad boots level 2, squad inventory
         -- level 2 = can upgrade squad boots level 3, squad inventory
         level = 0,
@@ -160,9 +160,10 @@ local BUILDINGS = {
         },
         repairDurations = { 5, 10 },
         item = "voxels.simple_workstation",
-        itemScale = 0.55,
+        itemScale = 0.75,
         color = Color.Brown,
         scale = 25,
+        rotation = 0.2 * math.pi,
         x = 5,
         y = -4
     },
@@ -179,6 +180,7 @@ local BUILDINGS = {
         color = Color.Yellow,
         item = "voxels.market_stall",
         itemScale = 0.75,
+        rotation = -0.2 * math.pi,
         scale = 25,
         x = -5,
         y = 4,
@@ -202,6 +204,7 @@ local BUILDINGS = {
         item = "voxels.simple_furnace",
         itemScale = 0.75,
         scale = 25,
+        rotation = -0.2 * math.pi,
         x = -5,
         y = -4
     }
@@ -484,6 +487,7 @@ function updateBuildings()
                 building.model.Pivot = { obj.Width * 0.5, 0, obj.Depth * 0.5 }
                 building.model.Scale = buildingInfo.itemScale
                 building.model:SetParent(World)
+                building.model.Rotation.Y = buildingInfo.rotation
                 building.model.OnCollisionBegin = function(_, other)
                     if other ~= localSquad then return end
                     LocalEvent:Send("InteractWithBuilding", { name = name })
