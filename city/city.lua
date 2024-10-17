@@ -137,6 +137,8 @@ local BUILDINGS = {
             }
         },
         repairDurations = { 5, 10 },
+        item = "caillef.shop2",
+        itemScale = 0.5,
         color = Color.Red,
         scale = 15,
         x = 5,
@@ -157,6 +159,8 @@ local BUILDINGS = {
             }
         },
         repairDurations = { 5, 10 },
+        item = "caillef.shop2",
+        itemScale = 0.5,
         color = Color.Brown,
         scale = 25,
         x = 5,
@@ -196,6 +200,7 @@ local BUILDINGS = {
         repairDurations = { 5, 10 },
         color = Color.Grey,
         item = "voxels.simple_furnace",
+        itemScale = 0.5,
         scale = 25,
         x = -5,
         y = -4
