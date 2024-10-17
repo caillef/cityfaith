@@ -125,6 +125,7 @@ local BUILDINGS = {
         -- level 0 = 1 people in squad
         -- level 1 = 2 people in squad
         -- level 2 = 4 people in squad
+        name = "House",
         level = 0,
         repairPrices = {
             {
@@ -148,6 +149,7 @@ local BUILDINGS = {
     workstation = {
         -- level 1 = can upgrade squad boots level 2, squad inventory
         -- level 2 = can upgrade squad boots level 3, squad inventory
+        name = "Workstation",
         level = 0,
         repairPrices = {
             {
@@ -170,6 +172,7 @@ local BUILDINGS = {
     },
     market = {
         -- level 1 = sell for coins
+        name = "Market",
         level = 0,
         repairPrices = {
             {
@@ -189,6 +192,7 @@ local BUILDINGS = {
     forge = {
         -- level 1 = can upgrade characters tool (mining speed) level 2
         -- level 2 = can upgrade characters tool (mining speed) level 3
+        name = "Forge",
         level = 0,
         repairPrices = {
             {
