@@ -465,11 +465,15 @@ end
 function updateBuildings()
     for name, buildingInfo in pairs(gameConfig.BUILDINGS) do
         local building = {}
+        local newLevel = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
         if buildings[name] then
+            if newLevel == buildings[name].level then
+                goto continue
+            end
             buildings[name].model:RemoveFromParent()
             buildings[name].model = nil
         end
-        building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
+        building.level = newLevel
         print("buildingLevel", building.level)
         if building.level == 0 then
             building.model = MutableShape()
@@ -526,6 +530,7 @@ function updateBuildings()
             common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
             buildings[name] = building
         end
+        ::continue::
     end
 end
 
