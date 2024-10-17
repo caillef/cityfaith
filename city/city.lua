@@ -815,36 +815,38 @@ function cantUpgradeUI()
     -- requirements UI
     local requirementsUINodes = {}
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
-    for name, qty in pairs(buildingInfo.repairPrices) do
-        print(gameConfig, gameConfig.RESOURCES_BY_KEY, name)
-        print(JSON:Encode(gameConfig.RESOURCES_BY_KEY[name]))
-        local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
-        local text = ui:createText(string.format(" %d/%d", 4, qty), Color.White)
-        local icon = ui:createShape(iconShape, { spherized = true })
-        icon.Size = 20
-        local triptychIcon = ui_blocks:createBlock({
-            triptych = {
-                dir = "horizontal",
-                right = icon,
-            },
-            height = function() return text.Height end
-        })
-        local node = ui_blocks:createBlock({
-            columns = {
-                triptychIcon, text
-            }
-        })
-        table.insert(requirementsUINodes, node)
-    end
-    local requirementsNode
-    requirementsNode = ui_blocks:createBlock({
-        columns = requirementsUINodes,
-        parentDidResize = function()
-            if not requirementsNode.parent then return end
-            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+    local newLevel = (playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0) + 1
+    local repairPrices = buildingInfo.repairPrices[newLevel]
+    if repairPrices then
+        for name, qty in pairs(repairPrices) do
+            local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
+            local text = ui:createText(string.format(" %d/%d", 4, qty), Color.White)
+            local icon = ui:createShape(iconShape, { spherized = true })
+            icon.Size = 20
+            local triptychIcon = ui_blocks:createBlock({
+                triptych = {
+                    dir = "horizontal",
+                    right = icon,
+                },
+                height = function() return text.Height end
+            })
+            local node = ui_blocks:createBlock({
+                columns = {
+                    triptychIcon, text
+                }
+            })
+            table.insert(requirementsUINodes, node)
         end
-    })
-    requirementsNode:setParent(bg)
+        local requirementsNode
+        requirementsNode = ui_blocks:createBlock({
+            columns = requirementsUINodes,
+            parentDidResize = function()
+                if not requirementsNode.parent then return end
+                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+            end
+        })
+        requirementsNode:setParent(bg)
+    end
 
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
