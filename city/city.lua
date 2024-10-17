@@ -495,7 +495,6 @@ function updateBuildings()
                 common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
                 buildings[name] = building
             end)
-            return
         else
             building.model = MutableShape()
             building.model:AddBlock(buildingInfo.color, 0, 0, 0)
@@ -511,8 +510,10 @@ function updateBuildings()
                 building.model.Physics = PhysicsMode.Static
             end)
         end
-        common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
-        buildings[name] = building
+        if building.model then
+            common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+            buildings[name] = building
+        end
     end
 end
 
