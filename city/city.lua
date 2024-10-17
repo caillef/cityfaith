@@ -462,6 +462,7 @@ function updateBuildings()
             buildings[name].model = nil
         end
         building.level = playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0
+        print("buildingLevel", building.level)
         if building.level == 0 then
             building.model = MutableShape()
             building.model:AddBlock(Color.Grey, 0, 0, 0)
