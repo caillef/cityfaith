@@ -513,7 +513,7 @@ propsModule.create = function(_, propType, x, y)
         end
         require("hierarchyactions"):applyToDescendants(prop, { includeRoot = true }, function(o)
             o.IsHidden = true
-            o.Physics = false
+            o.Physics = PhysicsMode.Disabled
         end)
         Timer(1, function()
             prop:RemoveFromParent()
