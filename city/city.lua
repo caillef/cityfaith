@@ -822,13 +822,13 @@ function cantUpgradeUI()
             local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
             local text = ui:createText(string.format(" %d/%d", 4, qty), Color.White)
             local icon = ui:createShape(iconShape, { spherized = true })
-            icon.Size = 20
+            icon.Size = 40
             local triptychIcon = ui_blocks:createBlock({
                 triptych = {
                     dir = "horizontal",
                     right = icon,
                 },
-                height = function() return text.Height end
+                height = function() return icon.Height end
             })
             local node = ui_blocks:createBlock({
                 columns = {
