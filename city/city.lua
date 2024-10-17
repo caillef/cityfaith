@@ -809,13 +809,14 @@ function cantUpgradeUI()
     local bg = ui:createFrame(Color(0, 0, 0, 0.5))
     progressUI = bg
 
-    local title = ui:createText(gameConfig.BUILDINGS[currentlyBuilding].name .. "
+    local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
+
+    local title = ui:createText(buildingInfo.name .. "
 Not enough resources", Color.White)
     title:setParent(bg)
 
     -- requirements UI
     local requirementsUINodes = {}
-    local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
     local newLevel = (playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0) + 1
     local repairPrices = buildingInfo.repairPrices[newLevel]
     if repairPrices then
