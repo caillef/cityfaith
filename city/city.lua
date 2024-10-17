@@ -674,8 +674,8 @@ cityModule.show = function(self, config)
         return
     end
     local map = MutableShape()
-    for z = -15, 15 do
-        for x = -15, 15 do
+    for z = -14, 14 do
+        for x = -14, 14 do
             local color = Color(116, 183, 46)
             if (x > -2 and x < 2) or (z > -2 and z < 2) then
                 color = Color(200, 173, 127)
