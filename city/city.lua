@@ -707,6 +707,9 @@ cityModule.show = function(self, config)
             local shape = Shape(obj, { includeChildren = true })
             shape:SetParent(map)
             shape.Scale = 0.08
+            require("hierarchyactions"):applyToDescendants(shape, { includeRoot = true }, function(o)
+                o.Shadow = true
+            end)
             shape.LocalPosition = Number3(
                 math.cos((i / nbFences) * math.pi * 2) * 9 + 0.5,
                 0,
