@@ -1,4 +1,4 @@
-local COMMIT_HASH = "c3d733e6"
+local COMMIT_HASH = "0bd33fe4"
 
 -- MODULES
 local inventoryModule
@@ -92,6 +92,7 @@ end)
 
 function goToVillage()
     cityModule:show({
+        inventory = inventory,
         squad = squad,
         portalCallback = generateNewMap,
         callback = function()
