@@ -160,7 +160,7 @@ local BUILDINGS = {
         },
         repairDurations = { 5, 10 },
         item = "wrden.workbench",
-        itemScale = 0.75,
+        itemScale = 0.4,
         color = Color.Brown,
         scale = 25,
         x = 5,
