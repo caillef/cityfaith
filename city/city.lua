@@ -683,7 +683,7 @@ cityModule.show = function(self, config)
     for z = -15, 14 do
         for x = -15, 14 do
             local color = Color(116, 183, 46)
-            if (x > -2 and x < 2) or (z > -2 and z < 2) then
+            if math.pow(x) + math.pow(z) < 16 then
                 color = Color(200, 173, 127)
             end
             map:AddBlock(color, x, 0, z)
