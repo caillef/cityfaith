@@ -69,7 +69,7 @@ local PROPS = {
             wood_log = { 2, 3 },
             wooden_stick = { 1, 2 }
         },
-        scale = 0.5,
+        scale = 0.8,
         hp = 3,
     },
     bush = {
@@ -78,7 +78,7 @@ local PROPS = {
         drops = {
             wooden_stick = { 1, 2 }
         },
-        scale = 0.5,
+        scale = 0.8,
         hp = 1,
     },
     berry_bush = {
@@ -88,7 +88,7 @@ local PROPS = {
             wooden_stick = { 0, 1 },
             berry = { 1, 2 }
         },
-        scale = 0.5,
+        scale = 0.8,
         hp = 1,
     },
     stone = {
@@ -97,7 +97,7 @@ local PROPS = {
         drops = {
             stone = { 2, 3 }
         },
-        scale = 0.5,
+        scale = 0.8,
         hp = 6,
     },
     iron = {
@@ -106,7 +106,7 @@ local PROPS = {
         drops = {
             iron = { 2, 3 }
         },
-        scale = 0.5,
+        scale = 0.8,
         hp = 10,
     },
     gold = {
@@ -115,7 +115,7 @@ local PROPS = {
         drops = {
             iron = { 1, 3 }
         },
-        scale = 0.5,
+        scale = 0.8,
         hp = 20,
     }
 }
