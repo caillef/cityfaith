@@ -822,9 +822,9 @@ function cantUpgradeUI()
         local triptychIcon = ui_blocks:createBlock({
             triptych = {
                 dir = "horizontal",
-                right = icon
+                right = icon,
+                padding = 10,
             },
-            padding = 10,
             height = function() return text.Height end
         })
         local node = ui_blocks:createBlock({
