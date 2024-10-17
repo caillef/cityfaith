@@ -700,6 +700,21 @@ cityModule.show = function(self, config)
     map:SetParent(World)
     map.Scale = common.MAP_SCALE
     map.Pivot = { 0, 1, 0 }
+
+    Object:Load("voxels.wood_barrier_fence", function(obj)
+        for i = 0, 20 do
+            local shape = Shape(obj, { includeChildren = true })
+            shape:SetParent(map)
+            shape.Scale = 0.2
+            shape.LocalPosition = Number3(
+                math.cos((i / 20) * math.pi * 2),
+                0,
+                math.sin((i / 20) * math.pi * 2)
+            )
+            shape.Rotation.Y = (i / 20) * math.pi * 2
+        end
+    end)
+
     -- HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
     --     local quad = Quad()
     --     map.groundTexture = quad
