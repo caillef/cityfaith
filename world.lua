@@ -1,4 +1,4 @@
-local COMMIT_HASH = "8d73440a"
+local COMMIT_HASH = "17f19a3d"
 
 -- MODULES
 local inventoryModule
@@ -232,13 +232,17 @@ initUI = function()
     local ui = require("uikit")
 
     local uiRoot = ui:createFrame()
+    uiRoot.parentDidResize = function()
+        uiRoot.Width = Screen.Width
+        uiRoot.Height = Screen.Height
+    end
     coinIcon = ui:createShape(Shape(Items.caillef.coin), { spherized = true })
     LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
         coinIcon.pivot.Rotation.Y = coinIcon.pivot.Rotation.Y + dt
     end)
     coinIcon.Size = 80
     coinText = ui:createText("0", Color.White, "big")
-    coinText.object.FontSize = 30
+    coinText.object.FontSize = 60
     coinText.parentDidResize = function()
         coinIcon.pos = { 10, Screen.Height - Screen.SafeArea.Top - 10 - coinIcon.Height }
         coinText.pos =
