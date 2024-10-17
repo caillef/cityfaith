@@ -823,8 +823,8 @@ function cantUpgradeUI()
 
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
 
-    local text = ui:createText(buildingInfo.description, Color.White)
-    text:setParent(bg)
+    local title = ui:createText(buildingInfo.description, Color.White)
+    title:setParent(bg)
 
     local text = ui:createText("Resources needed:", Color.White)
     text:setParent(bg)
@@ -873,8 +873,8 @@ function cantUpgradeUI()
             Screen.Width * 0.5 - bg.Width * 0.5,
             Screen.Height * 0.5 - bg.Height * 0.5
         }
-        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
-        text.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height - 5 - title.Height }
+        text.pos = { bg.Width * 0.5 - text.Width * 0.5, bg.Height * 0.5 - text.Height * 0.5 }
     end
     bg:parentDidResize()
     currentlyBuilding = nil
