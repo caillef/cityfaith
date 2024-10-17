@@ -140,7 +140,7 @@ local BUILDINGS = {
             }
         },
         repairDurations = { 5, 10 },
-        item = "caillef.shop2",
+        item = "voxels.simple_cabin",
         itemScale = 0.75,
         color = Color.Red,
         scale = 15,
