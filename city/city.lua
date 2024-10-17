@@ -819,8 +819,8 @@ function cantUpgradeUI()
         local icon = ui:createFrame(Color.Red)
         icon.Size = 20
         local triptychIcon = ui_blocks:createBlock({
-            direction = "horizontal",
             triptych = {
+                dir = "horizontal",
                 left = icon
             }
         })
