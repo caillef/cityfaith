@@ -690,7 +690,7 @@ function startBuildingProgress()
         progressBar = progressBarModule:create({
             color = Color.Green,
             width = function() return bg.Width * 0.8 end,
-            height = function() return bg.Height * 0.5 end,
+            height = function() return 50 end,
             pos = function(bar)
                 return {
                     bg.Width * 0.5 - bar.Width * 0.5,
@@ -860,7 +860,7 @@ function cantUpgradeUI()
             columns = requirementsUINodes,
             parentDidResize = function()
                 if not requirementsNode.parent then return end
-                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 15 }
             end
         })
         requirementsNode:setParent(bg)
