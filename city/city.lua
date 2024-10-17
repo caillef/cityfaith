@@ -816,32 +816,36 @@ function cantUpgradeUI()
     local requirementsUINodes = {}
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
     for name, qty in pairs(buildingInfo.repairPrices) do
-        local text = ui:createText(" 5/20")
-        local icon = ui:createFrame(Color.Red)
-        icon.Size = 20
-        local triptychIcon = ui_blocks:createBlock({
-            triptych = {
-                dir = "horizontal",
-                right = icon,
-            },
-            height = function() return text.Height end
-        })
-        local node = ui_blocks:createBlock({
-            columns = {
-                triptychIcon, text
-            }
-        })
-        table.insert(requirementsUINodes, node)
+        Object:Load(gameConfig.RESOURCES_BY_KEY[name].fullname, function(icon)
+            local text = ui:createText(string.format(" %d/%d", 4, qty), Color.White)
+            local icon = ui:createShape(icon, { spherized = true })
+            icon.Size = 20
+            local triptychIcon = ui_blocks:createBlock({
+                triptych = {
+                    dir = "horizontal",
+                    right = icon,
+                },
+                height = function() return text.Height end
+            })
+            local node = ui_blocks:createBlock({
+                columns = {
+                    triptychIcon, text
+                }
+            })
+            table.insert(requirementsUINodes, node)
+        end)
     end
     local requirementsNode
-    requirementsNode = ui_blocks:createBlock({
-        columns = requirementsUINodes,
-        parentDidResize = function()
-            if not requirementsNode.parent then return end
-            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
-        end
-    })
-    requirementsNode:setParent(bg)
+    Timer(1, function()
+        requirementsNode = ui_blocks:createBlock({
+            columns = requirementsUINodes,
+            parentDidResize = function()
+                if not requirementsNode.parent then return end
+                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+            end
+        })
+        requirementsNode:setParent(bg)
+    end)
 
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
