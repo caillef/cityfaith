@@ -471,6 +471,24 @@ function updateBuildings()
                 if other ~= localSquad then return end
                 onStopBuilding(name)
             end
+        elseif buildingInfo.item then
+            Object:Load(buildingInfo.item, function(obj)
+                building.model = obj
+                building.model.Pivot = { obj.Width * 0.5, 0, obj.Depth * 0.5 }
+                building.model.Scale = buildingInfo.itemScale
+                building.model:SetParent(World)
+                building.model.OnCollisionBegin = function(_, other)
+                    if other ~= localSquad then return end
+                    LocalEvent:Send("InteractWithBuilding", { name = name })
+                end
+                building.model.Physics = PhysicsMode.Disabled
+                Timer(5, function()
+                    building.model.Physics = PhysicsMode.Static
+                end)
+                common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+                buildings[name] = building
+            end)
+            return
         else
             building.model = MutableShape()
             building.model:AddBlock(buildingInfo.color, 0, 0, 0)
