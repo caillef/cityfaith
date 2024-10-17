@@ -692,17 +692,17 @@ cityModule.show = function(self, config)
     map:SetParent(World)
     map.Scale = common.MAP_SCALE
     map.Pivot = { 0, 1, 0 }
-    HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
-        local quad = Quad()
-        map.groundTexture = quad
-        quad.Image = res.Body
-        quad:SetParent(World)
-        quad.Width = 300
-        quad.Height = 300
-        quad.Anchor = { 0.5, 0.5 }
-        quad.Position.Y = 0.05
-        quad.Rotation.X = 0.5 * math.pi
-    end)
+    -- HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
+    --     local quad = Quad()
+    --     map.groundTexture = quad
+    --     quad.Image = res.Body
+    --     quad:SetParent(World)
+    --     quad.Width = 300
+    --     quad.Height = 300
+    --     quad.Anchor = { 0.5, 0.5 }
+    --     quad.Position.Y = 0.05
+    --     quad.Rotation.X = 0.5 * math.pi
+    -- end)
 
     updateBuildings()
 
@@ -716,7 +716,9 @@ cityModule.show = function(self, config)
 
     portal.model.OnCollisionBegin = function(_, other)
         if other ~= localSquad then return end
-        map.groundTexture:RemoveFromParent()
+        if map.groundTexture then
+            map.groundTexture:RemoveFromParent()
+        end
         map:RemoveFromParent()
         portal.model:RemoveFromParent()
         for _, building in pairs(buildings) do
