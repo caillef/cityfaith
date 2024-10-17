@@ -815,36 +815,36 @@ propsModule.createSpawner = function(self, type, x, y)
     return propSpawner
 end
 
--- local function createCharacterBox()
---     local bonus = Object()
---     local box = Box()
---     box.Min = { -4, 0, -4 }
---     box.Max = { 4, 0, 4 }
---     bonus.CollisionBox = box
---     bonus.Physics = PhysicsMode.Trigger
+propsModule.createCharacterBox = function()
+    local bonus = Object()
+    local box = Box()
+    box.Min = { -4, 0, -4 }
+    box.Max = { 4, 0, 4 }
+    bonus.CollisionBox = box
+    bonus.Physics = PhysicsMode.Trigger
 
---     local shape = MutableShape()
---     shape:AddBlock(Color.Blue, 0, 0, 0)
---     shape.Pivot = { 0.5, 0, 0.5 }
---     shape:SetParent(bonus)
---     shape.Scale = 5
---     shape.Physics = PhysicsMode.Disabled
+    local shape = MutableShape()
+    shape:AddBlock(Color.Blue, 0, 0, 0)
+    shape.Pivot = { 0.5, 0, 0.5 }
+    shape:SetParent(bonus)
+    shape.Scale = 5
+    shape.Physics = PhysicsMode.Disabled
 
---     local function executeBonus()
---         local list = { "lumberjack", "miner", "ranger" }
---         local character = createCharacter(list[math.random(#list)])
---         squad:add(character)
---     end
+    local function executeBonus()
+        local list = { "lumberjack", "miner", "ranger" }
+        local character = createCharacter(list[math.random(#list)])
+        squad:add(character)
+    end
 
---     bonus.OnCollisionBegin = function(_, other)
---         if other == squad then
---             bonus.OnCollisionBegin = nil
---             bonus:RemoveFromParent()
---             executeBonus()
---         end
---     end
+    bonus.OnCollisionBegin = function(_, other)
+        if other == squad then
+            bonus.OnCollisionBegin = nil
+            bonus:RemoveFromParent()
+            executeBonus()
+        end
+    end
 
---     return bonus
--- end
+    return bonus
+end
 
 return propsModule
