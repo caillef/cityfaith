@@ -428,7 +428,7 @@ function startBuildingProgress()
     local bg = ui:createFrame(Color(0, 0, 0, 0.5))
     progressUI = bg
 
-    local title = ui:createText("Upgrading " .. currentlyBuilding, Color.White)
+    local title = ui:createText((isUpgrade and "Upgrading " or "Constructing ") .. currentlyBuilding, Color.White)
     title:setParent(bg)
 
     bg.parentDidResize = function()
