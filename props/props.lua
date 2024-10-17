@@ -141,6 +141,7 @@ local BUILDINGS = {
         itemScale = 0.75,
         color = Color.Red,
         scale = 15,
+        rotation = 0.2 * math.pi,
         x = 5,
         y = 4,
     },
