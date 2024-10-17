@@ -826,10 +826,14 @@ function cantUpgradeUI()
         })
         table.insert(requirementsUINodes, node)
     end
-    ui_blocks:createBlock({
-        -- to make rows, replace this with "rows"
-        columns = requirementsUINodes
+    local requirementsNode
+    requirementsNode = ui_blocks:createBlock({
+        columns = requirementsUINodes,
+        parentDidResize = function()
+            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+        end
     })
+    requirementsNode:setParent(bg)
 
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
