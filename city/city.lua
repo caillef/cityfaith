@@ -705,7 +705,7 @@ cityModule.show = function(self, config)
         for i = 0, 20 do
             local shape = Shape(obj, { includeChildren = true })
             shape:SetParent(map)
-            shape.Scale = 0.05
+            shape.Scale = 0.1
             shape.LocalPosition = Number3(
                 math.cos((i / 20) * math.pi * 2) * 10,
                 0,
