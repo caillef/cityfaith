@@ -864,6 +864,7 @@ function cantUpgradeUI()
             end
         })
         requirementsNode:setParent(bg)
+        requirementsNode:parentDidResize()
     end
 
     bg.parentDidResize = function()
