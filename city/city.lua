@@ -824,6 +824,7 @@ function cantUpgradeUI()
                 dir = "horizontal",
                 right = icon
             },
+            padding = 10,
             height = function() return text.Height end
         })
         local node = ui_blocks:createBlock({
