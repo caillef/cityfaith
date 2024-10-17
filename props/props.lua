@@ -1,7 +1,7 @@
 local CHARACTERS = {
     gatherer = {
         skills = { gather = true },
-        avatarName = "soliton",
+        avatarName = Player.Username,
         slots = 30
     },
     lumberjack = {

@@ -1,7 +1,7 @@
 local CHARACTERS = {
     gatherer = {
         skills = { gather = true },
-        avatarName = "soliton",
+        avatarName = Player.Username,
         slots = 30
     },
     lumberjack = {
@@ -474,7 +474,6 @@ function updateBuildings()
             buildings[name].model = nil
         end
         building.level = newLevel
-        print("buildingLevel", building.level)
         if building.level == 0 then
             building.model = MutableShape()
             building.model:AddBlock(Color.Grey, 0, 0, 0)
@@ -511,24 +510,14 @@ function updateBuildings()
                 common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
                 buildings[name] = building
             end)
-        else
-            building.model = MutableShape()
-            building.model:AddBlock(buildingInfo.color, 0, 0, 0)
-            building.model.Pivot = { 0.5, 0, 0.5 }
-            building.model.Scale = buildingInfo.scale
-            building.model:SetParent(World)
-            building.model.OnCollisionBegin = function(_, other)
-                if other ~= localSquad then return end
-                LocalEvent:Send("InteractWithBuilding", { name = name })
-            end
-            building.model.Physics = PhysicsMode.Disabled
-            Timer(5, function()
-                building.model.Physics = PhysicsMode.Static
-            end)
         end
         if building.model then
             common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
             buildings[name] = building
+        end
+        local requirements = {}
+        for name, qty in pairs(buildingInfo.repairPrices) do
+
         end
         ::continue::
     end
