@@ -686,6 +686,14 @@ cityModule.show = function(self, config)
     map:SetParent(World)
     map.Scale = common.MAP_SCALE
     map.Pivot.Y = 1
+    HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
+        local quad = Quad()
+        quad.Image = res.Body
+        quad:SetParent(World)
+        quad.Width = 100
+        quad.Height = 100
+        quad.Position.Z = 0.1
+    end)
 
     updateBuildings()
 
