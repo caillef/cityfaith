@@ -1,4 +1,4 @@
-local COMMIT_HASH = "5d139829"
+local COMMIT_HASH = "bc75c38d"
 
 -- MODULES
 local inventoryModule
@@ -275,11 +275,10 @@ function startGame()
 
     squad = squadsModule:create({ "gatherer", "lumberjack", "miner" })
 
-    --generateNewMap()
-    goToVillage()
-
     initCamera()
     globalUI = initUI()
+
+    goToVillage()
 
     --[[
     for i = -5, 15 do
