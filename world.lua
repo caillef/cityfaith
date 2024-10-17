@@ -1,4 +1,4 @@
-local COMMIT_HASH = "07ce0c32"
+local COMMIT_HASH = "f5b72a88"
 
 -- MODULES
 local inventoryModule
@@ -79,7 +79,7 @@ local buildingsInfo = {
     },
     forge = {
     },
-    workshop = {
+    workstation = {
     },
 }
 

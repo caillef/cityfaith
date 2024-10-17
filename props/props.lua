@@ -159,7 +159,7 @@ local BUILDINGS = {
             }
         },
         repairDurations = { 5, 10 },
-        item = "wrden.workbench",
+        item = "voxels.simple_workstation",
         itemScale = 0.55,
         color = Color.Brown,
         scale = 25,
