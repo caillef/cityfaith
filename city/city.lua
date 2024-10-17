@@ -830,6 +830,7 @@ function cantUpgradeUI()
     requirementsNode = ui_blocks:createBlock({
         columns = requirementsUINodes,
         parentDidResize = function()
+            if not requirementsNode.parent then return end
             requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
         end
     })
