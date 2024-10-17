@@ -129,12 +129,14 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1000,
-                stone = 1
+                wood_log = 50,
+                stone = 25,
+                berry = 10
             },
             {
-                wood_log = 2,
-                stone = 2
+                wood_log = 100,
+                stone = 50,
+                berry = 20
             }
         },
         repairDurations = { 5, 10 },
@@ -153,12 +155,14 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1000,
-                stone = 1
+                wood_log = 75,
+                stone = 40,
+                iron = 10
             },
             {
-                wood_log = 2,
-                stone = 2
+                wood_log = 150,
+                stone = 80,
+                iron = 20
             }
         },
         repairDurations = { 5, 10 },
@@ -176,8 +180,9 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 11000,
-                stone = 1
+                wood_log = 100,
+                stone = 50,
+                gold = 5
             }
         },
         repairDurations = { 5 },
@@ -196,12 +201,15 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 1000,
-                stone = 1
+                wood_log = 60,
+                stone = 80,
+                iron = 20
             },
             {
-                wood_log = 1,
-                stone = 1
+                wood_log = 120,
+                stone = 160,
+                iron = 40,
+                gold = 5
             },
         },
         repairDurations = { 5, 10 },
