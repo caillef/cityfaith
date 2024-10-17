@@ -702,16 +702,17 @@ cityModule.show = function(self, config)
     map.Pivot = { 0, 1, 0 }
 
     Object:Load("voxels.wood_barrier_fence", function(obj)
-        for i = 0, 20 do
+        local nbFences = 30
+        for i = 0, nbFences do
             local shape = Shape(obj, { includeChildren = true })
             shape:SetParent(map)
-            shape.Scale = 0.1
+            shape.Scale = 0.08
             shape.LocalPosition = Number3(
-                math.cos((i / 20) * math.pi * 2) * 10,
+                math.cos((i / nbFences) * math.pi * 2) * 10,
                 0,
-                math.sin((i / 20) * math.pi * 2) * 10
+                math.sin((i / nbFences) * math.pi * 2) * 10
             )
-            shape.Rotation.Y = -(i / 20) * math.pi * 2 + 0.5 * math.pi
+            shape.Rotation.Y = -(i / nbFences) * math.pi * 2 + 0.5 * math.pi
         end
     end)
 
