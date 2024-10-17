@@ -705,13 +705,13 @@ cityModule.show = function(self, config)
         for i = 0, 20 do
             local shape = Shape(obj, { includeChildren = true })
             shape:SetParent(map)
-            shape.Scale = 0.2
+            shape.Scale = 0.05
             shape.LocalPosition = Number3(
-                math.cos((i / 20) * math.pi * 2) * 20,
+                math.cos((i / 20) * math.pi * 2) * 10,
                 0,
-                math.sin((i / 20) * math.pi * 2) * 20
+                math.sin((i / 20) * math.pi * 2) * 10
             )
-            shape.Rotation.Y = (i / 20) * math.pi * 2
+            shape.Rotation.Y = -(i / 20) * math.pi * 2
         end
     end)
 
