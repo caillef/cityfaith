@@ -1,4 +1,4 @@
-local COMMIT_HASH = "00dadc77"
+local COMMIT_HASH = "501657e3"
 
 -- MODULES
 local inventoryModule
@@ -199,6 +199,13 @@ function generateNewMap()
         end)
     end
 
+    for i = 1, 20 do
+        local box = createCharacterBox()
+        box:SetParent(World)
+        setPropPosition(box, math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
+    end
+
+
     squad:freeze()
     Timer(3, function()
         globalUI:show()
@@ -273,20 +280,12 @@ function startGame()
 
     squadsModule:setPropsModule(propsModule)
 
-    squad = squadsModule:create({ "gatherer", "lumberjack", "miner" })
+    squad = squadsModule:create({ "gatherer" })
 
     initCamera()
     globalUI = initUI()
 
     goToVillage()
-
-    --[[
-    for i = -5, 15 do
-        local box = createCharacterBox()
-        box:SetParent(World)
-        setPropPosition(box, (i - 2) * 2, 4)
-    end
-	--]]
 end
 
 Client.DirectionalPad = function(x, y)
