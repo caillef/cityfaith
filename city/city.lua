@@ -645,7 +645,7 @@ local playerCityInfo = {
 }
 local startFetchData = false
 
-local localSquad
+local localSquad, inventory
 local canUpgradeBuilding
 local payBuildingUpgrade
 
@@ -935,6 +935,7 @@ end
 
 cityModule.show = function(self, config)
     localSquad = config.squad
+    inventory = config.inventory
     canUpgradeBuilding = config.canUpgradeBuilding
     payBuildingUpgrade = config.payBuildingUpgrade
     if not startFetchData then
