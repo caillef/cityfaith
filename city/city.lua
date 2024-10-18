@@ -847,6 +847,7 @@ function updateBuildings()
                 building.model:SetParent(World)
                 require("hierarchyactions"):applyToDescendants(obj, function(o)
                     o.Shadow = true
+                    o.Physics = PhysicsMode.Disabled
                 end)
                 building.model.Rotation.Y = buildingInfo.rotation
                 building.model.OnCollisionBegin = function(_, other)
