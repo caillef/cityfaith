@@ -1,9 +1,9 @@
-local COMMIT_HASH = "bdf7a059"
+local COMMIT_HASH = "3321be1e"
 
 Modules = {
     niceLeaderboardModule = "github.com/aduermael/modzh/niceleaderboard",
 }
-
+local niceLeaderboard, leaderboard
 -- MODULES
 local gameLoaded = false
 local inventoryModule
@@ -172,6 +172,7 @@ function computeAdventureResources()
         coinText.Text = string.format("%d (+%d)", coins, finalCoinsToAdd)
         coins = coins + finalCoinsToAdd
         KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
+        niceLeaderboard:reload()
         leaderboard:set({
             score = coins,
             value = {},
