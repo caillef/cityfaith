@@ -1,4 +1,4 @@
-local COMMIT_HASH = "40a159b0"
+local COMMIT_HASH = "cb1aa07b"
 
 -- MODULES
 local gameLoaded = false
@@ -138,7 +138,7 @@ function computeAdventureResources()
         elseif common.buildingsLevel.market ~= nil and common.buildingsLevel.market > 1 then
             local multiplier = common.buildingsLevel.market == 2 and 1.5 or 2
             strText = strText ..
-                string.format("     x% 💰 (+%d%s) = %d 💰", resourcePrice, math.floor((multiplier - 1) * 100),
+                string.format("     x%d 💰 (+%d%s) = %d 💰", resourcePrice, math.floor((multiplier - 1) * 100),
                     "%", math.floor(resourcePrice * quantity * multiplier))
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity * multiplier
         end
