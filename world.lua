@@ -1,4 +1,4 @@
-local COMMIT_HASH = "2d4c6cde"
+local COMMIT_HASH = "8a579087"
 
 -- MODULES
 local gameLoaded = false
@@ -288,9 +288,8 @@ Pointer.Drag = function(pe)
     local dx, dy
     dx = pe.X - pointerStartX
     dy = pe.Y - pointerStartY
-    print(math.abs(dx), math.abs(dy), dx, dy)
-    if math.abs(dx) < 10 then dx = 0 end
-    if math.abs(dy) < 10 then dy = 0 end
+    if math.abs(dx) < 0.02 then dx = 0 end
+    if math.abs(dy) < 0.02 then dy = 0 end
     local x, y
     if dx > 0 then x = 1 elseif dx < 0 then x = -1 else x = 0 end
     if dy > 0 then y = 1 elseif dy < 0 then y = -1 else y = 0 end
