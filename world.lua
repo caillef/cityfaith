@@ -1,4 +1,4 @@
-local COMMIT_HASH = "0e49bf7d"
+local COMMIT_HASH = "eb583ea4"
 
 -- MODULES
 local gameLoaded = false
@@ -116,16 +116,13 @@ function computeAdventureResources()
     title.object.FontSize = 50
     title:setParent(bg)
 
-    local subframe = ui:createFrame()
-    subframe:setParent(bg)
-    subframe.Width = 200
-    subframe.Height = Screen.Height * 0.5
+    local requirementsNode = ui:createFrame()
 
     bg.parentDidResize = function()
         bg.Width = Screen.Width
         bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
-        subframe.pos = { bg.Width * 0.5 - subframe.Width, title.pos.Y - subframe.Height - 10 }
+        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width * 0.5, title.pos.Y }
     end
 
     local requirementsUINodes = {}
@@ -176,16 +173,10 @@ function computeAdventureResources()
         end)
     end
 
-    local requirementsNode
-    requirementsNode = ui_blocks:createLineContainer({
-        dir = "vertical",
-        nodes = requirementsUINodes,
-        -- parentDidResize = function()
-        --     --            if not requirementsNode.parent then return end
-        --     --            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
-        -- end
-    })
-    requirementsNode:setParent(subframe)
+    for k, node in ipairs(requirementsUINodes) do
+        node:setParent(requirementsNode)
+        node.pos.Y = -k * node.Height + 2
+    end
     bg:parentDidResize()
 
     Timer(5, function()
