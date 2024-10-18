@@ -969,7 +969,7 @@ propsModule.createCharacterBox = function(_, localSquad)
         if other == localSquad then
             bonus.OnCollisionBegin = nil
             bonus:RemoveFromParent()
-            LocalEvent:Send("AddCharacter", characterType)
+            LocalEvent:Send("AddCharacter", { name = characterType })
         end
     end
 
