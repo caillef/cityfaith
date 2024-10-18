@@ -946,7 +946,8 @@ function cantUpgradeUI()
         for name, qty in pairs(repairPrices) do
             local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
             local inventoryQty = inventory:getQuantity(name)
-            local text = ui:createText(string.format(" %d/%d", inventoryQty, qty), Color.White)
+            local text = ui:createText(string.format(" %d/%d", inventoryQty, qty),
+                inventoryQty < qty and Color.Red or Color.White)
             local icon = ui:createShape(iconShape, { spherized = true })
             icon.Size = 40
             local triptychIcon = ui_blocks:createBlock({
