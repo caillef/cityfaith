@@ -255,8 +255,8 @@ local BUILDINGS = {
         description = "The Forge allows you to gather resources faster.",
         levelsTooltip = {
             "+25% Mining Speed",
-            "+75% Mining Speed",
-            "+150% Mining Speed",
+            "+50% Mining Speed",
+            "+100% Mining Speed",
         },
         itemScale = 0.75,
         scale = 25,

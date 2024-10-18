@@ -255,8 +255,8 @@ local BUILDINGS = {
         description = "The Forge allows you to gather resources faster.",
         levelsTooltip = {
             "+25% Mining Speed",
-            "+75% Mining Speed",
-            "+150% Mining Speed",
+            "+50% Mining Speed",
+            "+100% Mining Speed",
         },
         itemScale = 0.75,
         scale = 25,
@@ -513,6 +513,16 @@ common.equipRightHand = function(avatar, shapeOrItem)
         shape:RotateLocal(Number3(0, 0, 1), math.pi * 0.5)
     end
 end
+
+local buildingsLevel = {
+    market = 0,
+    house = 0,
+    workstation = 0,
+    forge = 0
+}
+LocalEvent:Listen("UpgradeBuilding", function(data)
+    buildingsLevel[data.name] = data.level
+end)
 
 local progressBarModule = {}
 

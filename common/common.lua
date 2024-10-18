@@ -101,4 +101,14 @@ common.equipRightHand = function(avatar, shapeOrItem)
     end
 end
 
+local buildingsLevel = {
+    market = 0,
+    house = 0,
+    workstation = 0,
+    forge = 0
+}
+LocalEvent:Listen("UpgradeBuilding", function(data)
+    buildingsLevel[data.name] = data.level
+end)
+
 return common
