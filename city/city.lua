@@ -1081,7 +1081,7 @@ function cantUpgradeUI()
             bg.Height = bg.Width * 0.3 + 10
         else
             bg.Width = Screen.Width
-            bg.Height = bg.Height * 0.5
+            bg.Height = Screen.Height * 0.5
         end
         bg.pos = {
             Screen.Width * 0.5 - bg.Width * 0.5,
