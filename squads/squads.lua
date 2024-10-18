@@ -872,6 +872,7 @@ squadModule.create = function(_, defaultCharacterList)
     squad.CollisionGroups = Player.CollisionGroups
     squad.CollidesWithGroups = Player.CollidesWithGroups
     squad.freezed = false
+    squad.CollisionBox = Box(Number3(-4, 0, -4), Number3(4, 4, 4))
 
     local characters = {}
     squad.add = function(_, character)
