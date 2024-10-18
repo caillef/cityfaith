@@ -916,18 +916,20 @@ function updateBuildings()
             onStopBuilding(name)
         end
         if building.level == 0 then
-            Object:Load("voxels.rock_1", function(obj)
-                local nbRocks = 10
-                for i = 0, nbRocks do
-                    local shape = Shape(obj, { includeChildren = true })
-                    shape:SetParent(building.model)
-                    shape.Scale = { 0.01, 2, 0.01 }
-                    shape.LocalPosition = Number3(math.random(-2, 2), 0, math.random(-2, 2)) * 0.15
-                    require("hierarchyactions"):applyToDescendants(shape, { includeRoot = true }, function(o)
-                        o.Physics = false
-                    end)
-                end
-            end)
+            for i = 1, 5 do
+                Object:Load("voxels.rock_" .. i, function(obj)
+                    local nbRocks = 3
+                    for _ = 0, nbRocks do
+                        local shape = Shape(obj, { includeChildren = true })
+                        shape:SetParent(building.model)
+                        shape.Scale = { 0.01, 2, 0.01 }
+                        shape.LocalPosition = Number3(math.random(-2, 2), 0, math.random(-2, 2)) * 0.15
+                        require("hierarchyactions"):applyToDescendants(shape, { includeRoot = true }, function(o)
+                            o.Physics = false
+                        end)
+                    end
+                end)
+            end
         else
             Object:Load(buildingInfo.item, function(obj)
                 building.model2 = obj
