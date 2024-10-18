@@ -1,4 +1,4 @@
-local COMMIT_HASH = "9d566b83"
+local COMMIT_HASH = "5da482fc"
 
 -- MODULES
 local gameLoaded = false
@@ -169,6 +169,7 @@ function computeAdventureResources()
         coins = coins + finalCoinsToAdd
         Timer(2, function()
             coinText.Text = string.format("%d", coins)
+            require("sfx")("coin_1", { Spatialized = false, Volume = 0.6 })
         end)
     end
 
@@ -184,10 +185,7 @@ function computeAdventureResources()
     requirementsNode:parentDidResize()
 
     bg:parentDidResize()
-    globalUI:hide()
     Timer(5, function()
-        globalUI:show()
-
         bg:remove()
         title = nil
         bg = nil
