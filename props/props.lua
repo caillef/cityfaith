@@ -874,6 +874,10 @@ propsModule.create = function(_, propType, x, y)
                     local randomRange = math.random() * (quantityRange[2] - quantityRange[1])
                     local quantity = math.floor(randomRange) + quantityRange[1]
                     if quantity > 0 then
+                        LocalEvent:Send("CurrentAdventureAddResource", {
+                            name = dropName,
+                            qty = quantity
+                        })
                         LocalEvent:Send("InvAdd", {
                             key = "hotbar",
                             rKey = dropName,

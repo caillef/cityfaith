@@ -1,4 +1,4 @@
-local COMMIT_HASH = "daa59e41"
+local COMMIT_HASH = "b1d22b99"
 
 -- MODULES
 local gameLoaded = false
@@ -9,6 +9,7 @@ local propsModule
 local squadsModule
 local cityModule
 local modulesLoad = {}
+local currentAdventureResources = {}
 
 function dostring(str, name)
     local module, err = load(str, name)
@@ -101,7 +102,36 @@ function goToVillage()
     })
 end
 
+function computeAdventureResources()
+    local ui = require("uikit")
+
+    local bg = ui:createFrame(Color.Black)
+    local title = ui:createText("Resources collected:", Color.White, "big")
+    title.object.FontSize = 50
+    title:setParent(bg)
+    bg.parentDidResize = function()
+        bg.Width = Screen.Width
+        bg.Height = Screen.Height
+        title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
+    end
+    bg:parentDidResize()
+    globalUI:hide()
+
+    for key, value in pairs(currentAdventureResources) do
+        print(key, value)
+    end
+
+    Timer(5, function()
+        globalUI:show()
+
+        bg:remove()
+        title = nil
+        bg = nil
+    end)
+end
+
 function generateNewMap()
+    currentAdventureResources = {}
     nbVisits = nbVisits + 1
     local worldKeys = { "forest", "forest", "forest", "desert", "desert", "plateau", "plateau", "magicland" }
     local worldType = worldKeys[math.random(1, #worldKeys)]
@@ -165,6 +195,8 @@ function generateNewMap()
         end)
 
         Timer(common.ADVENTURE_DURATION, function()
+            computeAdventureResources()
+
             -- Clear map
             map:RemoveFromParent()
             propsModule:clearAllProps()
@@ -268,6 +300,13 @@ function startGame()
     globalUI = initUI()
     goToVillage()
 end
+
+LocalEvent:Listen("CurrentAdventureAddResource", function(data)
+    local resource = data.name
+    local quantity = data.quantity
+    currentAdventureResources[resource] = (currentAdventureResources[resource] or 0) + quantity
+end)
+
 
 -- Client.OnStart = function()
 -- local node = require("controls"):getDirectionalPad()
