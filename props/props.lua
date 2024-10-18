@@ -77,7 +77,7 @@ local PROPS = {
         skill = "gather",
         objFullname = "voxels.bush",
         drops = {
-            wooden_stick = { 1, 2 }
+            wooden_stick = { 1, 3 }
         },
         scale = 0.8,
         hp = 1,
@@ -86,11 +86,11 @@ local PROPS = {
         skill = "gather",
         objFullname = "voxels.berry_bush",
         drops = {
-            wooden_stick = { 0, 1 },
+            wooden_stick = { 0, 2 },
             berry = { 1, 2 }
         },
         scale = 0.8,
-        hp = 1,
+        hp = 3,
     },
     stone = {
         skill = "mine",
