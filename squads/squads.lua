@@ -864,7 +864,10 @@ local function createCharacter(charaType)
         if needToMove then
             local dir = action.Position - character.Position
             dir:Normalize()
-            character.Position = character.Position + dir * dt * 20
+            if buildingsLevel.workstation == 1 then buildingBonus = 1.25 end
+            if buildingsLevel.workstation == 2 then buildingBonus = 1.5 end
+            if buildingsLevel.workstation == 3 then buildingBonus = 2 end
+            character.Position = character.Position + dir * dt * 20 * buildingBonus
         elseif nextActionTick <= t then
             local buildingBonus = 0
             if buildingsLevel.forge == 1 then buildingBonus = 0.125 end
