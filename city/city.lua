@@ -824,41 +824,33 @@ function updateBuildings()
             buildings[name].model = nil
         end
         building.level = newLevel
-        if building.level == 0 then
-            building.model = MutableShape()
-            building.model:AddBlock(Color.Grey, 0, 0, 0)
-            building.model.Pivot = { 0.5, 0, 0.5 }
-            building.model.Scale = { 30, 0.1, 30 }
-            building.model:SetParent(World)
-            building.model.Physics = PhysicsMode.Trigger
-            building.model.OnCollisionBegin = function(_, other)
-                if other ~= localSquad then return end
-                onStartBuilding(name)
-            end
-            building.model.OnCollisionEnd = function(_, other)
-                if other ~= localSquad then return end
-                onStopBuilding(name)
-            end
-        elseif buildingInfo.item then
+        building.model = MutableShape()
+        building.model:AddBlock(newLevel == 0 and Color.Grey or Color(0, 0, 0, 0), 0, 0, 0)
+        building.model.Pivot = { 0.5, 0, 0.5 }
+        building.model.Scale = { 30, 0.1, 30 }
+        building.model:SetParent(World)
+        building.model.Physics = PhysicsMode.Trigger
+        building.model.OnCollisionBegin = function(_, other)
+            if other ~= localSquad then return end
+            onStartBuilding(name)
+        end
+        building.model.OnCollisionEnd = function(_, other)
+            if other ~= localSquad then return end
+            onStopBuilding(name)
+        end
+        if building.level > 0 then
             Object:Load(buildingInfo.item, function(obj)
-                building.model = obj
-                building.model.Pivot = { obj.Width * 0.5, 0, obj.Depth * 0.5 }
-                building.model.Scale = buildingInfo.itemScale
-                building.model:SetParent(World)
+                building.model2 = obj
+                building.model2.Pivot = { obj.Width * 0.5, 0, obj.Depth * 0.5 }
+                building.model2.Scale = buildingInfo.itemScale
+                building.model2:SetParent(World)
                 require("hierarchyactions"):applyToDescendants(obj, function(o)
                     o.Shadow = true
                     o.Physics = PhysicsMode.Disabled
                 end)
-                building.model.Rotation.Y = buildingInfo.rotation
-                building.model.OnCollisionBegin = function(_, other)
-                    if other ~= localSquad then return end
-                    LocalEvent:Send("InteractWithBuilding", { name = name })
-                end
-                building.model.Physics = PhysicsMode.Disabled
-                Timer(5, function()
-                    building.model.Physics = PhysicsMode.Static
-                end)
-                common.setPropPosition(building.model, buildingInfo.x, buildingInfo.y)
+                building.model2.Rotation.Y = buildingInfo.rotation
+                building.model2.Physics = PhysicsMode.Disabled
+                common.setPropPosition(building.model2, buildingInfo.x, buildingInfo.y)
                 buildings[name] = building
             end)
         end
@@ -1140,6 +1132,9 @@ cityModule.show = function(self, config)
         portal.model:RemoveFromParent()
         for _, building in pairs(buildings) do
             building.model:RemoveFromParent()
+            if portal.model2 then
+                portal.model2:RemoveFromParent()
+            end
         end
         buildings = {}
         config.portalCallback()
