@@ -892,7 +892,7 @@ function updateBuildings()
         building.model = MutableShape()
         building.model:AddBlock(newLevel == 0 and Color.Grey or Color(0, 0, 0, 0), 0, 0, 0)
         building.model.Pivot = { 0.5, 0, 0.5 }
-        building.model.Scale = { 30, 0.1, 30 }
+        building.model.Scale = { 30, 0.15, 30 }
         building.model:SetParent(World)
         building.model.Physics = PhysicsMode.Trigger
         building.model.OnCollisionBegin = function(_, other)
