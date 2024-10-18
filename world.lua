@@ -1,4 +1,4 @@
-local COMMIT_HASH = "759660c0"
+local COMMIT_HASH = "3758a328"
 
 -- MODULES
 local gameLoaded = false
@@ -115,18 +115,36 @@ function computeAdventureResources()
     local title = ui:createText("Resources collected:", Color.White, "big")
     title.object.FontSize = 50
     title:setParent(bg)
+
+    local subframe = ui:createFrame()
+    subframe:setParent(bg)
+    subframe.Width = 200
+    subframe.Height = Screen.Height * 0.5
+
     bg.parentDidResize = function()
         bg.Width = Screen.Width
         bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
+        subframe.pos = { bg.Width * 0.5 - subframe.Width * 0.5, title.pos.Y - subframe.Height - 10 }
     end
-    bg:parentDidResize()
-    globalUI:hide()
 
     local requirementsUINodes = {}
+    local finalCoinsToAdd = 0
     for name, quantity in pairs(currentAdventureResources) do
         local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
-        local text = ui:createText(string.format(" +%d", quantity), Color.White)
+        local strText = string.format(" +%d", quantity)
+        local resourcePrice = gameConfig.RESOURCES_BY_KEY[name].price
+        if buildingsLevel.market == 1 then
+            strText = strText .. string.format("    x%d💰 = %d💰", resourcePrice, resourcePrice * quantity)
+            finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity
+        elseif buildingsLevel.market > 1 then
+            local multiplier = buildingsLevel.market == 2 and 1.5 or 2
+            strText =
+                string.format("%s    x%d💰 (+%d%) = %d💰", strText, resourcePrice, (multiplier - 1) * 100,
+                    resourcePrice * quantity * multiplier)
+            finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity * multiplier
+        end
+        local text = ui:createText(strText, Color.White)
         local icon = ui:createShape(iconShape, { spherized = true })
         icon.Size = 40
         local triptychIcon = ui_blocks:createBlock({
@@ -139,10 +157,18 @@ function computeAdventureResources()
         icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[name].icon.rotation
         local node = ui_blocks:createBlock({
             columns = {
-                triptychIcon, text
+                triptychIcon, text,
             }
         })
         table.insert(requirementsUINodes, node)
+    end
+
+    if finalCoinsToAdd > 0 then
+        coinText.Text = string.format("%d (+%d)", coins, finalCoinsToAdd)
+        coins = coins + finalCoinsToAdd
+        Timer(2, function()
+            coinText.Text = string.format("%d", coins)
+        end)
     end
 
     local requirementsNode
@@ -153,9 +179,11 @@ function computeAdventureResources()
             requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
         end
     })
-    requirementsNode:setParent(bg)
+    requirementsNode:setParent(subframe)
     requirementsNode:parentDidResize()
 
+    bg:parentDidResize()
+    globalUI:hide()
     Timer(5, function()
         globalUI:show()
 
