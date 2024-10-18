@@ -918,6 +918,7 @@ squadModule.create = function(_, defaultCharacterList)
             characters[i]:RemoveFromParent()
         end
         characters = { characters[1] }
+        localSquad.characters = characters
     end
 
     for _, defaultCharacterType in ipairs(defaultCharacterList) do
