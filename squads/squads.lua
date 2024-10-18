@@ -144,9 +144,13 @@ local BUILDINGS = {
                 berry = 20
             }
         },
-        repairDurations = { 5, 10 },
         item = "voxels.simple_cabin",
         description = "The House increase your squad maximum size.",
+        levelsTooltip = {
+            "Squads max size: 2",
+            "Squads max size: 4",
+            "Squads max size: 6",
+        },
         itemScale = 0.75,
         color = Color.Red,
         scale = 15,
@@ -177,9 +181,13 @@ local BUILDINGS = {
             }
 
         },
-        repairDurations = { 5, 10 },
         item = "voxels.simple_workstation",
         description = "The Workstation increases your characters speed.",
+        levelsTooltip = {
+            "+25% Move Speed",
+            "+50% Move Speed",
+            "+100% Move Speed",
+        },
         itemScale = 0.75,
         color = Color.Brown,
         scale = 25,
@@ -207,10 +215,14 @@ local BUILDINGS = {
                 stone = 50,
             },
         },
-        repairDurations = { 5, 10, 20 },
         color = Color.Yellow,
         item = "voxels.market_stall",
         description = "The Market increases the number of golds received.",
+        levelsTooltip = {
+            "+0% bonus gold",
+            "+50% bonus gold",
+            "+100% bonus gold",
+        },
         itemScale = 0.75,
         rotation = -0.2 * math.pi,
         scale = 25,
@@ -231,11 +243,21 @@ local BUILDINGS = {
                 stone = 30,
                 iron = 20,
             },
+            {
+                wood_log = 100,
+                stone = 40,
+                iron = 30,
+                gold = 20,
+            },
         },
-        repairDurations = { 5, 10 },
         color = Color.Grey,
         item = "voxels.simple_furnace",
         description = "The Forge allows you to gather resources faster.",
+        levelsTooltip = {
+            "+25% Mining Speed",
+            "+75% Mining Speed",
+            "+150% Mining Speed",
+        },
         itemScale = 0.75,
         scale = 25,
         rotation = -0.2 * math.pi,

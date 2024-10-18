@@ -144,9 +144,13 @@ local BUILDINGS = {
                 berry = 20
             }
         },
-        repairDurations = { 5, 10 },
         item = "voxels.simple_cabin",
         description = "The House increase your squad maximum size.",
+        levelsTooltip = {
+            "Squads max size: 2",
+            "Squads max size: 4",
+            "Squads max size: 6",
+        },
         itemScale = 0.75,
         color = Color.Red,
         scale = 15,
@@ -177,9 +181,13 @@ local BUILDINGS = {
             }
 
         },
-        repairDurations = { 5, 10 },
         item = "voxels.simple_workstation",
         description = "The Workstation increases your characters speed.",
+        levelsTooltip = {
+            "+25% Move Speed",
+            "+50% Move Speed",
+            "+100% Move Speed",
+        },
         itemScale = 0.75,
         color = Color.Brown,
         scale = 25,
@@ -207,10 +215,14 @@ local BUILDINGS = {
                 stone = 50,
             },
         },
-        repairDurations = { 5, 10, 20 },
         color = Color.Yellow,
         item = "voxels.market_stall",
         description = "The Market increases the number of golds received.",
+        levelsTooltip = {
+            "+0% bonus gold",
+            "+50% bonus gold",
+            "+100% bonus gold",
+        },
         itemScale = 0.75,
         rotation = -0.2 * math.pi,
         scale = 25,
@@ -231,11 +243,21 @@ local BUILDINGS = {
                 stone = 30,
                 iron = 20,
             },
+            {
+                wood_log = 100,
+                stone = 40,
+                iron = 30,
+                gold = 20,
+            },
         },
-        repairDurations = { 5, 10 },
         color = Color.Grey,
         item = "voxels.simple_furnace",
         description = "The Forge allows you to gather resources faster.",
+        levelsTooltip = {
+            "+25% Mining Speed",
+            "+75% Mining Speed",
+            "+150% Mining Speed",
+        },
         itemScale = 0.75,
         scale = 25,
         rotation = -0.2 * math.pi,
@@ -787,6 +809,48 @@ function startBuildingProgress()
     local title = ui:createText((isUpgrade and "Upgrading " or "Building ") .. currentlyBuilding .. "...", Color.White)
     title:setParent(bg)
 
+    local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
+    local currentInfo = playerCityInfo.buildings[currentlyBuilding]
+    local nextLevel = (currentInfo and currentInfo.level or 0) + 1
+
+    -- requirements UI
+    local requirementsUINodes = {}
+    local repairPrices = buildingInfo.repairPrices[nextLevel]
+    if repairPrices then
+        for name, qty in pairs(repairPrices) do
+            local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
+            local inventoryQty = inventory:getQuantity(name)
+            local text = ui:createText(string.format(" %d/%d", inventoryQty, qty),
+                inventoryQty < qty and Color.Red or Color.White)
+            local icon = ui:createShape(iconShape, { spherized = true })
+            icon.Size = 40
+            local triptychIcon = ui_blocks:createBlock({
+                triptych = {
+                    dir = "horizontal",
+                    right = icon,
+                },
+                height = function() return icon.Height end
+            })
+            icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[name].icon.rotation
+            local node = ui_blocks:createBlock({
+                columns = {
+                    triptychIcon, text
+                }
+            })
+            table.insert(requirementsUINodes, node)
+        end
+        local requirementsNode
+        requirementsNode = ui_blocks:createBlock({
+            columns = requirementsUINodes,
+            parentDidResize = function()
+                if not requirementsNode.parent then return end
+                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+            end
+        })
+        requirementsNode:setParent(bg)
+        requirementsNode:parentDidResize()
+    end
+
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
         bg.Height = bg.Width * 0.3
@@ -881,7 +945,6 @@ function successfullBuild()
         nextLevel = playerCityInfo.buildings[currentlyBuilding].level + 1
     end
     if not gameConfig.BUILDINGS[currentlyBuilding].repairPrices[nextLevel] then
-        print("can't upgrade this building")
         setBuildingState(BUILDING_STATES.NONE)
         return
     end
@@ -929,13 +992,15 @@ function cantUpgradeUI()
     local title = ui:createText(buildingInfo.description, Color.White)
     title:setParent(bg)
 
-    local text = ui:createText("Resources needed:", Color.White)
+    local nextLevel = (playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0) + 1
+    local text = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel] .. "
+Resources needed:",
+        Color.White)
     text:setParent(bg)
 
     -- requirements UI
     local requirementsUINodes = {}
-    local newLevel = (playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0) + 1
-    local repairPrices = buildingInfo.repairPrices[newLevel]
+    local repairPrices = buildingInfo.repairPrices[nextLevel]
     if repairPrices then
         for name, qty in pairs(repairPrices) do
             local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
@@ -1098,18 +1163,6 @@ cityModule.show = function(self, config)
             shape.Rotation.Y = -(i / nbFences) * math.pi * 2 + 0.55 * math.pi
         end
     end)
-
-    -- HTTP:Get("https://api.voxdream.art/groundgame.png", function(res)
-    --     local quad = Quad()
-    --     map.groundTexture = quad
-    --     quad.Image = res.Body
-    --     quad:SetParent(World)
-    --     quad.Width = 300
-    --     quad.Height = 300
-    --     quad.Anchor = { 0.5, 0.5 }
-    --     quad.Position.Y = 0.05
-    --     quad.Rotation.X = 0.5 * math.pi
-    -- end)
 
     updateBuildings()
 
