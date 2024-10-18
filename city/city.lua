@@ -994,11 +994,13 @@ function cantUpgradeUI()
 
     local currentInfo = playerCityInfo.buildings[currentlyBuilding]
     local nextLevel = (currentInfo and currentInfo.level or 0) + 1
+    print("a")
     local text = ui:createText(
         "Current level: " .. (nextLevel == 0 and "no bonus" or buildingInfo.levelsTooltip[nextLevel - 1]), Color.White)
     text:setParent(bg)
     local text2 = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel], Color.White)
     text:setParent(bg)
+    print("b")
 
     -- requirements UI
     local requirementsUINodes = {}
