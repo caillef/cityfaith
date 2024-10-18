@@ -24,9 +24,10 @@ local WORLDS = {
         color = Color(116, 183, 46),
         props = {
             tree = 50,
-            bush = 50,
-            stone = 30,
-            iron = 10
+            bush = 40,
+            berry = 10,
+            stone = 10,
+            iron = 5
         }
     },
     desert = {
