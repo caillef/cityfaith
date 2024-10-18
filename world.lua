@@ -1,4 +1,4 @@
-local COMMIT_HASH = "1165597a"
+local COMMIT_HASH = "d3824b09"
 
 -- MODULES
 local gameLoaded = false
