@@ -1,4 +1,4 @@
-local COMMIT_HASH = "53c64067"
+local COMMIT_HASH = "82f9d9eb"
 
 Modules = {
     niceLeaderboardModule = "github.com/aduermael/modzh/niceleaderboard",
@@ -382,6 +382,12 @@ function startGame()
     niceLeaderboard = niceLeaderboardModule({})
     niceLeaderboard.Width = 200
     niceLeaderboard.Height = 200
+    niceLeaderboard.parentDidResize = function()
+        niceLeaderboard.pos = { Screen.Width - Screen.SafeArea.Right - niceLeaderboard.Width, Screen.Height -
+        Screen.SafeArea.Top - niceLeaderboard.Height }
+    end
+    niceLeaderboard:parentDidResize()
+    niceLeaderboard:reload()
     leaderboard = Leaderboard("default")
 
     -- function layoutNiceLeaderboard()
