@@ -891,6 +891,7 @@ squadModule.create = function(_, defaultCharacterList)
 
     squad.setPosition = function(_, x, y)
         common.setPropPosition(squad, x, y)
+        squad.LocalPosition.Y = 5
         for _, c in ipairs(characters) do
             c.LocalPosition = { 0, 0, 0 }
         end
