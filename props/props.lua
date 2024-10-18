@@ -823,22 +823,23 @@ propsModule.createCharacterBox = function()
     bonus.CollisionBox = box
     bonus.Physics = PhysicsMode.Trigger
 
-    local shape = MutableShape()
-    shape:AddBlock(Color.Blue, 0, 0, 0)
-    shape.Pivot = { 0.5, 0, 0.5 }
-    shape:SetParent(bonus)
-    shape.Scale = 8
-    shape.Physics = PhysicsMode.Disabled
+    -- local shape = MutableShape()
+    -- shape:AddBlock(Color.Blue, 0, 0, 0)
+    -- shape.Pivot = { 0.5, 0, 0.5 }
+    -- shape:SetParent(bonus)
+    -- shape.Scale = 8
+    -- shape.Physics = PhysicsMode.Disabled
 
     local CHARACTERS = { "lumberjack", "miner", "gatherer" }
     local randomIndex = math.random(#CHARACTERS)
     local characterType = CHARACTERS[randomIndex]
-    local COLORS = { Color.Blue, Color.Red, Color.Green }
-    shape:GetBlock(0, 0, 0):Replace(COLORS[randomIndex])
+    -- local COLORS = { Color.Blue, Color.Red, Color.Green }
+    -- shape:GetBlock(0, 0, 0):Replace(COLORS[randomIndex])
 
     local model = require("avatar"):get(gameConfig.CHARACTERS[characterType].avatarName)
     model:SetParent(bonus)
     model.LocalPosition.Y = 1
+    model.Rotation.Y = math.pi
     model.Scale = 0.6
     require("hierarchyactions"):applyToDescendants(model, { includeRoot = true }, function(obj)
         obj.Physics = PhysicsMode.Disabled
