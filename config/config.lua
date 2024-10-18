@@ -133,9 +133,9 @@ local BUILDINGS = {
                 berry = 1,
             },
             {
-                wood_log = 30,
-                stone = 20,
-                berry = 20
+                wood_log = 10,
+                stone = 5,
+                berry = 5
             },
             {
                 wood_log = 100,
@@ -154,21 +154,27 @@ local BUILDINGS = {
         y = 4,
     },
     workstation = {
-        -- level 1 = can upgrade squad boots level 2, squad inventory
-        -- level 2 = can upgrade squad boots level 3, squad inventory
+        -- level 1 = can upgrade squad boots level 2
+        -- level 2 = can upgrade squad boots level 3
         name = "Workstation",
         level = 0,
         repairPrices = {
             {
-                wood_log = 75,
-                stone = 40,
-                iron = 10
+                wood_log = 5,
+                stone = 3,
+                iron = 2
             },
             {
-                wood_log = 150,
-                stone = 80,
-                iron = 20
+                wood_log = 30,
+                stone = 10,
+                iron = 5
+            },
+            {
+                wood_log = 60,
+                stone = 30,
+                iron = 15
             }
+
         },
         repairDurations = { 5, 10 },
         item = "voxels.simple_workstation",
@@ -186,12 +192,21 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 100,
+                wooden_stick = 10,
+                stone = 2,
+            },
+            {
+                wooden_stick = 30,
+                wood_log = 10,
+                stone = 10,
+            },
+            {
+                wooden_stick = 50,
+                wood_log = 30,
                 stone = 50,
-                gold = 5
-            }
+            },
         },
-        repairDurations = { 5 },
+        repairDurations = { 5, 10, 20 },
         color = Color.Yellow,
         item = "voxels.market_stall",
         description = "The Market increases the number of golds received.",
@@ -208,15 +223,12 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 60,
-                stone = 80,
-                iron = 20
+                wood_log = 5,
             },
             {
-                wood_log = 120,
-                stone = 160,
-                iron = 40,
-                gold = 5
+                wood_log = 30,
+                stone = 30,
+                iron = 20,
             },
         },
         repairDurations = { 5, 10 },
