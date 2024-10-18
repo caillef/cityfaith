@@ -1,6 +1,7 @@
-local COMMIT_HASH = "f119d608"
+local COMMIT_HASH = "eb315288"
 
 -- MODULES
+local gameLoaded = false
 local inventoryModule
 local common
 local gameConfig
@@ -60,35 +61,6 @@ local squad
 local coins = 0
 local coinIcon, coinText
 local globalUI
-
-local buildingsInfo = {
-    house = {
-    },
-    market = {
-        -- onInteract = function()
-        --     local sticksPrice = inventory:getQuantity("wooden_stick")
-        --     local logsPrice = inventory:getQuantity("oak_log") * 3
-        --     local ironsPrice = inventory:getQuantity("iron") * 10
-        --     local fullPrice = sticksPrice + logsPrice + ironsPrice
-        --     LocalEvent:Send("InvClearAll", { key = "hotbar" })
-
-        --     coins = coins + fullPrice
-        --     KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
-        --     coinText.Text = string.format("%d", coins)
-        -- end
-    },
-    forge = {
-    },
-    workstation = {
-    },
-}
-
-LocalEvent:Listen("InteractWithBuilding", function(data)
-    local name = data.name
-    if buildingsInfo[name] and buildingsInfo[name].onInteract then
-        buildingsInfo[name].onInteract()
-    end
-end)
 
 function goToVillage()
     cityModule:show({
@@ -263,7 +235,8 @@ initUI = function()
 end
 
 Client.OnPlayerJoin = function(player)
-    if player ~= Player then return end
+    if player ~= Player or gameLoaded then return end
+    gameLoaded = true
     modulesLoad:start(function()
         startGame()
     end)
