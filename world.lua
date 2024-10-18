@@ -1,4 +1,4 @@
-local COMMIT_HASH = "0e335901"
+local COMMIT_HASH = "c8a70e0e"
 
 -- MODULES
 local gameLoaded = false
@@ -117,6 +117,7 @@ function computeAdventureResources()
     title:setParent(bg)
 
     local requirementsNode = ui:createFrame()
+    requirementsNode:setParent(bg)
 
     bg.parentDidResize = function()
         bg.Width = Screen.Width
