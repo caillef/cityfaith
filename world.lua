@@ -1,4 +1,4 @@
-local COMMIT_HASH = "bb04fca5"
+local COMMIT_HASH = "f5b43bc3"
 
 -- MODULES
 local inventoryModule
@@ -200,7 +200,7 @@ function generateNewMap()
     end
 
     for i = 1, 20 do
-        local box = propsModule:createCharacterBox()
+        local box = propsModule:createCharacterBox(squad)
         box:SetParent(World)
         common.setPropPosition(box, math.floor(math.random() * 50) - 25, math.floor(math.random() * 50) - 25)
     end

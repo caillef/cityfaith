@@ -129,9 +129,13 @@ local BUILDINGS = {
         level = 0,
         repairPrices = {
             {
-                wood_log = 50,
-                stone = 25,
-                berry = 10
+                wooden_stick = 5,
+                berry = 1,
+            },
+            {
+                wood_log = 30,
+                stone = 20,
+                berry = 20
             },
             {
                 wood_log = 100,
@@ -908,7 +912,7 @@ propsModule.createSpawner = function(self, type, x, y)
     return propSpawner
 end
 
-propsModule.createCharacterBox = function()
+propsModule.createCharacterBox = function(localSquad)
     local bonus = Object()
     local box = Box()
     box.Min = { -4, 0, -4 }
@@ -950,7 +954,7 @@ propsModule.createCharacterBox = function()
     end
 
     bonus.OnCollisionBegin = function(_, other)
-        if other == squad then
+        if other == localSquad then
             bonus.OnCollisionBegin = nil
             bonus:RemoveFromParent()
             LocalEvent:Send("AddCharacter", characterType)
