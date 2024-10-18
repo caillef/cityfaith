@@ -866,10 +866,14 @@ propsModule.create = function(_, propType, x, y)
                             triptychIcon, text
                         }
                     })
+                    local nodeParent = ui:createFrame()
+                    nodeParent.Width = 100
+                    nodeParent.Height = icon.Height
+                    node:setParent(nodeParent)
                     local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
-                    node.pos = pos
+                    nodeParent.pos = pos
                     Timer(2, function()
-                        node:remove()
+                        nodeParent:remove()
                     end)
                 end
             end
