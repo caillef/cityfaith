@@ -918,12 +918,12 @@ function updateBuildings()
         if building.level == 0 then
             for i = 1, 5 do
                 Object:Load("voxels.rock_" .. i, function(obj)
-                    local nbRocks = 3
+                    local nbRocks = 6
                     for _ = 0, nbRocks do
                         local shape = Shape(obj, { includeChildren = true })
                         shape:SetParent(building.model)
                         shape.Scale = { 0.01, 2, 0.01 }
-                        shape.LocalPosition = Number3(math.random(-2, 2), 0, math.random(-2, 2)) * 0.15
+                        shape.LocalPosition = Number3(math.random(-1, 1), 0, math.random(-1, 1)) * 0.4
                         require("hierarchyactions"):applyToDescendants(shape, { includeRoot = true }, function(o)
                             o.Physics = false
                         end)
