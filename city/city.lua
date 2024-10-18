@@ -921,8 +921,11 @@ function updateBuildings()
                 for i = 0, nbRocks do
                     local shape = Shape(obj, { includeChildren = true })
                     shape:SetParent(building.model)
-                    shape.Scale = { 0.1, 10, 0.1 }
+                    shape.Scale = { 0.1, 2, 0.1 }
                     shape.LocalPosition = { math.random(-2, 2), 0, math.random(-2, 2) }
+                    require("hierarchyactions"):applyToDescendants(shape, { includeRoot = true }, function(o)
+                        o.Physics = false
+                    end)
                 end
             end)
         else
