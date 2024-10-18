@@ -1,4 +1,4 @@
-local COMMIT_HASH = "15be23f3"
+local COMMIT_HASH = "ed1f7ada"
 
 -- MODULES
 local gameLoaded = false
@@ -141,7 +141,7 @@ function computeAdventureResources()
             local multiplier = common.buildingsLevel.market == 2 and 1.5 or 2
             strText = strText ..
                 string.format("     x%d💰 (+%d%%) = %d💰", resourcePrice, math.floor((multiplier - 1) * 100),
-                    resourcePrice * quantity * multiplier)
+                    math.floor(resourcePrice * quantity * multiplier))
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity * multiplier
         end
         local text = ui:createText(strText, Color.White)
@@ -163,6 +163,7 @@ function computeAdventureResources()
         table.insert(requirementsUINodes, node)
     end
 
+    finalCoinsToAdd = math.floor(finalCoinsToAdd)
     if finalCoinsToAdd > 0 then
         coinText.Text = string.format("%d (+%d)", coins, finalCoinsToAdd)
         coins = coins + finalCoinsToAdd
