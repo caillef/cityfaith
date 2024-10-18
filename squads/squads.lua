@@ -25,7 +25,7 @@ local WORLDS = {
         props = {
             tree = 50,
             bush = 40,
-            berry = 10,
+            berry_bush = 10,
             stone = 10,
             iron = 5
         }
