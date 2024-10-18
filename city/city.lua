@@ -520,6 +520,7 @@ local buildingsLevel = {
     workstation = 0,
     forge = 0
 }
+common.buildingsLevel = buildingsLevel
 LocalEvent:Listen("UpgradeBuilding", function(data)
     buildingsLevel[data.name] = data.level
 end)

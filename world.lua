@@ -1,4 +1,4 @@
-local COMMIT_HASH = "6af5ecaf"
+local COMMIT_HASH = "6243c857"
 
 -- MODULES
 local gameLoaded = false
@@ -301,9 +301,9 @@ end
 
 Client.DirectionalPad = function(x, y)
     local buildingBonus = 1
-    if buildingsLevel.workstation == 1 then buildingBonus = 1.25 end
-    if buildingsLevel.workstation == 2 then buildingBonus = 1.5 end
-    if buildingsLevel.workstation == 3 then buildingBonus = 2 end
+    if common.buildingsLevel.workstation == 1 then buildingBonus = 1.25 end
+    if common.buildingsLevel.workstation == 2 then buildingBonus = 1.5 end
+    if common.buildingsLevel.workstation == 3 then buildingBonus = 2 end
 
     print("move", buildingBonus)
 
