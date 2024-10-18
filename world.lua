@@ -1,4 +1,7 @@
-local COMMIT_HASH = "98e3a0f1"
+local COMMIT_HASH = "45520f19"
+--TODO
+-- [ ] Upgrade building keeps old buildings
+-- [ ]
 
 -- MODULES
 local gameLoaded = false
@@ -125,7 +128,7 @@ function computeAdventureResources()
         bg.Width = Screen.Width
         bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
-        subframe.pos = { bg.Width * 0.5 - subframe.Width * 0.5, title.pos.Y - subframe.Height - 10 }
+        subframe.pos = { bg.Width * 0.5 - subframe.Width, title.pos.Y - subframe.Height - 10 }
     end
 
     local requirementsUINodes = {}
@@ -135,12 +138,12 @@ function computeAdventureResources()
         local strText = string.format(" +%d", quantity)
         local resourcePrice = gameConfig.RESOURCES_BY_KEY[name].price
         if common.buildingsLevel.market ~= nil and common.buildingsLevel.market == 1 then
-            strText = strText .. string.format("    x%d💰 = %d💰", resourcePrice, resourcePrice * quantity)
+            strText = string.format("    x%d💰 = %d💰", resourcePrice, resourcePrice * quantity)
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity
         elseif common.buildingsLevel.market ~= nil and common.buildingsLevel.market > 1 then
             local multiplier = common.buildingsLevel.market == 2 and 1.5 or 2
-            strText =
-                string.format("%s    x%d💰 (+%d%) = %d💰", strText, resourcePrice, (multiplier - 1) * 100,
+            strText = strText ..
+                string.format("     x%d💰 (+%d%) = %d💰", resourcePrice, (multiplier - 1) * 100,
                     resourcePrice * quantity * multiplier)
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity * multiplier
         end
