@@ -836,7 +836,7 @@ propsModule.createCharacterBox = function()
     local COLORS = { Color.Blue, Color.Red, Color.Green }
     shape:GetBlock(0, 0, 0):Replace(COLORS[randomIndex])
 
-    local model = require("avatar"):get(characterType)
+    local model = require("avatar"):get(gameConfig.CHARACTERS[characterType].avatarName)
     model:SetParent(bonus)
     model.LocalPosition.Y = 1
     model.Scale = 0.6
