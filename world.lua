@@ -1,4 +1,4 @@
-local COMMIT_HASH = "1262e332"
+local COMMIT_HASH = "f53f1b41"
 
 -- MODULES
 local gameLoaded = false
@@ -20,7 +20,7 @@ function dostring(str, name)
 end
 
 modulesLoad.start = function(_, callback)
-    local nbToLoad = 6
+    local nbToLoad = 7
     local loaded = 0
     local function loadNext()
         loaded = loaded + 1
