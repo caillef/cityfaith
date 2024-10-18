@@ -873,9 +873,11 @@ squadModule.create = function(_, defaultCharacterList)
     end
 
     squad.reset = function()
-        for _, c in ipairs(characters) do
-            c:setAction({ type = "idle", Position = squad.Position })
+        characters[1]:setAction({ type = "idle", Position = squad.Position })
+        for i = 2, #characters do
+            characters[i]:RemoveFromParent()
         end
+        characters = { characters[1] }
     end
 
     for _, defaultCharacterType in ipairs(defaultCharacterList) do
