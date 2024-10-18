@@ -1,4 +1,4 @@
-local COMMIT_HASH = "fab1e44e"
+local COMMIT_HASH = "c628d6ca"
 
 -- MODULES
 local gameLoaded = false
@@ -206,7 +206,7 @@ initCamera = function()
     Camera.Rotation.X = math.pi * 0.3
 end
 
-initUI = function()
+initUI = function(callback)
     inventoryModule:setResources(gameConfig.RESOURCES_BY_KEY, gameConfig.RESOURCES_BY_ID)
     Timer(1, function()
         inventory = inventoryModule:create("hotbar", {
@@ -219,6 +219,7 @@ initUI = function()
                 return { Screen.Width * 0.5 - node.Width * 0.5, padding }
             end,
         })
+        callback()
     end)
 
     local ui = require("uikit")
@@ -268,9 +269,9 @@ function startGame()
     squad = squadsModule:create({ "gatherer" })
 
     initCamera()
-    globalUI = initUI()
-
-    goToVillage()
+    globalUI = initUI(function()
+        goToVillage()
+    end)
 end
 
 -- Client.OnStart = function()
