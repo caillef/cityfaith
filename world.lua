@@ -1,4 +1,4 @@
-local COMMIT_HASH = "cb1aa07b"
+local COMMIT_HASH = "461d83e9"
 
 -- MODULES
 local gameLoaded = false
@@ -123,7 +123,7 @@ function computeAdventureResources()
         bg.Width = Screen.Width
         bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
-        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width * 1.5, title.pos.Y - 20 }
+        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width * 0.5, title.pos.Y - 20 }
     end
 
     local requirementsUINodes = {}
@@ -174,6 +174,7 @@ function computeAdventureResources()
         end)
     end
 
+    requirementsNode.Width = 500
     for _, node in ipairs(requirementsUINodes) do
         node:setParent(requirementsNode)
         if node.Width > requirementsNode.Width then
