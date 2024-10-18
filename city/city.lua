@@ -1166,8 +1166,8 @@ cityModule.show = function(self, config)
         for _ = 0, nbSandTiles do
             local shape = Shape(obj, { includeChildren = true })
             shape:SetParent(map)
-            shape.Scale = 0.08
-            shape.LocalPosition = Number3(math.random(-9, 9), 1, math.random(-9, 9))
+            shape.Scale = 0.01
+            shape.LocalPosition = Number3(math.random(-5, 5), 0.1, math.random(-5, 5))
         end
     end)
 
