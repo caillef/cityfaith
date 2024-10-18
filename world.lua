@@ -1,4 +1,4 @@
-local COMMIT_HASH = "aa958dd0"
+local COMMIT_HASH = "9cc7b645"
 
 -- MODULES
 local gameLoaded = false
@@ -119,7 +119,7 @@ function generateNewMap()
     title:setParent(bg)
     bg.parentDidResize = function()
         bg.Width = Screen.Width
-        bg.Height = Screen."Height"
+        bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
     end
     bg:parentDidResize()
