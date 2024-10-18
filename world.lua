@@ -1,4 +1,4 @@
-local COMMIT_HASH = "cdd03eed"
+local COMMIT_HASH = "27ee5f66"
 
 -- MODULES
 local gameLoaded = false
@@ -184,7 +184,6 @@ function computeAdventureResources()
         end
     })
     requirementsNode:setParent(subframe)
-    requirementsNode:parentDidResize()
     subframe:parentDidResize()
     bg:parentDidResize()
 
