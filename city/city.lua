@@ -1161,6 +1161,16 @@ cityModule.show = function(self, config)
     map.Scale = common.MAP_SCALE
     map.Pivot = { 0, 1, 0 }
 
+    Object:Load("voxels.sand_tile", function(obj)
+        local nbSandTiles = 5
+        for _ = 0, nbSandTiles do
+            local shape = Shape(obj, { includeChildren = true })
+            shape:SetParent(map)
+            shape.Scale = 0.08
+            shape.LocalPosition = Number3(math.random(-9, 9), 1, math.random(-9, 9))
+        end
+    end)
+
     Object:Load("voxels.wood_barrier_fence", function(obj)
         local nbFences = 30
         for i = 0, nbFences do
