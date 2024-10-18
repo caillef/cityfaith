@@ -993,13 +993,14 @@ function cantUpgradeUI()
     local title = ui:createText(buildingInfo.description, Color.White)
     title:setParent(bg)
 
-    local nextLevel = (playerCityInfo.buildings[currentlyBuilding] and playerCityInfo.buildings[currentlyBuilding].level or 0) +
-        1
+    local currentInfo = playerCityInfo.buildings[currentlyBuilding]
+    local nextLevel = (currentInfo and currentInfo.level or 0) + 1
     local text = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel] .. "
 Resources needed:",
         Color.White)
     text:setParent(bg)
 
+    --[[
     -- requirements UI
     local requirementsUINodes = {}
     local repairPrices = buildingInfo.repairPrices[nextLevel]
@@ -1037,6 +1038,7 @@ Resources needed:",
         requirementsNode:setParent(bg)
         requirementsNode:parentDidResize()
     end
+    --]]
 
     bg.parentDidResize = function()
         bg.Width = math.min(title.Width + 10, Screen.Width * 0.5)
