@@ -1,4 +1,4 @@
-local COMMIT_HASH = "5da482fc"
+local COMMIT_HASH = "cdd03eed"
 
 -- MODULES
 local gameLoaded = false
@@ -167,6 +167,7 @@ function computeAdventureResources()
     if finalCoinsToAdd > 0 then
         coinText.Text = string.format("%d (+%d)", coins, finalCoinsToAdd)
         coins = coins + finalCoinsToAdd
+        KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
         Timer(2, function()
             coinText.Text = string.format("%d", coins)
             require("sfx")("coin_1", { Spatialized = false, Volume = 0.6 })
@@ -174,8 +175,9 @@ function computeAdventureResources()
     end
 
     local requirementsNode
-    requirementsNode = ui_blocks:createBlock({
-        rows = requirementsUINodes,
+    requirementsNode = ui_blocks:createLineContainer({
+        dir = "vertical",
+        nodes = requirementsUINodes,
         parentDidResize = function()
             if not requirementsNode.parent then return end
             requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
@@ -183,8 +185,9 @@ function computeAdventureResources()
     })
     requirementsNode:setParent(subframe)
     requirementsNode:parentDidResize()
-
+    subframe:parentDidResize()
     bg:parentDidResize()
+
     Timer(5, function()
         bg:remove()
         title = nil
