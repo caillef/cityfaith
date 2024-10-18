@@ -1,4 +1,4 @@
-local COMMIT_HASH = "c8a70e0e"
+local COMMIT_HASH = "64bf09de"
 
 -- MODULES
 local gameLoaded = false
@@ -177,6 +177,9 @@ function computeAdventureResources()
     for k, node in ipairs(requirementsUINodes) do
         node:setParent(requirementsNode)
         node.pos.Y = -k * 40
+        if node.Width > requirementsNode.Width then
+            requirementsNode.Width = node.Width
+        end
     end
     bg:parentDidResize()
 
