@@ -915,7 +915,17 @@ function updateBuildings()
             if other ~= localSquad then return end
             onStopBuilding(name)
         end
-        if building.level > 0 then
+        if building.level == 0 then
+            Object:Load("voxels.rock_1", function(obj)
+                local nbRocks = 5
+                for i = 0, nbRocks do
+                    local shape = Shape(obj, { includeChildren = true })
+                    shape:SetParent(building.model)
+                    shape.Scale = { 0.1, 10, 0.1 }
+                    shape.LocalPosition = { math.random(-2, 2), 0, math.random(-2, 2) }
+                end
+            end)
+        else
             Object:Load(buildingInfo.item, function(obj)
                 building.model2 = obj
                 building.model2.Pivot = { obj.Width * 0.5, 0, obj.Depth * 0.5 }
