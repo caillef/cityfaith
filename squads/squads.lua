@@ -1024,7 +1024,7 @@ LocalEvent:Listen("AddCharacter", function(data)
     if buildingsLevel.house == 2 then buildingBonus = 4 end
     if buildingsLevel.house == 3 then buildingBonus = 6 end
 
-    if localSquad.characters < buildingBonus then
+    if #localSquad.characters < buildingBonus then
         local character = createCharacter(data.name)
         localSquad:add(character)
     else
