@@ -877,10 +877,11 @@ propsModule.create = function(_, propType, x, y)
                         local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
                         nodeParent.pos = pos - Number2(50, 20)
                         local t = 0
+                        local yOffset = offset * 40
                         local tickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
                             t = t + dt
                             local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
-                            nodeParent.pos = pos - Number2(50, 20 - offset * 100) + Number2(0, t * 20)
+                            nodeParent.pos = pos - Number2(50, 20) + Number2(0, t * 20 + yOffset)
                         end)
                         Timer(2, function()
                             nodeParent:remove()
