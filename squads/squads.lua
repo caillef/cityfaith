@@ -864,6 +864,7 @@ local function createCharacter(charaType)
         if needToMove then
             local dir = action.Position - character.Position
             dir:Normalize()
+            local buildingBonus = 1
             if buildingsLevel.workstation == 1 then buildingBonus = 1.25 end
             if buildingsLevel.workstation == 2 then buildingBonus = 1.5 end
             if buildingsLevel.workstation == 3 then buildingBonus = 2 end
@@ -1044,7 +1045,6 @@ showInfo = function(str)
 end
 
 LocalEvent:Listen("AddCharacter", function(data)
-    print(buildingsLevel.house)
     -- check max squad size
     local buildingBonus = 2
     if buildingsLevel.house == 1 then buildingBonus = 3 end
