@@ -1,4 +1,8 @@
-local COMMIT_HASH = "3b1733cb"
+local COMMIT_HASH = "bdf7a059"
+
+Modules = {
+    niceLeaderboardModule = "github.com/aduermael/modzh/niceleaderboard",
+}
 
 -- MODULES
 local gameLoaded = false
@@ -168,6 +172,14 @@ function computeAdventureResources()
         coinText.Text = string.format("%d (+%d)", coins, finalCoinsToAdd)
         coins = coins + finalCoinsToAdd
         KeyValueStore("coins"):Set(Player.UserID, coins, function() end)
+        leaderboard:set({
+            score = coins,
+            value = {},
+            -- callback = function(success)
+            -- 	print("LEGACY SCORE SENT ->", best.score)
+            -- end,
+        })
+
         Timer(2, function()
             coinText.Text = string.format("%d", coins)
             require("sfx")("coin_1", { Spatialized = false, Volume = 0.6 })
@@ -365,6 +377,30 @@ function startGame()
     initCamera()
     globalUI = initUI()
     goToVillage()
+
+    niceLeaderboard = niceLeaderboardModule({})
+    niceLeaderboard.Width = 200
+    niceLeaderboard.Height = 200
+    leaderboard = Leaderboard("default")
+
+    -- function layoutNiceLeaderboard()
+    --     ease:cancel(niceLeaderboard)
+    --     niceLeaderboard.pos.Y = scoreLabel.pos.Y - niceLeaderboard.Height - margin
+    --     if state == STATE_PLAYING then
+    --         ease:linear(niceLeaderboard.pos, 0.2, {
+    --             onDone = function()
+    --                 niceLeaderboard:hide()
+    --             end,
+    --         }).X = Screen.Width
+    --             + margin
+    --     else
+    --         niceLeaderboard:show()
+    --         ease:linear(niceLeaderboard.pos, 0.2).X = Screen.Width
+    --             - Screen.SafeArea.Right
+    --             - niceLeaderboard.Width
+    --             - margin
+    --     end
+    -- end
 end
 
 LocalEvent:Listen("CurrentAdventureAddResource", function(data)
@@ -372,37 +408,6 @@ LocalEvent:Listen("CurrentAdventureAddResource", function(data)
     local quantity = data.quantity
     currentAdventureResources[resource] = (currentAdventureResources[resource] or 0) + quantity
 end)
-
-
--- Client.OnStart = function()
--- local node = require("controls"):getDirectionalPad()
--- if node then
---     node:hide()
--- end
--- end
-
--- local pointerStartX, pointerStartY
--- Pointer.Down = function(pe)
---     pointerStartX = pe.X
---     pointerStartY = pe.Y
--- end
-
--- Pointer.Drag = function(pe)
---     local dx, dy
---     dx = pe.X - pointerStartX
---     dy = pe.Y - pointerStartY
---     if math.abs(dx) < 0.01 then dx = 0 end
---     if math.abs(dy) < 0.01 then dy = 0 end
---     local x, y
---     if dx > 0 then x = 1 elseif dx < 0 then x = -1 else x = 0 end
---     if dy > 0 then y = 1 elseif dy < 0 then y = -1 else y = 0 end
---     -- handle diagonal
---     squad.Motion = (squad.Forward * y + squad.Right * x) * 50
--- end
-
--- Pointer.Up = function()
---     squad.Motion = Number3(0, 0, 0)
--- end
 
 Client.DirectionalPad = function(x, y)
     local buildingBonus = 1
