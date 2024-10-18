@@ -1,4 +1,4 @@
-local COMMIT_HASH = "f53f1b41"
+local COMMIT_HASH = "759660c0"
 
 -- MODULES
 local gameLoaded = false
@@ -7,6 +7,7 @@ local common
 local gameConfig
 local propsModule
 local squadsModule
+local ui_blocks
 local cityModule
 local modulesLoad = {}
 local currentAdventureResources = {}
