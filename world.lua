@@ -1,4 +1,4 @@
-local COMMIT_HASH = "7f8c1765"
+local COMMIT_HASH = "003d112e"
 
 -- MODULES
 local gameLoaded = false
@@ -133,12 +133,12 @@ function computeAdventureResources()
         local strText = string.format(" +%d", quantity)
         local resourcePrice = gameConfig.RESOURCES_BY_KEY[name].price
         if common.buildingsLevel.market ~= nil and common.buildingsLevel.market == 1 then
-            strText = string.format("    x%d💰 = %d💰", resourcePrice, resourcePrice * quantity)
+            strText = string.format("    x%d 💰 = %d 💰", resourcePrice, resourcePrice * quantity)
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity
         elseif common.buildingsLevel.market ~= nil and common.buildingsLevel.market > 1 then
             local multiplier = common.buildingsLevel.market == 2 and 1.5 or 2
             strText = strText ..
-                string.format("     x%d💰 (+%d%s) = %d💰", resourcePrice, math.floor((multiplier - 1) * 100),
+                string.format("     x% 💰 (+%d%s) = %d 💰", resourcePrice, math.floor((multiplier - 1) * 100),
                     "%", math.floor(resourcePrice * quantity * multiplier))
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity * multiplier
         end
@@ -182,6 +182,9 @@ function computeAdventureResources()
     end
     for k, node in ipairs(requirementsUINodes) do
         node.pos = { requirementsNode.Width * 0.5 - node.Width * 0.5, -k * 40 }
+        if k == #requirementsUINodes then
+            node.pos = { requirementsNode.Width - node.Width, -k * 40 }
+        end
     end
     bg:parentDidResize()
 
