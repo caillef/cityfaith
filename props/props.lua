@@ -832,6 +832,7 @@ propsModule.create = function(_, propType, x, y)
         if prop.hp <= 0 then prop.hp = 0 end
         hpBar:setPercentage(prop.hp / prop.maxHp)
         if prop.hp <= 0 then
+            local worldPos = prop.Position
             prop:destroy()
             if propInfo.drops then
                 for dropName, quantityRange in pairs(propInfo.drops) do
@@ -847,6 +848,29 @@ propsModule.create = function(_, propType, x, y)
                             end
                         end,
                     })
+                    local ui = require("uikit")
+                    local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[dropName].cachedShape, { includeChildren = true })
+                    local text = ui:createText(string.format("+%d", quantity), Color.White)
+                    local icon = ui:createShape(iconShape, { spherized = true })
+                    icon.Size = 40
+                    local triptychIcon = ui_blocks:createBlock({
+                        triptych = {
+                            dir = "horizontal",
+                            right = icon,
+                        },
+                        height = function() return icon.Height end
+                    })
+                    icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[name].icon.rotation
+                    local node = ui_blocks:createBlock({
+                        columns = {
+                            triptychIcon, text
+                        }
+                    })
+                    local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
+                    node.pos = pos
+                    Timer(2, function()
+                        node:remove()
+                    end)
                 end
             end
         end
