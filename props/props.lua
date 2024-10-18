@@ -924,7 +924,7 @@ propsModule.createSpawner = function(self, type, x, y)
     return propSpawner
 end
 
-propsModule.createCharacterBox = function(localSquad)
+propsModule.createCharacterBox = function(_, localSquad)
     local bonus = Object()
     local box = Box()
     box.Min = { -4, 0, -4 }
