@@ -839,48 +839,50 @@ propsModule.create = function(_, propType, x, y)
                 for dropName, quantityRange in pairs(propInfo.drops) do
                     local randomRange = math.random() * (quantityRange[2] - quantityRange[1])
                     local quantity = math.floor(randomRange) + quantityRange[1]
-                    LocalEvent:Send("InvAdd", {
-                        key = "hotbar",
-                        rKey = dropName,
-                        amount = quantity,
-                        callback = function(success)
-                            if success then
-                                return
-                            end
-                        end,
-                    })
-                    local ui = require("uikit")
-                    local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[dropName].cachedShape, { includeChildren = true })
-                    local text = ui:createText(string.format("+%d", quantity), Color.White)
-                    local icon = ui:createShape(iconShape, { spherized = true })
-                    icon.Size = 40
-                    local triptychIcon = ui_blocks:createBlock({
-                        triptych = {
-                            dir = "horizontal",
-                            right = icon,
-                        },
-                        height = function() return icon.Height end
-                    })
-                    icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[dropName].icon.rotation
-                    local node = ui_blocks:createBlock({
-                        columns = {
-                            triptychIcon, text
-                        }
-                    })
-                    local nodeParent = ui:createFrame()
-                    nodeParent.Width = 100
-                    nodeParent.Height = icon.Height
-                    node:setParent(nodeParent)
-                    local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
-                    nodeParent.pos = pos
-                    local tickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
-                        pos.Y = pos.Y + dt
-                        nodeParent.pos = pos
-                    end)
-                    Timer(2, function()
-                        nodeParent:remove()
-                        tickListener:Remove()
-                    end)
+                    if quantity > 0 then
+                        LocalEvent:Send("InvAdd", {
+                            key = "hotbar",
+                            rKey = dropName,
+                            amount = quantity,
+                            callback = function(success)
+                                if success then
+                                    return
+                                end
+                            end,
+                        })
+                        local ui = require("uikit")
+                        local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[dropName].cachedShape,
+                            { includeChildren = true })
+                        local text = ui:createText(string.format("+%d", quantity), Color.White)
+                        local icon = ui:createShape(iconShape, { spherized = true })
+                        icon.Size = 40
+                        local triptychIcon = ui_blocks:createBlock({
+                            triptych = {
+                                dir = "horizontal",
+                                right = icon,
+                            },
+                            height = function() return icon.Height end
+                        })
+                        icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[dropName].icon.rotation
+                        local node = ui_blocks:createBlock({
+                            columns = {
+                                triptychIcon, text
+                            }
+                        })
+                        local nodeParent = ui:createFrame()
+                        nodeParent.Width = 100
+                        nodeParent.Height = icon.Height
+                        node:setParent(nodeParent)
+                        local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
+                        nodeParent.pos = pos - Number2(50, 20)
+                        local tickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
+                            nodeParent.pos = pos + Number2(0, dt * 5)
+                        end)
+                        Timer(2, function()
+                            nodeParent:remove()
+                            tickListener:Remove()
+                        end)
+                    end
                 end
             end
         end
