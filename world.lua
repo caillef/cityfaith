@@ -1,4 +1,4 @@
-local COMMIT_HASH = "7a744026"
+local COMMIT_HASH = "aa958dd0"
 
 -- MODULES
 local gameLoaded = false
@@ -13,7 +13,7 @@ local modulesLoad = {}
 function dostring(str, name)
     local module, err = load(str, name)
     if not module then
-        print("Can't load", name, err)
+        error(name .. ":" .. err)
     end
     return module()
 end
@@ -119,7 +119,7 @@ function generateNewMap()
     title:setParent(bg)
     bg.parentDidResize = function()
         bg.Width = Screen.Width
-        bg.Height = Screen.Height
+        bg.Height = Screen."Height"
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.5 - title.Height * 0.5 }
     end
     bg:parentDidResize()
