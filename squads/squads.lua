@@ -1039,6 +1039,7 @@ showInfo = function(str)
 end
 
 LocalEvent:Listen("AddCharacter", function(data)
+    print(buildingsLevel.house)
     -- check max squad size
     local buildingBonus = 2
     if buildingsLevel.house == 1 then buildingBonus = 3 end
