@@ -1,4 +1,4 @@
-local COMMIT_HASH = "2b2e1fc2"
+local COMMIT_HASH = "7a744026"
 
 -- MODULES
 local gameLoaded = false
@@ -11,8 +11,11 @@ local cityModule
 local modulesLoad = {}
 
 function dostring(str, name)
-    print("loading", name)
-    return load(str, name)()
+    local module, err = load(str, name)
+    if not module then
+        print("Can't load", name, err)
+    end
+    return module()
 end
 
 modulesLoad.start = function(_, callback)
