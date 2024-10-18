@@ -1,4 +1,4 @@
-local COMMIT_HASH = "3321be1e"
+local COMMIT_HASH = "53c64067"
 
 Modules = {
     niceLeaderboardModule = "github.com/aduermael/modzh/niceleaderboard",

@@ -142,6 +142,11 @@ local BUILDINGS = {
                 wood_log = 100,
                 stone = 50,
                 berry = 20
+            },
+            {
+                wood_log = 1000,
+                stone = 500,
+                berry = 400
             }
         },
         item = "voxels.simple_cabin",
@@ -150,6 +155,7 @@ local BUILDINGS = {
             "Squads max size: 3",
             "Squads max size: 4",
             "Squads max size: 6",
+            "Squads max size: 10",
         },
         itemScale = 0.75,
         color = Color.Red,
@@ -178,6 +184,11 @@ local BUILDINGS = {
                 wood_log = 60,
                 stone = 30,
                 iron = 15
+            },
+            {
+                wood_log = 1000,
+                stone = 600,
+                iron = 600
             }
 
         },
@@ -187,6 +198,7 @@ local BUILDINGS = {
             "+25% Move Speed",
             "+50% Move Speed",
             "+100% Move Speed",
+            "+200% Move Speed",
         },
         itemScale = 0.75,
         color = Color.Brown,
@@ -214,6 +226,11 @@ local BUILDINGS = {
                 wood_log = 30,
                 stone = 50,
             },
+            {
+                wooden_stick = 3500,
+                wood_log = 300,
+                stone = 500,
+            },
         },
         color = Color.Yellow,
         item = "voxels.market_stall",
@@ -222,6 +239,7 @@ local BUILDINGS = {
             "+0% bonus gold",
             "+50% bonus gold",
             "+100% bonus gold",
+            "+200% bonus gold",
         },
         itemScale = 0.75,
         rotation = -0.2 * math.pi,
@@ -249,6 +267,12 @@ local BUILDINGS = {
                 iron = 30,
                 gold = 20,
             },
+            {
+                wood_log = 1000,
+                stone = 450,
+                iron = 300,
+                gold = 400,
+            },
         },
         color = Color.Grey,
         item = "voxels.simple_furnace",
@@ -257,6 +281,7 @@ local BUILDINGS = {
             "+25% Mining Speed",
             "+50% Mining Speed",
             "+100% Mining Speed",
+            "+200% Mining Speed",
         },
         itemScale = 0.75,
         scale = 25,
