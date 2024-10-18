@@ -751,7 +751,9 @@ local function createCharacter(charaType)
     local model = require("avatar"):get(charaInfo.avatarName)
     model:SetParent(character)
     model.Scale = 0.6
-    model.Physics = PhysicsMode.Disabled
+    require("hierarchyactions"):applyToDescendants(model, { includeRoot = true }, function(obj)
+        obj.Physics = PhysicsMode.Disabled
+    end)
     character.model = model
     if charaInfo.tool then
         Object:Load(charaInfo.tool, function(obj)
