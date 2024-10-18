@@ -809,6 +809,7 @@ function startBuildingProgress()
     local title = ui:createText((isUpgrade and "Upgrading " or "Building ") .. currentlyBuilding .. "...", Color.White)
     title:setParent(bg)
 
+    --[[
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
     local currentInfo = playerCityInfo.buildings[currentlyBuilding]
     local nextLevel = (currentInfo and currentInfo.level or 0) + 1
@@ -850,7 +851,7 @@ function startBuildingProgress()
         requirementsNode:setParent(bg)
         requirementsNode:parentDidResize()
     end
-
+    --]]
     bg.parentDidResize = function()
         bg.Width = math.min(500, Screen.Width * 0.5)
         bg.Height = bg.Width * 0.3
@@ -993,7 +994,7 @@ function cantUpgradeUI()
     title:setParent(bg)
 
     local nextLevel = (playerCityInfo.buildings[currentlyBuilding] and playerCityInfo.buildings[currentlyBuilding].level or 0) +
-    1
+        1
     local text = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel] .. "
 Resources needed:",
         Color.White)
