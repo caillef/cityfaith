@@ -147,7 +147,7 @@ local BUILDINGS = {
         item = "voxels.simple_cabin",
         description = "The House increase your squad maximum size.",
         levelsTooltip = {
-            "Squads max size: 2",
+            "Squads max size: 3",
             "Squads max size: 4",
             "Squads max size: 6",
         },

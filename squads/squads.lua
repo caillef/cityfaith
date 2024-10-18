@@ -147,7 +147,7 @@ local BUILDINGS = {
         item = "voxels.simple_cabin",
         description = "The House increase your squad maximum size.",
         levelsTooltip = {
-            "Squads max size: 2",
+            "Squads max size: 3",
             "Squads max size: 4",
             "Squads max size: 6",
         },
@@ -1017,10 +1017,31 @@ squadModule.create = function(_, defaultCharacterList)
     return squad
 end
 
+
+local currentInfo
+showInfo = function(str)
+    if currentInfo then
+        currentInfo.listener:Cancel()
+        currentInfo:remove()
+    end
+    local bg = require("uikit"):createFrame(Color.Black)
+    local text = require("uikit"):createText(str, Color.White, "big")
+    text:setParent(bg)
+    text.pos = { 5, 5 }
+    bg.Width = text.Width + 10
+    bg.Height = text.Height + 10
+    bg.pos = { Screen.Width * 0.5 - bg.Width * 0.5, Screen.Height * 0.5 - bg.Height * 0.5 }
+    currentInfo = bg
+    currentInfo.listener = Timer(3, function()
+        bg:remove()
+        currentInfo = nil
+    end)
+end
+
 LocalEvent:Listen("AddCharacter", function(data)
     -- check max squad size
-    local buildingBonus = 1
-    if buildingsLevel.house == 1 then buildingBonus = 2 end
+    local buildingBonus = 2
+    if buildingsLevel.house == 1 then buildingBonus = 3 end
     if buildingsLevel.house == 2 then buildingBonus = 4 end
     if buildingsLevel.house == 3 then buildingBonus = 6 end
 
@@ -1028,7 +1049,7 @@ LocalEvent:Listen("AddCharacter", function(data)
         local character = createCharacter(data.name)
         localSquad:add(character)
     else
-        print("Squad is full. Upgrade the House.")
+        showInfo("Your squad is full. Upgrade the House!")
     end
 end)
 
