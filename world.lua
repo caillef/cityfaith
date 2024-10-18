@@ -1,4 +1,4 @@
-local COMMIT_HASH = "671ce2b7"
+local COMMIT_HASH = "2c401975"
 
 -- MODULES
 local gameLoaded = false
@@ -266,10 +266,9 @@ function startGame()
 
     squadsModule:setPropsModule(propsModule)
 
-    squad = squadsModule:create({ "gatherer" })
-
     initCamera()
     globalUI = initUI(function()
+        squad = squadsModule:create({ "gatherer" })
         goToVillage()
     end)
 end
