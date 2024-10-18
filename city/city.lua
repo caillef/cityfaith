@@ -1076,8 +1076,13 @@ function cantUpgradeUI()
     end
 
     bg.parentDidResize = function()
-        bg.Width = math.min(title.Width + 10, Screen.Width * 0.5) + 10
-        bg.Height = bg.Width * 0.3 + 10
+        if Screen.Width > Screen.Height then
+            bg.Width = math.min(title.Width + 10, Screen.Width * 0.5) + 10
+            bg.Height = bg.Width * 0.3 + 10
+        else
+            bg.Width = Screen.Width
+            bg.Height = bg.Height * 0.5
+        end
         bg.pos = {
             Screen.Width * 0.5 - bg.Width * 0.5,
             Screen.Height * 0.5 - bg.Height * 0.5
