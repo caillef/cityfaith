@@ -1,4 +1,4 @@
-local COMMIT_HASH = "0ea2529c"
+local COMMIT_HASH = "0e49bf7d"
 
 -- MODULES
 local gameLoaded = false
@@ -178,7 +178,7 @@ function computeAdventureResources()
 
     local requirementsNode
     requirementsNode = ui_blocks:createLineContainer({
-        dir = "horizontal",
+        dir = "vertical",
         nodes = requirementsUINodes,
         -- parentDidResize = function()
         --     --            if not requirementsNode.parent then return end
