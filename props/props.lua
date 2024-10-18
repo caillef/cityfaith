@@ -961,7 +961,7 @@ propsModule.createCharacterBox = function(_, localSquad)
     local bonus = Object()
     local box = Box()
     box.Min = { -4, 0, -4 }
-    box.Max = { 4, 0, 4 }
+    box.Max = { 4, 4, 4 }
     bonus.CollisionBox = box
     bonus.Physics = PhysicsMode.Trigger
 
