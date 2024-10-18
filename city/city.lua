@@ -1067,7 +1067,7 @@ cityModule.show = function(self, config)
             if results[Player.UserID] then
                 --playerCityInfo = results[Player.UserID]
             end
-            playerCityInfo.buildings.market = { level = 1 }
+            -- playerCityInfo.buildings.market = { level = 1 }
             self:show(config)
         end)
         return
