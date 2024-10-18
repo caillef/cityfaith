@@ -827,21 +827,29 @@ propsModule.createCharacterBox = function()
     shape:AddBlock(Color.Blue, 0, 0, 0)
     shape.Pivot = { 0.5, 0, 0.5 }
     shape:SetParent(bonus)
-    shape.Scale = 5
+    shape.Scale = 8
     shape.Physics = PhysicsMode.Disabled
 
-    local function executeBonus()
-        local list = { "lumberjack", "miner", "gatherer" }
-        LocalEvent:Send("AddCharacter", { name = list[math.random(#list)] })
-    end
+    local CHARACTERS = { "lumberjack", "miner", "gatherer" }
+    local randomIndex = math.random(#CHARACTERS)
+    local characterType = CHARACTERS[randomIndex]
+    local COLORS = { Color.Blue, Color.Red, Color.Green }
+    shape:GetBlock(0, 0, 0):Replace(COLORS[randomIndex])
 
     bonus.OnCollisionBegin = function(_, other)
         if other == squad then
             bonus.OnCollisionBegin = nil
             bonus:RemoveFromParent()
-            executeBonus()
+            LocalEvent:Send("AddCharacter", characterType)
         end
     end
+
+    bonus.destroy = function()
+        bonus.OnCollisionBegin = nil
+        bonus:RemoveFromParent()
+    end
+
+    table.insert(props, bonus)
 
     return bonus
 end
