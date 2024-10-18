@@ -1,4 +1,4 @@
-local COMMIT_HASH = "45520f19"
+local COMMIT_HASH = "ed6f0630"
 --TODO
 -- [ ] Upgrade building keeps old buildings
 -- [ ]
@@ -142,8 +142,10 @@ function computeAdventureResources()
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity
         elseif common.buildingsLevel.market ~= nil and common.buildingsLevel.market > 1 then
             local multiplier = common.buildingsLevel.market == 2 and 1.5 or 2
+            print("multiplier", multiplier)
+            print(resourcePrice, math.floor((multiplier - 1) * 100), resourcePrice * quantity * multiplier)
             strText = strText ..
-                string.format("     x%d💰 (+%d%) = %d💰", resourcePrice, (multiplier - 1) * 100,
+                string.format("     x%d💰 (+%d%) = %d💰", resourcePrice, math.floor((multiplier - 1) * 100),
                     resourcePrice * quantity * multiplier)
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity * multiplier
         end
