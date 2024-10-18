@@ -1,4 +1,4 @@
-local COMMIT_HASH = "55fcb103"
+local COMMIT_HASH = "c4d93ccb"
 
 -- MODULES
 local gameLoaded = false
@@ -178,10 +178,10 @@ function computeAdventureResources()
     requirementsNode = ui_blocks:createLineContainer({
         dir = "vertical",
         nodes = requirementsUINodes,
-        parentDidResize = function()
-            if not requirementsNode.parent then return end
-            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
-        end
+        -- parentDidResize = function()
+        --     --            if not requirementsNode.parent then return end
+        --     --            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+        -- end
     })
     requirementsNode:setParent(subframe)
     bg:parentDidResize()
