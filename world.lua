@@ -1,4 +1,4 @@
-local COMMIT_HASH = "a3ccebcc"
+local COMMIT_HASH = "1262e332"
 
 -- MODULES
 local gameLoaded = false
@@ -28,9 +28,14 @@ modulesLoad.start = function(_, callback)
             callback()
         end
     end
-    HTTP:Get("https://raw.githubusercontent.com/caillef/cubzh-library/refs/heads/main/inventory/inventory_module.lua",
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cubzh-library/3bce1e2/inventory/inventory_module.lua",
         function(res)
             inventoryModule = dostring(res.Body:ToString(), "inventoryModule")
+            loadNext()
+        end)
+    HTTP:Get("https://raw.githubusercontent.com/caillef/cubzh-library/3bce1e2/ui_blocks/ui_blocks_module.lua",
+        function(res)
+            ui_blocks = dostring(res.Body:ToString(), "ui_blocks")
             loadNext()
         end)
     HTTP:Get("https://raw.githubusercontent.com/caillef/cityfaith/" .. COMMIT_HASH .. "/common/common.lua", function(res)
@@ -117,9 +122,38 @@ function computeAdventureResources()
     bg:parentDidResize()
     globalUI:hide()
 
-    for key, value in pairs(currentAdventureResources) do
-        print(key, value)
+    local requirementsUINodes = {}
+    for name, quantity in pairs(currentAdventureResources) do
+        local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
+        local text = ui:createText(string.format(" +%d", quantity), Color.White)
+        local icon = ui:createShape(iconShape, { spherized = true })
+        icon.Size = 40
+        local triptychIcon = ui_blocks:createBlock({
+            triptych = {
+                dir = "horizontal",
+                right = icon,
+            },
+            height = function() return icon.Height end
+        })
+        icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[name].icon.rotation
+        local node = ui_blocks:createBlock({
+            columns = {
+                triptychIcon, text
+            }
+        })
+        table.insert(requirementsUINodes, node)
     end
+
+    local requirementsNode
+    requirementsNode = ui_blocks:createBlock({
+        rows = requirementsUINodes,
+        parentDidResize = function()
+            if not requirementsNode.parent then return end
+            requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 5 }
+        end
+    })
+    requirementsNode:setParent(bg)
+    requirementsNode:parentDidResize()
 
     Timer(5, function()
         globalUI:show()
