@@ -1,4 +1,4 @@
-local COMMIT_HASH = "204886ec"
+local COMMIT_HASH = "ea8ef1a7"
 
 -- MODULES
 local gameLoaded = false
@@ -271,34 +271,35 @@ function startGame()
     goToVillage()
 end
 
-Client.OnStart = function()
-    local node = require("controls"):getDirectionalPad()
-    if node then
-        node:hide()
-    end
-end
+-- Client.OnStart = function()
+-- local node = require("controls"):getDirectionalPad()
+-- if node then
+--     node:hide()
+-- end
+-- end
 
-local pointerStartX, pointerStartY
-Pointer.Down = function(pe)
-    pointerStartX = pe.X
-    pointerStartY = pe.Y
-end
+-- local pointerStartX, pointerStartY
+-- Pointer.Down = function(pe)
+--     pointerStartX = pe.X
+--     pointerStartY = pe.Y
+-- end
 
-Pointer.Drag = function(pe)
-    local dx, dy
-    dx = pe.X - pointerStartX
-    dy = pe.Y - pointerStartY
-    if math.abs(dx) < 0.02 then dx = 0 end
-    if math.abs(dy) < 0.02 then dy = 0 end
-    local x, y
-    if dx > 0 then x = 1 elseif dx < 0 then x = -1 else x = 0 end
-    if dy > 0 then y = 1 elseif dy < 0 then y = -1 else y = 0 end
-    squad.Motion = (squad.Forward * y + squad.Right * x) * 50
-end
+-- Pointer.Drag = function(pe)
+--     local dx, dy
+--     dx = pe.X - pointerStartX
+--     dy = pe.Y - pointerStartY
+--     if math.abs(dx) < 0.01 then dx = 0 end
+--     if math.abs(dy) < 0.01 then dy = 0 end
+--     local x, y
+--     if dx > 0 then x = 1 elseif dx < 0 then x = -1 else x = 0 end
+--     if dy > 0 then y = 1 elseif dy < 0 then y = -1 else y = 0 end
+--     -- handle diagonal
+--     squad.Motion = (squad.Forward * y + squad.Right * x) * 50
+-- end
 
-Pointer.Up = function()
-    squad.Motion = Number3(0, 0, 0)
-end
+-- Pointer.Up = function()
+--     squad.Motion = Number3(0, 0, 0)
+-- end
 
 Client.DirectionalPad = function(x, y)
     squad.Motion = (squad.Forward * y + squad.Right * x) * 50
