@@ -916,7 +916,7 @@ function updateBuildings()
             onStopBuilding(name)
         end
         if building.level == 0 then
-            for i = 1, 5 do
+            for i = 1, 4 do
                 Object:Load("voxels.rock_" .. i, function(obj)
                     local nbRocks = 6
                     for _ = 0, nbRocks do
