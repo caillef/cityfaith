@@ -1031,7 +1031,7 @@ function cantUpgradeUI()
             columns = requirementsUINodes,
             parentDidResize = function()
                 if not requirementsNode.parent then return end
-                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 15 }
+                requirementsNode.pos = { requirementsNode.parent.Width * 0.5 - requirementsNode.Width * 0.5, 20 }
             end
         })
         requirementsNode:setParent(bg)
