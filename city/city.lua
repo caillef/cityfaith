@@ -803,7 +803,7 @@ function startBuildingProgress()
 
     local ui = require("uikit")
 
-    local bg = ui:createFrame(Color(0, 0, 0, 0.5))
+    local bg = ui:createFrame(Color(0, 0, 0, 0.8))
     progressUI = bg
 
     local title = ui:createText((isUpgrade and "Upgrading " or "Building ") .. currentlyBuilding .. "...", Color.White)
@@ -959,7 +959,7 @@ function successfullBuild()
     saveBuildingUpgrade()
     local ui = require("uikit")
 
-    local bg = ui:createFrame(Color(0, 0, 0, 0.5))
+    local bg = ui:createFrame(Color(0, 0, 0, 0.8))
     progressUI = bg
 
     local title = ui:createText("Successfully " .. (isUpgrade and "upgraded" or "built") .. " " .. currentlyBuilding,
@@ -984,7 +984,7 @@ function cantUpgradeUI()
 
     local ui = require("uikit")
 
-    local bg = ui:createFrame(Color(0, 0, 0, 0.5))
+    local bg = ui:createFrame(Color(0, 0, 0, 0.8))
     progressUI = bg
 
     local buildingInfo = gameConfig.BUILDINGS[currentlyBuilding]
