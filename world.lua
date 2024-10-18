@@ -1,4 +1,4 @@
-local COMMIT_HASH = "003d112e"
+local COMMIT_HASH = "40a159b0"
 
 -- MODULES
 local gameLoaded = false
@@ -123,7 +123,7 @@ function computeAdventureResources()
         bg.Width = Screen.Width
         bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
-        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width, title.pos.Y - 20 }
+        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width * 1.5, title.pos.Y - 20 }
     end
 
     local requirementsUINodes = {}
