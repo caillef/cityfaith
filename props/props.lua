@@ -114,7 +114,7 @@ local PROPS = {
         skill = "mine",
         objFullname = "voxels.gold_ore",
         drops = {
-            iron = { 1, 3 }
+            gold = { 1, 2 }
         },
         scale = 0.8,
         hp = 20,

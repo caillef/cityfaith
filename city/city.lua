@@ -114,7 +114,7 @@ local PROPS = {
         skill = "mine",
         objFullname = "voxels.gold_ore",
         drops = {
-            iron = { 1, 3 }
+            gold = { 1, 2 }
         },
         scale = 0.8,
         hp = 20,
@@ -898,6 +898,10 @@ function updateBuildings()
             end
             buildings[name].model:RemoveFromParent()
             buildings[name].model = nil
+            if building.model2 then
+                building.model2:RemoveFromParent()
+                building.model2 = nil
+            end
         end
         building.level = newLevel
         LocalEvent:Send("UpgradeBuilding", { name = name, level = newLevel })
