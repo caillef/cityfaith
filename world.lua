@@ -1,4 +1,4 @@
-local COMMIT_HASH = "ed6f0630"
+local COMMIT_HASH = "c418c9d3"
 --TODO
 -- [ ] Upgrade building keeps old buildings
 -- [ ]

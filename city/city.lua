@@ -421,7 +421,7 @@ local common = {}
 
 common.MAP_SCALE = 10
 common.TIME_TO_BUILD_BUILDING = 5
-common.ADVENTURE_DURATION = 45
+common.ADVENTURE_DURATION = 10
 
 common.setPropPosition = function(obj, x, y)
     obj.Position = { (x + 0.5) * common.MAP_SCALE, 0, (y + 0.5) * common.MAP_SCALE }
@@ -904,9 +904,9 @@ function updateBuildings()
             end
             buildings[name].model:RemoveFromParent()
             buildings[name].model = nil
-            if building.model2 then
-                building.model2:RemoveFromParent()
-                building.model2 = nil
+            if buildings[name].model2 then
+                buildings[name].model2:RemoveFromParent()
+                buildings[name].model2 = nil
             end
         end
         building.level = newLevel
