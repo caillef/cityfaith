@@ -889,6 +889,7 @@ squadModule.create = function(_, defaultCharacterList)
     squad.CollisionBox = Box(Number3(-4, 0, -4), Number3(4, 4, 4))
 
     local characters = {}
+    squad.characters = characters
     squad.add = function(_, character)
         character:SetParent(squad)
         table.insert(characters, character)
@@ -1023,7 +1024,7 @@ LocalEvent:Listen("AddCharacter", function(data)
     if buildingsLevel.house == 2 then buildingBonus = 4 end
     if buildingsLevel.house == 3 then buildingBonus = 6 end
 
-    if #characters < buildingBonus then
+    if localSquad.characters < buildingBonus then
         local character = createCharacter(data.name)
         localSquad:add(character)
     else
