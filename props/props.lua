@@ -876,7 +876,7 @@ propsModule.create = function(_, propType, x, y)
                     if quantity > 0 then
                         LocalEvent:Send("CurrentAdventureAddResource", {
                             name = dropName,
-                            qty = quantity
+                            quantity = quantity
                         })
                         LocalEvent:Send("InvAdd", {
                             key = "hotbar",
