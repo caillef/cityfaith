@@ -1,4 +1,4 @@
-local COMMIT_HASH = "3758a328"
+local COMMIT_HASH = "98e3a0f1"
 
 -- MODULES
 local gameLoaded = false
@@ -134,11 +134,11 @@ function computeAdventureResources()
         local iconShape = Shape(gameConfig.RESOURCES_BY_KEY[name].cachedShape, { includeChildren = true })
         local strText = string.format(" +%d", quantity)
         local resourcePrice = gameConfig.RESOURCES_BY_KEY[name].price
-        if buildingsLevel.market == 1 then
+        if common.buildingsLevel.market ~= nil and common.buildingsLevel.market == 1 then
             strText = strText .. string.format("    x%d💰 = %d💰", resourcePrice, resourcePrice * quantity)
             finalCoinsToAdd = finalCoinsToAdd + resourcePrice * quantity
-        elseif buildingsLevel.market > 1 then
-            local multiplier = buildingsLevel.market == 2 and 1.5 or 2
+        elseif common.buildingsLevel.market ~= nil and common.buildingsLevel.market > 1 then
+            local multiplier = common.buildingsLevel.market == 2 and 1.5 or 2
             strText =
                 string.format("%s    x%d💰 (+%d%) = %d💰", strText, resourcePrice, (multiplier - 1) * 100,
                     resourcePrice * quantity * multiplier)
