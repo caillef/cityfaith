@@ -998,7 +998,7 @@ function cantUpgradeUI()
         "Current level: " .. (nextLevel == 1 and "no bonus" or buildingInfo.levelsTooltip[nextLevel - 1]), Color.White)
     text:setParent(bg)
     local text2 = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel], Color.White)
-    text:setParent(bg)
+    text2:setParent(bg)
 
     -- requirements UI
     local requirementsUINodes = {}
