@@ -1185,8 +1185,8 @@ cityModule.show = function(self, config)
         portal.model:RemoveFromParent()
         for _, building in pairs(buildings) do
             building.model:RemoveFromParent()
-            if portal.model2 then
-                portal.model2:RemoveFromParent()
+            if building.model2 then
+                building.model2:RemoveFromParent()
             end
         end
         buildings = {}
