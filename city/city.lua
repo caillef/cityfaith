@@ -925,7 +925,7 @@ function updateBuildings()
                         shape.Scale = { 0.01, 2, 0.01 }
                         shape.LocalPosition = Number3(math.random() * 2 - 1, 0, math.random() * 2 - 1) * 0.4
                         require("hierarchyactions"):applyToDescendants(shape, { includeRoot = true }, function(o)
-                            o.Physics = false
+                            o.Physics = PhysicsMode.Disabled
                         end)
                     end
                 end)
