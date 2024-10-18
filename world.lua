@@ -1,4 +1,4 @@
-local COMMIT_HASH = "2e09fd3d"
+local COMMIT_HASH = "ce61cdf3"
 
 -- MODULES
 local gameLoaded = false
@@ -163,6 +163,8 @@ function computeAdventureResources()
         table.insert(requirementsUINodes, node)
     end
 
+    table.insert(requirementsUINodes, ui:createText(string.format("+%d 💰", finalCoinsToAdd), Color.White))
+
     finalCoinsToAdd = math.floor(finalCoinsToAdd)
     if finalCoinsToAdd > 0 then
         coinText.Text = string.format("%d (+%d)", coins, finalCoinsToAdd)
@@ -176,7 +178,7 @@ function computeAdventureResources()
 
     local requirementsNode
     requirementsNode = ui_blocks:createLineContainer({
-        dir = "vertical",
+        dir = "horizontal",
         nodes = requirementsUINodes,
         -- parentDidResize = function()
         --     --            if not requirementsNode.parent then return end
