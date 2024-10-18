@@ -992,7 +992,8 @@ function cantUpgradeUI()
     local title = ui:createText(buildingInfo.description, Color.White)
     title:setParent(bg)
 
-    local nextLevel = (playerCityInfo.buildings[name] and playerCityInfo.buildings[name].level or 0) + 1
+    local nextLevel = (playerCityInfo.buildings[currentlyBuilding] and playerCityInfo.buildings[currentlyBuilding].level or 0) +
+    1
     local text = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel] .. "
 Resources needed:",
         Color.White)
