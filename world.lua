@@ -1,4 +1,4 @@
-local COMMIT_HASH = "eb583ea4"
+local COMMIT_HASH = "c8b54956"
 
 -- MODULES
 local gameLoaded = false
@@ -122,7 +122,7 @@ function computeAdventureResources()
         bg.Width = Screen.Width
         bg.Height = Screen.Height
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height * 0.75 - title.Height * 0.5 }
-        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width * 0.5, title.pos.Y }
+        requirementsNode.pos = { bg.Width * 0.5 - requirementsNode.Width * 0.5, title.pos.Y - 20 }
     end
 
     local requirementsUINodes = {}
@@ -175,7 +175,7 @@ function computeAdventureResources()
 
     for k, node in ipairs(requirementsUINodes) do
         node:setParent(requirementsNode)
-        node.pos.Y = -k * node.Height + 2
+        node.pos.Y = -k * node.Height - 2
     end
     bg:parentDidResize()
 
