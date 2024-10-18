@@ -1,4 +1,4 @@
-local COMMIT_HASH = "f6af81d7"
+local COMMIT_HASH = "37b53e5c"
 
 -- MODULES
 local gameLoaded = false
@@ -278,10 +278,19 @@ Client.OnStart = function()
     end
 end
 
+local pointerStartX, pointerStartY
+Pointer.Down = function(pe)
+    pointerStartX = pe.X
+    pointerStartY = pe.Y
+end
+
 Pointer.Drag = function(pe)
+    local dx, dy
+    dx = pe.X - pointerStartX
+    dy = pe.Y - pointerStartY
     local x, y
-    if pe.DX > 0 then x = 1 elseif pe.DX < 0 then x = -1 else x = 0 end
-    if pe.DY > 0 then y = 1 elseif pe.DY < 0 then y = -1 else y = 0 end
+    if dx > 0 then x = 1 elseif dx < 0 then x = -1 else x = 0 end
+    if dy > 0 then y = 1 elseif dy < 0 then y = -1 else y = 0 end
     squad.Motion = (squad.Forward * y + squad.Right * x) * 50
 end
 
