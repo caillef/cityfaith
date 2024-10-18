@@ -1,4 +1,4 @@
-local COMMIT_HASH = "263bf6da"
+local COMMIT_HASH = "f6af81d7"
 
 -- MODULES
 local gameLoaded = false
@@ -269,6 +269,24 @@ function startGame()
     globalUI = initUI()
 
     goToVillage()
+end
+
+Client.OnStart = function()
+    local node = require("controls"):getDirectionalPad()
+    if node then
+        node:hide()
+    end
+end
+
+Pointer.Drag = function(pe)
+    local x, y
+    if pe.DX > 0 then x = 1 elseif pe.DX < 0 then x = -1 else x = 0 end
+    if pe.DY > 0 then y = 1 elseif pe.DY < 0 then y = -1 else y = 0 end
+    squad.Motion = (squad.Forward * y + squad.Right * x) * 50
+end
+
+Pointer.Up = function()
+    squad.Motion = Number3(0, 0, 0)
 end
 
 Client.DirectionalPad = function(x, y)
