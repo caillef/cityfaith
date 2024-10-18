@@ -1,4 +1,4 @@
-local COMMIT_HASH = "5a53300c"
+local COMMIT_HASH = "d68228db"
 
 -- MODULES
 local gameLoaded = false
@@ -57,6 +57,7 @@ Config = {
     Items = { "buche.portal", "caillef.coin" }
 }
 
+local nbVisits = 0
 local squad
 local coins = 0
 local coinIcon, coinText
@@ -97,8 +98,14 @@ function goToVillage()
 end
 
 function generateNewMap()
+    nbVisits = nbVisits + 1
     local worldKeys = { "forest", "forest", "forest", "desert", "desert", "plateau", "plateau", "magicland" }
     local worldType = worldKeys[math.random(1, #worldKeys)]
+
+    if nbVisits <= 3 then
+        worldType = "forest"
+    end
+
     local worldInfo = gameConfig.WORLDS[worldType]
 
     local ui = require("uikit")
