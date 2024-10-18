@@ -836,6 +836,7 @@ propsModule.create = function(_, propType, x, y)
             local worldPos = prop.Position
             prop:destroy()
             if propInfo.drops then
+                local offset = 0
                 for dropName, quantityRange in pairs(propInfo.drops) do
                     local randomRange = math.random() * (quantityRange[2] - quantityRange[1])
                     local quantity = math.floor(randomRange) + quantityRange[1]
@@ -879,12 +880,13 @@ propsModule.create = function(_, propType, x, y)
                         local tickListener = LocalEvent:Listen(LocalEvent.Name.Tick, function(dt)
                             t = t + dt
                             local pos = Camera:WorldToScreen(worldPos) * Number2(Screen.Width, Screen.Height)
-                            nodeParent.pos = pos - Number2(50, 20) + Number2(0, t * 15)
+                            nodeParent.pos = pos - Number2(50, 20 - offset * 50) + Number2(0, t * 15)
                         end)
                         Timer(2, function()
                             nodeParent:remove()
                             tickListener:Remove()
                         end)
+                        offset = offset + 1
                     end
                 end
             end
