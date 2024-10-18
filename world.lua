@@ -1,4 +1,4 @@
-local COMMIT_HASH = "50669e6c"
+local COMMIT_HASH = "fab1e44e"
 
 -- MODULES
 local gameLoaded = false
@@ -208,16 +208,18 @@ end
 
 initUI = function()
     inventoryModule:setResources(gameConfig.RESOURCES_BY_KEY, gameConfig.RESOURCES_BY_ID)
-    inventory = inventoryModule:create("hotbar", {
-        width = 8,
-        height = 1,
-        alwaysVisible = true,
-        selector = false,
-        uiPos = function(node)
-            local padding = require("uitheme").current.padding
-            return { Screen.Width * 0.5 - node.Width * 0.5, padding }
-        end,
-    })
+    Timer(1, function()
+        inventory = inventoryModule:create("hotbar", {
+            width = 8,
+            height = 1,
+            alwaysVisible = true,
+            selector = false,
+            uiPos = function(node)
+                local padding = require("uitheme").current.padding
+                return { Screen.Width * 0.5 - node.Width * 0.5, padding }
+            end,
+        })
+    end)
 
     local ui = require("uikit")
 
