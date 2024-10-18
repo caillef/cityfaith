@@ -1,4 +1,4 @@
-local COMMIT_HASH = "82f9d9eb"
+local COMMIT_HASH = "63c4bec1"
 
 Modules = {
     niceLeaderboardModule = "github.com/aduermael/modzh/niceleaderboard",
@@ -389,25 +389,6 @@ function startGame()
     niceLeaderboard:parentDidResize()
     niceLeaderboard:reload()
     leaderboard = Leaderboard("default")
-
-    -- function layoutNiceLeaderboard()
-    --     ease:cancel(niceLeaderboard)
-    --     niceLeaderboard.pos.Y = scoreLabel.pos.Y - niceLeaderboard.Height - margin
-    --     if state == STATE_PLAYING then
-    --         ease:linear(niceLeaderboard.pos, 0.2, {
-    --             onDone = function()
-    --                 niceLeaderboard:hide()
-    --             end,
-    --         }).X = Screen.Width
-    --             + margin
-    --     else
-    --         niceLeaderboard:show()
-    --         ease:linear(niceLeaderboard.pos, 0.2).X = Screen.Width
-    --             - Screen.SafeArea.Right
-    --             - niceLeaderboard.Width
-    --             - margin
-    --     end
-    -- end
 end
 
 LocalEvent:Listen("CurrentAdventureAddResource", function(data)
