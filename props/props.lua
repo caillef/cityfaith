@@ -860,7 +860,7 @@ propsModule.create = function(_, propType, x, y)
                         },
                         height = function() return icon.Height end
                     })
-                    icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[name].icon.rotation
+                    icon.pivot.Rotation = gameConfig.RESOURCES_BY_KEY[dropName].icon.rotation
                     local node = ui_blocks:createBlock({
                         columns = {
                             triptychIcon, text
