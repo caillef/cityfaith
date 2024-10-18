@@ -1,4 +1,4 @@
-local COMMIT_HASH = "40ae9646"
+local COMMIT_HASH = "0c64f820"
 
 -- MODULES
 local gameLoaded = false
@@ -304,8 +304,5 @@ Client.DirectionalPad = function(x, y)
     if common.buildingsLevel.workstation == 1 then buildingBonus = 1.25 end
     if common.buildingsLevel.workstation == 2 then buildingBonus = 1.5 end
     if common.buildingsLevel.workstation == 3 then buildingBonus = 2 end
-
-    print("move", buildingBonus)
-
     squad.Motion = (squad.Forward * y + squad.Right * x) * 50 * buildingBonus
 end
