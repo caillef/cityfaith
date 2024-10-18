@@ -994,7 +994,10 @@ function cantUpgradeUI()
 
     local currentInfo = playerCityInfo.buildings[currentlyBuilding]
     local nextLevel = (currentInfo and currentInfo.level or 0) + 1
-    local text = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel], Color.White)
+    local text = ui:createText(
+        "Current level: " .. (nextLevel == 0 and "no bonus" or buildingInfo.levelsTooltip[nextLevel - 1]), Color.White)
+    text:setParent(bg)
+    local text2 = ui:createText("Next level: " .. buildingInfo.levelsTooltip[nextLevel], Color.White)
     text:setParent(bg)
 
     -- requirements UI
@@ -1043,7 +1046,8 @@ function cantUpgradeUI()
             Screen.Height * 0.5 - bg.Height * 0.5
         }
         title.pos = { bg.Width * 0.5 - title.Width * 0.5, bg.Height - 5 - title.Height }
-        text.pos = { bg.Width * 0.5 - text.Width * 0.5, bg.Height * 0.5 - text.Height * 0.5 }
+        text.pos = { bg.Width * 0.5 - text.Width * 0.5, bg.Height * 0.5 + 5 }
+        text2.pos = { bg.Width * 0.5 - text2.Width * 0.5, bg.Height * 0.5 - text2.Height - 5 }
     end
     bg:parentDidResize()
     currentlyBuilding = nil
